@@ -28,7 +28,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/StanfordSpezi/SpeziStudy.git", from: "0.2.2"),
-        .package(url: "https://github.com/StanfordSpezi/SpeziFoundation.git", branch: "lukas/LocalizationsDict-init"),
+        .package(url: "https://github.com/StanfordSpezi/SpeziFoundation.git", from: "2.7.7"),
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.6.2")
     ],
     targets: [
@@ -52,8 +52,7 @@ let package = Package(
                 .copy("Resources/article"),
                 .copy("Resources/questionnaire"),
                 .copy("Resources/hhdExplainer")
-            ],
-            swiftSettings: [.defaultIsolation(MainActor.self)]
+            ]
         ),
         .executableTarget(
             name: "MHCStudyDefinitionExporterCLI",
@@ -62,8 +61,7 @@ let package = Package(
                 "MHCStudyDefinitionExporter",
                 .product(name: "SpeziStudyDefinition", package: "SpeziStudy"),
                 .product(name: "ArgumentParser", package: "swift-argument-parser")
-            ],
-            swiftSettings: [.defaultIsolation(MainActor.self)]
+            ]
         ),
         .testTarget(
             name: "MHCStudyDefinitionExporterTests",

@@ -12,9 +12,9 @@ import Foundation
 import MHCStudyDefinition
 import SpeziHealthKit
 import enum SpeziHealthKitBulkExport.ExportSessionStartDate
+import SpeziLocalization
 import SpeziScheduler
 import SpeziStudyDefinition
-import SpeziLocalization
 
 
 extension StudyBundle.FileReference {
