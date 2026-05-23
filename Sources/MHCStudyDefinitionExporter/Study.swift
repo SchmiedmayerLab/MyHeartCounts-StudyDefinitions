@@ -12,6 +12,7 @@ import Foundation
 import MHCStudyDefinition
 import SpeziHealthKit
 import enum SpeziHealthKitBulkExport.ExportSessionStartDate
+import SpeziLocalization
 import SpeziScheduler
 import SpeziStudyDefinition
 
@@ -38,17 +39,16 @@ extension StudyBundle.FileReference {
 
 
 let mhcStudyDefinition = StudyDefinition(
-    studyRevision: 40,
+    studyRevision: 41,
     metadata: .init(
         id: .mhcStudy,
-        title: "My Heart Counts",
-        shortTitle: "MHC",
+        title: [.enUS: "My Heart Counts"],
+        shortTitle: [.enUS: "MHC"],
         icon: .systemSymbol("cube.transparent"),
-        explanationText: "",
-        shortExplanationText: "Improve your cardiovascular health",
+        explanationText: [:],
+        shortExplanationText: [.enUS: "Improve your cardiovascular health"],
         studyDependency: nil,
         participationCriterion: .ageAtLeast(18) && (.isFromRegion(.unitedStates) || .isFromRegion(.unitedKingdom)),
-        enrollmentConditions: .none,
         consentFileRef: .init(category: .consent, filename: "Consent", fileExtension: "md")
     ),
     components: [

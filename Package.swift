@@ -27,11 +27,9 @@ let package = Package(
         .executable(name: "MHCStudyDefinitionExporterCLI", targets: ["MHCStudyDefinitionExporterCLI"])
     ],
     dependencies: [
-        .package(url: "https://github.com/StanfordSpezi/SpeziStudy.git", .upToNextMinor(from: "0.1.19")),
-        .package(url: "https://github.com/StanfordSpezi/SpeziFoundation.git", from: "2.4.0"),
-        .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.6.2"),
-        // not used directly but we need to fix it below 0.9.0 for the time being
-        .package(url: "https://github.com/apple/FHIRModels.git", .upToNextMinor(from: "0.8.0"))
+        .package(url: "https://github.com/StanfordSpezi/SpeziStudy.git", revision: "e11803b1897930da7c374085606814e82622bdf3"),
+        .package(url: "https://github.com/StanfordSpezi/SpeziFoundation.git", from: "2.7.7"),
+        .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.6.2")
     ],
     targets: [
         .target(
@@ -54,8 +52,7 @@ let package = Package(
                 .copy("Resources/article"),
                 .copy("Resources/questionnaire"),
                 .copy("Resources/hhdExplainer")
-            ],
-            swiftSettings: [.defaultIsolation(MainActor.self)]
+            ]
         ),
         .executableTarget(
             name: "MHCStudyDefinitionExporterCLI",
@@ -64,8 +61,7 @@ let package = Package(
                 "MHCStudyDefinitionExporter",
                 .product(name: "SpeziStudyDefinition", package: "SpeziStudy"),
                 .product(name: "ArgumentParser", package: "swift-argument-parser")
-            ],
-            swiftSettings: [.defaultIsolation(MainActor.self)]
+            ]
         ),
         .testTarget(
             name: "MHCStudyDefinitionExporterTests",
