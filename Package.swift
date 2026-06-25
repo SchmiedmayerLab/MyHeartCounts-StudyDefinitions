@@ -17,7 +17,6 @@ let package = Package(
     platforms: [
         .iOS(.v18),
         .watchOS(.v11),
-        .visionOS(.v2),
         .macOS(.v15),
         .macCatalyst(.v18)
     ],
@@ -27,17 +26,14 @@ let package = Package(
         .executable(name: "MHCStudyDefinitionExporterCLI", targets: ["MHCStudyDefinitionExporterCLI"])
     ],
     dependencies: [
-        .package(url: "https://github.com/StanfordSpezi/SpeziStudy.git", .upToNextMinor(from: "0.1.19")),
-        .package(url: "https://github.com/StanfordSpezi/SpeziFoundation.git", from: "2.4.0"),
-        .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.6.2"),
-        // not used directly but we need to fix it below 0.9.0 for the time being
-        .package(url: "https://github.com/apple/FHIRModels.git", .upToNextMinor(from: "0.8.0"))
+        .package(url: "https://github.com/SchmiedmayerLab/Spezi.git", .upToNextMinor(from: "0.1.0")),
+        .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.6.2")
     ],
     targets: [
         .target(
             name: "MHCStudyDefinition",
             dependencies: [
-                .product(name: "SpeziStudyDefinition", package: "SpeziStudy")
+                .product(name: "SpeziStudyDefinition", package: "Spezi")
             ],
             resources: [.process("Resources")]
         ),
@@ -45,34 +41,32 @@ let package = Package(
             name: "MHCStudyDefinitionExporter",
             dependencies: [
                 "MHCStudyDefinition",
-                .product(name: "SpeziStudyDefinition", package: "SpeziStudy"),
-                .product(name: "SpeziStudy", package: "SpeziStudy"),
-                .product(name: "SpeziLocalization", package: "SpeziFoundation")
+                .product(name: "SpeziStudyDefinition", package: "Spezi"),
+                .product(name: "SpeziStudy", package: "Spezi"),
+                .product(name: "SpeziLocalization", package: "Spezi")
             ],
             resources: [
                 .copy("Resources/consent"),
                 .copy("Resources/article"),
                 .copy("Resources/questionnaire"),
                 .copy("Resources/hhdExplainer")
-            ],
-            swiftSettings: [.defaultIsolation(MainActor.self)]
+            ]
         ),
         .executableTarget(
             name: "MHCStudyDefinitionExporterCLI",
             dependencies: [
                 "MHCStudyDefinition",
                 "MHCStudyDefinitionExporter",
-                .product(name: "SpeziStudyDefinition", package: "SpeziStudy"),
+                .product(name: "SpeziStudyDefinition", package: "Spezi"),
                 .product(name: "ArgumentParser", package: "swift-argument-parser")
-            ],
-            swiftSettings: [.defaultIsolation(MainActor.self)]
+            ]
         ),
         .testTarget(
             name: "MHCStudyDefinitionExporterTests",
             dependencies: [
                 "MHCStudyDefinition",
                 "MHCStudyDefinitionExporter",
-                .product(name: "SpeziStudyDefinition", package: "SpeziStudy")
+                .product(name: "SpeziStudyDefinition", package: "Spezi")
             ]
         )
     ]
