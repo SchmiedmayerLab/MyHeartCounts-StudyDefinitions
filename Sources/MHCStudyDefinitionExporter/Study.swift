@@ -46,7 +46,10 @@ let mhcStudyDefinition = StudyDefinition(
         shortTitle: [.enUS: "MHC"],
         icon: .systemSymbol("cube.transparent"),
         explanationText: [:],
-        shortExplanationText: [.enUS: "Improve your cardiovascular health"],
+        shortExplanationText: [
+            .enUS: "Improve your cardiovascular health",
+            .esES: "Mejora tu salud cardiovascular"
+        ],
         studyDependency: nil,
         participationCriterion: .ageAtLeast(18) && (.isFromRegion(.unitedStates) || .isFromRegion(.unitedKingdom)),
         consentFileRef: .init(category: .consent, filename: "Consent", fileExtension: "md")
@@ -327,3 +330,8 @@ let mhcStudyDefinition = StudyDefinition(
         )
     }
 )
+
+
+extension LocalizationKey {
+    static let esES = Self(language: .init(identifier: "es"), region: .spain)
+}
