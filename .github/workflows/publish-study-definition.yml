@@ -70,7 +70,7 @@ jobs:
   build:
     name: Build Study Bundle
     needs: [determineenvironment, vars]
-    runs-on: macos-latest
+    runs-on: ["self-hosted", "macOS"]
     environment: ${{ needs.determineenvironment.outputs.environment }}
     steps:
       - name: Checkout code

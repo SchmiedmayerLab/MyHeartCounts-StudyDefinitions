@@ -9,13 +9,13 @@ SPDX-License-Identifier: MIT
 -->
 
 # MyHeartCounts-StudyDefinitions
-[![Publish Study Definition](https://github.com/StanfordBDHG/MyHeartCounts-StudyDefinitions/actions/workflows/publish-study-definition.yml/badge.svg)](https://github.com/StanfordBDHG/MyHeartCounts-StudyDefinitions/actions/workflows/publish-study-definition.yml)
-[![Build and Test](https://github.com/StanfordBDHG/MyHeartCounts-StudyDefinitions/actions/workflows/verify-study-bundle.yml/badge.svg)](https://github.com/StanfordBDHG/MyHeartCounts-StudyDefinitions/actions/workflows/verify-study-bundle.yml)
+[![Publish Study Definition](https://github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions/actions/workflows/publish-study-definition.yml/badge.svg)](https://github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions/actions/workflows/publish-study-definition.yml)
+[![Build and Test](https://github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions/actions/workflows/verify-study-bundle.yml/badge.svg)](https://github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions/actions/workflows/verify-study-bundle.yml)
 [![DOI](https://zenodo.org/badge/573230182.svg)](https://zenodo.org/badge/latestdoi/573230182)
 
 
 ## Overview
-Study Definitions and supporting code for the [My Heart Counts](https://github.com/StanfordBDHG/MyHeartCounts-iOS) iOS application.
+Study Definitions and supporting code for the [My Heart Counts](https://github.com/SchmiedmayerLab/MyHeartCounts-iOS) iOS application.
 
 This package consists of 3 (three) targets:
 - `MHCStudyDefinition` contains supporting code that is shared between the MHC app and the study definition, e.g., static properties defining custom active tasks;
@@ -31,11 +31,12 @@ The `swift test` command may be used to run a dry-run export of the study defini
 The repo's CI setup performs this check on every push, to ensure that only valid study definitions can be merged.
 
 ## License
-This project is licensed under the MIT License. See [Licenses](https://github.com/StanfordBDHG/MyHeartCounts-StudyDefinitions/tree/main/LICENSES) for more information.
+This project is licensed under the MIT License. See [Licenses](https://github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions/tree/main/LICENSES) for more information.
 
-## Contributors
-This project is developed as part of the Stanford Byers Center for Biodesign at Stanford University.
-See [CONTRIBUTORS.md](https://github.com/StanfordBDHG/MyHeartCounts-StudyDefinitions/tree/main/CONTRIBUTORS.md) for a full list of all MyHeartCounts-StudyDefinitions contributors.
 
-![Stanford Byers Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-light.png#gh-light-mode-only)
-![Stanford Byers Center for Biodesign Logo](https://raw.githubusercontent.com/StanfordBDHG/.github/main/assets/biodesign-footer-dark.png#gh-dark-mode-only)
+## Our Research
+
+For more information, visit the [Schmiedmayer Lab GitHub organization](https://github.com/SchmiedmayerLab).
+
+![Stanford and Stanford Medicine logos](https://raw.githubusercontent.com/SchmiedmayerLab/.github/main/assets/stanford-footer-light.png#gh-light-mode-only)
+![Stanford and Stanford Medicine logos](https://raw.githubusercontent.com/SchmiedmayerLab/.github/main/assets/stanford-footer-dark.png#gh-dark-mode-only)
