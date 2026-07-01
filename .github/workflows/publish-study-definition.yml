@@ -79,12 +79,6 @@ jobs:
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest-stable
-      
-      - name: versions
-        run: |
-          swift --version
-          xcrun swift --version
-          xcodebuild -version
 
       - name: Build study bundle
         run: |
