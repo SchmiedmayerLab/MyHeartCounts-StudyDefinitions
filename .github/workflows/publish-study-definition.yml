@@ -195,6 +195,7 @@ jobs:
           gsutil ls gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_US }}.firebasestorage.app/public/
 
       - name: (UK production) Decode and authenticate to Google Cloud
+        if: ${{ false }}
         run: |
           if [ -z "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_BASE64_PRODUCTION_UK }}" ]; then
             echo "ERROR: GOOGLE_APPLICATION_CREDENTIALS_BASE64_PRODUCTION_UK secret is not set"
@@ -216,12 +217,14 @@ jobs:
           gcloud config set project ${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_UK }}
 
       - name: (UK production) Upload study bundle to Firebase Storage
+        if: ${{ false }}
         run: |
           gsutil cp mhcStudyBundle.spezistudybundle.aar gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_UK }}.firebasestorage.app/public/
 
           gsutil acl ch -u AllUsers:R gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_UK }}.firebasestorage.app/public/mhcStudyBundle.spezistudybundle.aar
 
       - name: (UK production) Verify upload
+        if: ${{ false }}
         run: |
           # List the files in the public directory to confirm
           gsutil ls gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_UK }}.firebasestorage.app/public/
