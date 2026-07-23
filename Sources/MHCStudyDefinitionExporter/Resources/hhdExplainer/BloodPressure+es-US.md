@@ -11,7 +11,11 @@ El monitoreo regular es importante.
 Los cambios en el estilo de vida, como no fumar, mantenerse activo, comer bien y manejar el estrés, ayudan a mantener la presión arterial en un rango saludable.
 Aunque los objetivos de la presión arterial pueden variar para algunas personas, controlarla es vital para reducir riesgos graves para la salud. 
 
-La presión arterial normal es inferior a 120/80 mmHg. 
-La presión arterial elevada se considera de 120-129/<80 mmHg 
-La hipertensión estadio 1 es de 130-139/80-89 mmHg 
-La hipertensión estadio 2 es ≥140/≥90 mmHg
+| Categoría              | Sistólica (mmHg) | Diastólica (mmHg) |
+| :--------------------- | :--------------: | :---------------: |
+| Normal                 | <120             | <80               |
+| Elevada                | 120–129          | <80               |
+| Hipertensión estadio 1 | 130–139          | 80–89             |
+| Hipertensión estadio 2 | ≥140             | ≥90               |
+
+_Si tus dos números caen en categorías diferentes, se aplica la categoría más alta._
