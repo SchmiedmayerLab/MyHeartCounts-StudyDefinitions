@@ -31,8 +31,8 @@ The `swift test` command may be used to run a dry-run export of the study defini
 The repo's CI setup performs this check on every push, to ensure that only valid study definitions can be merged.
 
 ## License
-This project is licensed under the MIT License. See [Licenses](https://github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions/tree/main/LICENSES) for more information.
 
+This project is licensed under the MIT License. See [Licenses](https://github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions/tree/main/LICENSES) for more information.
 
 ## Our Research
 
