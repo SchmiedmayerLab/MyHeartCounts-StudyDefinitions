@@ -8,6 +8,7 @@ El humano nace con un LDL en los 30-50s y las personas que viven fuera de la soc
 Aunque tu cuerpo necesita algo de colesterol para la función celular, demasiado LDL es perjudicial y lleva a un mayor riesgo de enfermedades cardiovasculares y demencia.
 
 Nuestro sistema de puntuación te ayuda a ver tu riesgo de un vistazo:
+
 | Rango      | Puntuación | Qué significa                                                             |
 | :--------: | :--------: | :------------------------------------------------------------------------ |
 | <55 mg/dL  | 100        | Excelente; máxima protección, especialmente para pacientes de alto riesgo |

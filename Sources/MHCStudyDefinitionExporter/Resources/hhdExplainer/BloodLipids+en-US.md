@@ -8,6 +8,7 @@ You are born with an LDL in the 30-50s and people who live outside of modern soc
 While your body needs some cholesterol for cell function, too much LDL is harmful and leads to increased risk of cardiovascular disease and dementia.
 
 Our scoring system helps you see your risk at a glance:
+
 | Range      | Score | What it means                                                    |
 | :--------: | :---: | :--------------------------------------------------------------- |
 | <55 mg/dL  | 100   | Excellent; maximal protection, especially for high-risk patients |
