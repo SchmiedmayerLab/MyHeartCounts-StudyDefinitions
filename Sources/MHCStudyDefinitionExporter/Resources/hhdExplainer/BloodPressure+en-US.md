@@ -9,7 +9,11 @@ High blood pressure (hypertension) often has no symptoms but raises the risk of 
 Regular monitoring is important. Lifestyle changes like not smoking, staying active, eating well, and managing stress help keep blood pressure in a healthy range.
 While blood pressure targets may vary for some individuals, controlling it is vital for reducing serious health risks.
 
-Normal blood pressure is below 120/80 mmHg.
-Elevated blood pressure is considered 120-129/<80 mmHg
-Hypertension stage 1 is 130-139/80-89 mmHg
-Hypertension stage 2 is ≥140/≥90 mmHg"
+| Category             | Systolic (mmHg) | Diastolic (mmHg) |
+| :------------------- | :-------------: | :--------------: |
+| Normal               | <120            | <80              |
+| Elevated             | 120–129         | <80              |
+| Hypertension stage 1 | 130–139         | 80–89            |
+| Hypertension stage 2 | ≥140            | ≥90              |
+
+_If your two numbers fall into different categories, the higher category applies._
