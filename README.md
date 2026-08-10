@@ -10,7 +10,7 @@ SPDX-License-Identifier: MIT
 
 # MyHeartCounts-StudyDefinitions
 
-[![Build and Test](https://github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions/actions/workflows/static-analysis.yml)
+[![Build and Test](https://github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions/actions/workflows/verify-study-bundle.yml/badge.svg)](https://github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions/actions/workflows/verify-study-bundle.yml)
 [![Deployment](https://github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions/actions/workflows/publish-study-definition.yml/badge.svg)](https://github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions/actions/workflows/publish-study-definition.yml)
 [![REUSE status](https://api.reuse.software/badge/github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions)](https://api.reuse.software/info/github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions/blob/main/LICENSE.md)
