@@ -1,5 +1,5 @@
 #
-# This source file is part of the My Heart Counts open source project
+# This source file is part of the My Heart Counts Study Definitions open-source project
 #
 # SPDX-FileCopyrightText: 2025 Stanford University and the project authors (see CONTRIBUTORS.md)
 #
@@ -8,6 +8,7 @@
 
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
+type: software
 authors:
 - family-names: "Kollmer"
   given-names: "Lukas"
@@ -15,7 +16,12 @@ authors:
 - family-names: "Goldschmidt"
   given-names: "Paul"
   orcid: "https://orcid.org/0009-0005-9748-3858"
+- family-names: "Johnson"
+  given-names: "Anders"
 - family-names: "Schmiedmayer"
   given-names: "Paul"
   orcid: "https://orcid.org/0000-0002-8607-9148"
 title: "My Heart Counts"
+license: MIT
+url: "https://github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions"
+repository-code: "https://github.com/SchmiedmayerLab/MyHeartCounts-StudyDefinitions"
