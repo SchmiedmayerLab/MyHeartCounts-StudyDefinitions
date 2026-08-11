@@ -28,4 +28,7 @@ jobs:
     uses: SchmiedmayerLab/.github/.github/workflows/swiftlint.yml@v0.5
   markdown_link_check:
     name: Markdown Link Check
+    permissions:
+      contents: read
+      pull-requests: read
     uses: SchmiedmayerLab/.github/.github/workflows/markdown-links.yml@v0.5
