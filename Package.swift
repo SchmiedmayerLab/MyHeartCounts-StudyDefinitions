@@ -42,7 +42,6 @@ let package = Package(
             dependencies: [
                 "MHCStudyDefinition",
                 .product(name: "SpeziStudyDefinition", package: "Spezi"),
-                .product(name: "SpeziStudy", package: "Spezi"),
                 .product(name: "SpeziLocalization", package: "Spezi")
             ],
             resources: [
