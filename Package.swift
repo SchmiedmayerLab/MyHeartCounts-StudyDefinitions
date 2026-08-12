@@ -26,8 +26,8 @@ let package = Package(
         .executable(name: "MHCStudyDefinitionExporterCLI", targets: ["MHCStudyDefinitionExporterCLI"])
     ],
     dependencies: [
-        // Tracks the study-bundle feature branch until the next Spezi release.
-        .package(url: "https://github.com/SchmiedmayerLab/Spezi.git", branch: "feature/study-bundle-archive"),
+        // Pins the study-bundle feature revision until the next Spezi release.
+        .package(url: "https://github.com/SchmiedmayerLab/Spezi.git", revision: "4a1240eff42fca1c94a5f495cfeb9b7e83db26ed"),
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.6.2")
     ],
     targets: [
