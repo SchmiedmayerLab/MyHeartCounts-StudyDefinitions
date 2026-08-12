@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+#if canImport(AppleArchive)
 import AppleArchive
 import Foundation
 import System
@@ -129,3 +130,5 @@ extension FileManager {
         }
     }
 }
+
+#endif

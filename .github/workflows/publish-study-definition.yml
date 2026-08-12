@@ -87,7 +87,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: study-bundle
-          path: mhcStudyBundle.spezistudybundle.aar
+          path: mhcStudyBundle.spezistudybundle.tar.zst
 
   authenticate-and-publish:
     name: (Development/Staging) Publish Study Bundle to Firebase Storage
@@ -127,9 +127,9 @@ jobs:
 
       - name: Upload study bundle to Firebase Storage
         run: |
-          gsutil cp mhcStudyBundle.spezistudybundle.aar gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID }}.firebasestorage.app/public/
+          gsutil cp mhcStudyBundle.spezistudybundle.tar.zst gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID }}.firebasestorage.app/public/
 
-          gsutil acl ch -u AllUsers:R gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID }}.firebasestorage.app/public/mhcStudyBundle.spezistudybundle.aar
+          gsutil acl ch -u AllUsers:R gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID }}.firebasestorage.app/public/mhcStudyBundle.spezistudybundle.tar.zst
 
       - name: Verify upload
         run: |
@@ -184,9 +184,9 @@ jobs:
 
       - name: (US production) Upload study bundle to Firebase Storage
         run: |
-          gsutil cp mhcStudyBundle.spezistudybundle.aar gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_US }}.firebasestorage.app/public/
+          gsutil cp mhcStudyBundle.spezistudybundle.tar.zst gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_US }}.firebasestorage.app/public/
 
-          gsutil acl ch -u AllUsers:R gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_US }}.firebasestorage.app/public/mhcStudyBundle.spezistudybundle.aar
+          gsutil acl ch -u AllUsers:R gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_US }}.firebasestorage.app/public/mhcStudyBundle.spezistudybundle.tar.zst
 
       - name: (US production) Verify upload
         run: |
@@ -218,9 +218,9 @@ jobs:
       - name: (UK production) Upload study bundle to Firebase Storage
         if: ${{ false }}
         run: |
-          gsutil cp mhcStudyBundle.spezistudybundle.aar gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_UK }}.firebasestorage.app/public/
+          gsutil cp mhcStudyBundle.spezistudybundle.tar.zst gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_UK }}.firebasestorage.app/public/
 
-          gsutil acl ch -u AllUsers:R gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_UK }}.firebasestorage.app/public/mhcStudyBundle.spezistudybundle.aar
+          gsutil acl ch -u AllUsers:R gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_UK }}.firebasestorage.app/public/mhcStudyBundle.spezistudybundle.tar.zst
 
       - name: (UK production) Verify upload
         if: ${{ false }}

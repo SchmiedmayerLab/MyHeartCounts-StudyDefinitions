@@ -6,6 +6,7 @@
 // SPDX-License-Identifier: MIT
 //
 
+import SpeziLocalization
 import SpeziStudyDefinition
 
 
@@ -18,7 +19,7 @@ extension StudyDefinition.CustomActiveTaskComponent.ActiveTask {
     /// The My Heart Counts app's ECG active task.
     public static let ecg = Self(
         identifier: "edu.stanford.MyHeartCounts.activeTask.ecg",
-        title: "ECG",
-        subtitle: "Record an ECG using your Apple Watch"
+        title: [.enUS: "ECG"],
+        subtitle: [.enUS: "Record an ECG using your Apple Watch"]
     )
 }
