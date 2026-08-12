@@ -37,6 +37,9 @@ concurrency:
   group: ${{ inputs.environment || 'staging' }}
   cancel-in-progress: false
 
+permissions:
+  contents: read
+
 jobs:
   determineenvironment:
     name: Determine Environment
