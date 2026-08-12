@@ -27,7 +27,7 @@ let package = Package(
     ],
     dependencies: [
         // Pins the study-bundle feature revision until the next Spezi release.
-        .package(url: "https://github.com/SchmiedmayerLab/Spezi.git", revision: "4a1240eff42fca1c94a5f495cfeb9b7e83db26ed"),
+        .package(url: "https://github.com/SchmiedmayerLab/Spezi.git", revision: "8ed550bc8c689743250cc493937686fcf6d1350c"),
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.6.2")
     ],
     targets: [
