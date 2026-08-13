@@ -26,7 +26,13 @@ struct MHCStudyDefinitionExporterTests {
         }
         let archiveUrl: URL
         do {
-            archiveUrl = try MHCStudyDefinitionExporter.export(to: dstDir, as: .archive)
+            archiveUrl = try MHCStudyDefinitionExporter.export(to: dstDir, as: .zstd)
+            let bundleUrl = dstDir.appending(
+                path: "mhcStudyBundle.\(StudyBundle.fileExtension)",
+                directoryHint: .isDirectory
+            )
+            let bundle = try StudyBundle.unarchive(archiveUrl, to: bundleUrl)
+            #expect(bundle.studyDefinition.studyRevision == 43)
         } catch StudyBundle.CreateBundleError.failedValidation(let issues) {
             let desc = issues.enumerated().reduce(into: "Failed Validation:\n") { desc, element in
                 let (idx, issue) = element

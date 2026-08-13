@@ -38,7 +38,7 @@ struct Export: ParsableCommand {
     }
     
     @Option(help: "The desired output format")
-    var format: Format = .archive
+    var format: Format = .zstd
     
     @Argument(help: "Directory into which the output file should be stored.")
     var outputDir: String = "."
@@ -85,7 +85,7 @@ struct Validate: ParsableCommand {
         defer {
             try? fileManager.removeItem(at: dir)
         }
-        try Export(format: .archive, outputDir: dir, isValidation: true).run()
+        try Export(format: .zstd, outputDir: dir, isValidation: true).run()
         print("Validation succeeded.")
     }
 }

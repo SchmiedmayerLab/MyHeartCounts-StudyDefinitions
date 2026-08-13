@@ -26,14 +26,15 @@ let package = Package(
         .executable(name: "MHCStudyDefinitionExporterCLI", targets: ["MHCStudyDefinitionExporterCLI"])
     ],
     dependencies: [
-        .package(url: "https://github.com/SchmiedmayerLab/Spezi.git", .upToNextMinor(from: "0.2.0")),
+        .package(url: "https://github.com/SchmiedmayerLab/Spezi.git", .upToNextMinor(from: "0.2.1")),
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.6.2")
     ],
     targets: [
         .target(
             name: "MHCStudyDefinition",
             dependencies: [
-                .product(name: "SpeziStudyDefinition", package: "Spezi")
+                .product(name: "SpeziStudyDefinition", package: "Spezi"),
+                .product(name: "SpeziLocalization", package: "Spezi")
             ],
             resources: [.process("Resources")]
         ),

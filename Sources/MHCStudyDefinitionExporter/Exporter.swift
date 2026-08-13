@@ -14,12 +14,23 @@ import SpeziStudyDefinition
 
 
 public enum Format: String, Codable, CaseIterable {
-    case archive
+    /// A zstd-compressed tar archive, readable on every platform. The default.
+    case zstd
+    /// The uncompressed bundle directory.
     case package
+    /// An Apple Archive, readable only on Apple platforms.
+    @available(*, deprecated, message: "Use the cross-platform 'zstd' format instead.")
+    case archive
+
+    // Manual so the deprecated Apple Archive case neither breaks the synthesis nor
+    // appears in the CLI's format suggestions.
+    public static var allCases: [Format] {
+        [.zstd, .package]
+    }
 }
 
 
-/// Exports a `mhcStudyDefinition.spezistudybundle.aar` file to the specified `outputDir`.
+/// Exports the My Heart Counts study bundle to the specified `outputDir`, in the given ``Format``.
 @discardableResult
 public func export(to outputDir: URL, as format: Format) throws -> URL {
     let fileManager = FileManager.default
@@ -29,7 +40,7 @@ public func export(to outputDir: URL, as format: Format) throws -> URL {
         ])
     }
     let filename = "mhcStudyBundle"
-    let bundleUrl = outputDir.appendingPathComponent(filename, conformingTo: .speziStudyBundle)
+    let bundleUrl = outputDir.appending(path: "\(filename).\(StudyBundle.fileExtension)", directoryHint: .isDirectory)
     
     let inputFiles: [StudyBundle.FileResourceInput] = try Array {
         let bundleResourceUrl = try tryUnwrap(Bundle.module.resourceURL, "Unable to find Bundle /Resources URL")
@@ -61,17 +72,37 @@ public func export(to outputDir: URL, as format: Format) throws -> URL {
         )
     }
     
-    _ = try StudyBundle.writeToDisk(at: bundleUrl, definition: mhcStudyDefinition, files: inputFiles)
-    
+    let bundle = try StudyBundle.writeToDisk(at: bundleUrl, definition: mhcStudyDefinition, files: inputFiles)
+
     switch format {
     case .package:
         return bundleUrl
-    case .archive:
-        // Archive into .aar file
-        let archiveUrl = bundleUrl.appendingPathExtension(for: .appleArchive)
+    case .zstd:
+        let archiveUrl = outputDir.appending(path: "\(filename).\(StudyBundle.archiveFileExtension)")
         try? fileManager.removeItem(at: archiveUrl)
-        try fileManager.archiveDirectory(at: bundleUrl, to: archiveUrl)
+        try bundle.archive(to: archiveUrl, compressionLevel: .maxRegular)
         try? fileManager.removeItem(at: bundleUrl)
         return archiveUrl
+    case .archive:
+        return try appleArchive(bundleAt: bundleUrl)
     }
+}
+
+
+/// Packages an exported bundle into an `.aar` file, replacing the bundle directory.
+///
+/// Apple Archive is only available on Apple platforms; everywhere else `.zstd` is the archive format.
+private func appleArchive(bundleAt bundleUrl: URL) throws -> URL {
+    #if canImport(AppleArchive)
+    let fileManager = FileManager.default
+    let archiveUrl = bundleUrl.appendingPathExtension(for: .appleArchive)
+    try? fileManager.removeItem(at: archiveUrl)
+    try fileManager.archiveDirectory(at: bundleUrl, to: archiveUrl)
+    try? fileManager.removeItem(at: bundleUrl)
+    return archiveUrl
+    #else
+    throw NSError(domain: "edu.stanford.MHCStudyDefinitionExporter", code: 0, userInfo: [
+        NSLocalizedDescriptionKey: "The Apple Archive format requires AppleArchive. Export with --format \(Format.zstd.rawValue)."
+    ])
+    #endif
 }

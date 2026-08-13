@@ -26,3 +26,10 @@ jobs:
     with:
       runsonlabels: '["macOS", "self-hosted"]'
       customcommand: 'swift test'
+  verify_study_bundle_linux:
+    name: Verify Study Bundle Integrity (Linux)
+    uses: SchmiedmayerLab/.github/.github/workflows/swift-test.yml@v0.5
+    permissions:
+      contents: read
+    with:
+      runs_on_labels: '["ubuntu-latest"]'
