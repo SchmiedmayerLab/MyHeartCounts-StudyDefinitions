@@ -76,7 +76,7 @@ jobs:
     environment: ${{ needs.determineenvironment.outputs.environment }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
@@ -87,7 +87,7 @@ jobs:
           swift run MHCStudyDefinitionExporterCLI export .
 
       - name: Upload study bundle artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: study-bundle
           path: mhcStudyBundle.spezistudybundle.tar.zst
@@ -100,10 +100,10 @@ jobs:
     environment: ${{ needs.determineenvironment.outputs.environment }}
     steps:
       - name: Setup Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
+        uses: google-github-actions/setup-gcloud@v3
 
       - name: Download study bundle artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: study-bundle
 
@@ -147,10 +147,10 @@ jobs:
     environment: ${{ needs.determineenvironment.outputs.environment }}
     steps:
       - name: Setup Google Cloud SDK for Production
-        uses: google-github-actions/setup-gcloud@v2
+        uses: google-github-actions/setup-gcloud@v3
 
       - name: Download study bundle artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: study-bundle
 
