@@ -7,9 +7,9 @@
 //
 
 import Foundation
-import MHCStudyDefinitionExporter
 @_spi(APISupport)
-import SpeziStudyDefinition
+import GroveStudyDefinition
+import MHCStudyDefinitionExporter
 import Testing
 
 
@@ -32,7 +32,7 @@ struct MHCStudyDefinitionExporterTests {
                 directoryHint: .isDirectory
             )
             let bundle = try StudyBundle.unarchive(archiveUrl, to: bundleUrl)
-            #expect(bundle.studyDefinition.studyRevision == 43)
+            #expect(bundle.studyDefinition.studyRevision == 44)
         } catch StudyBundle.CreateBundleError.failedValidation(let issues) {
             let desc = issues.enumerated().reduce(into: "Failed Validation:\n") { desc, element in
                 let (idx, issue) = element

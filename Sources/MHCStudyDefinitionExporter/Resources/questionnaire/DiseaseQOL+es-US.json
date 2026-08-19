@@ -6,7 +6,7 @@
   "id": "343982A4-907C-4E59-8E8F-9C379F9579DA",
   "meta": {
     "profile": [
-      "http://spezi.health/fhir/StructureDefinition/sdf-Questionnaire"
+      "https://grovealliance.org/fhir/core/StructureDefinition/sdf-Questionnaire"
     ],
     "tag": [
       {
@@ -37,6 +37,7 @@
     "Patient"
   ],
   "purpose": "Vida con enfermedad cardiovascular: síntomas, funcionamiento diario, bienestar general",
+  "url": "https://myheartcounts.stanford.edu/fhir/survey/diseaseQoL",
   "item": [
     {
       "linkId": "5c428e4c-6390-4102-bc9c-9d2bb2ef51d4",
