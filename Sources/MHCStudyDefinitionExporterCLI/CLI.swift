@@ -10,9 +10,9 @@
 
 import ArgumentParser
 import Foundation
-import MHCStudyDefinitionExporter
 @_spi(APISupport)
-import SpeziStudyDefinition
+import GroveStudyDefinition
+import MHCStudyDefinitionExporter
 
 
 @main

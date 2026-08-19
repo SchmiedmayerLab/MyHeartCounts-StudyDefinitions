@@ -26,15 +26,15 @@ let package = Package(
         .executable(name: "MHCStudyDefinitionExporterCLI", targets: ["MHCStudyDefinitionExporterCLI"])
     ],
     dependencies: [
-        .package(url: "https://github.com/SchmiedmayerLab/Spezi.git", .upToNextMinor(from: "0.2.1")),
+        .package(url: "https://github.com/SchmiedmayerLab/Grove.git", exact: "0.3.0-beta.2"),
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.6.2")
     ],
     targets: [
         .target(
             name: "MHCStudyDefinition",
             dependencies: [
-                .product(name: "SpeziStudyDefinition", package: "Spezi"),
-                .product(name: "SpeziLocalization", package: "Spezi")
+                .product(name: "GroveStudyDefinition", package: "Grove"),
+                .product(name: "GroveLocalization", package: "Grove")
             ],
             resources: [.process("Resources")]
         ),
@@ -42,8 +42,8 @@ let package = Package(
             name: "MHCStudyDefinitionExporter",
             dependencies: [
                 "MHCStudyDefinition",
-                .product(name: "SpeziStudyDefinition", package: "Spezi"),
-                .product(name: "SpeziLocalization", package: "Spezi")
+                .product(name: "GroveStudyDefinition", package: "Grove"),
+                .product(name: "GroveLocalization", package: "Grove")
             ],
             resources: [
                 .copy("Resources/consent"),
@@ -57,7 +57,7 @@ let package = Package(
             dependencies: [
                 "MHCStudyDefinition",
                 "MHCStudyDefinitionExporter",
-                .product(name: "SpeziStudyDefinition", package: "Spezi"),
+                .product(name: "GroveStudyDefinition", package: "Grove"),
                 .product(name: "ArgumentParser", package: "swift-argument-parser")
             ]
         ),
@@ -66,7 +66,7 @@ let package = Package(
             dependencies: [
                 "MHCStudyDefinition",
                 "MHCStudyDefinitionExporter",
-                .product(name: "SpeziStudyDefinition", package: "Spezi")
+                .product(name: "GroveStudyDefinition", package: "Grove")
             ]
         )
     ]
