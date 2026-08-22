@@ -26,7 +26,7 @@ let package = Package(
         .executable(name: "MHCStudyDefinitionExporterCLI", targets: ["MHCStudyDefinitionExporterCLI"])
     ],
     dependencies: [
-        .package(url: "https://github.com/SchmiedmayerLab/Grove.git", exact: "0.3.0-beta.2"),
+        .package(url: "https://github.com/SchmiedmayerLab/Grove.git", .upToNextMinor(from: "0.3.0-beta.6")),
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.6.2")
     ],
     targets: [
