@@ -3,10 +3,20 @@
   "language": "es-US",
   "id": "09BE8C43-4501-4861-B6C9-A15F94BE6E14",
   "title": "Riesgo Cardíaco",
-  "status": "draft",
+  "status": "active",
+  "version": "0.0.0",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
+      "valueCoding": {
+        "system": "http://hl7.org/fhir/version-algorithm",
+        "code": "semver"
+      }
+    }
+  ],
   "meta": {
     "profile": [
-      "https://grovealliance.org/fhir/core/StructureDefinition/sdf-Questionnaire"
+      "https://grovealliance.org/fhir/questionnaire/StructureDefinition/grove-questionnaire"
     ],
     "tag": [
       {
@@ -19,17 +29,11 @@
   "useContext": [
     {
       "code": {
-        "system": "http://hl7.org/fhir/ValueSet/usage-context-type",
-        "code": "focus",
-        "display": "Enfoque Clínico"
+        "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+        "code": "focus"
       },
       "valueCodeableConcept": {
-        "coding": [
-          {
-            "system": "urn:oid:2.16.578.1.12.4.1.1.8655",
-            "display": "Riesgo Cardíaco"
-          }
-        ]
+        "text": "Riesgo Cardíaco"
       }
     }
   ],
@@ -42,18 +46,15 @@
     {
       "linkId": "49863af0-8520-40c9-8ff7-5c51756eb64e",
       "type": "display",
-      "text": "Por favor, responda las siguientes preguntas sobre factores que pueden estar relacionados con el riesgo de enfermedad cardíaca. Responda todas las preguntas de las que se sienta seguro y cómodo respondiendo. Si no conoce una respuesta, puede omitir la pregunta.",
-      "required": false
+      "text": "Por favor, responda las siguientes preguntas sobre factores que pueden estar relacionados con el riesgo de enfermedad cardíaca. Responda todas las preguntas de las que se sienta seguro y cómodo respondiendo. Si no conoce una respuesta, puede omitir la pregunta."
     },
     {
       "linkId": "1a18f004-e6ab-4ee8-d5b2-284389d15e14",
       "type": "choice",
       "text": "¿Cuál es su estado de tabaquismo?",
-      "required": false,
       "answerOption": [
         {
           "valueCoding": {
-            "id": "0e1c175b-af30-4143-c078-c1055a9fb018",
             "code": "never-smoked/vaped",
             "system": "urn:uuid:dd27d607-7d9c-4fa2-e28b-d90a40d628bf",
             "display": "Nunca he fumado/vapeado"
@@ -61,7 +62,6 @@
         },
         {
           "valueCoding": {
-            "id": "104f46dd-00d6-4819-a1e5-f6e610b1b448",
             "code": "quit->5-years-ago",
             "system": "urn:uuid:dd27d607-7d9c-4fa2-e28b-d90a40d628bf",
             "display": "Dejé hace más de 5 años"
@@ -69,7 +69,6 @@
         },
         {
           "valueCoding": {
-            "id": "635ebd23-e102-4323-8ade-6636c79a08c3",
             "code": "quit-1-5-years-ago",
             "system": "urn:uuid:dd27d607-7d9c-4fa2-e28b-d90a40d628bf",
             "display": "Dejé hace 1-5 años"
@@ -77,7 +76,6 @@
         },
         {
           "valueCoding": {
-            "id": "682757ef-61fb-4fc9-e72b-82d7969c3245",
             "code": "quit-<1-year-ago",
             "system": "urn:uuid:dd27d607-7d9c-4fa2-e28b-d90a40d628bf",
             "display": "Dejé hace menos de 1 año"
@@ -85,7 +83,6 @@
         },
         {
           "valueCoding": {
-            "id": "e750c1d5-c2f1-4ad3-ad9a-58c4cac68073",
             "code": "light-smoker/vaper-(<10/day)",
             "system": "urn:uuid:dd27d607-7d9c-4fa2-e28b-d90a40d628bf",
             "display": "Fumador/vapeador ligero (menos de 10 al día)"
@@ -93,7 +90,6 @@
         },
         {
           "valueCoding": {
-            "id": "62488345-2b44-416f-c26d-99706561c128",
             "code": "moderate-smoker/vaper-(10-to-19/day)",
             "system": "urn:uuid:dd27d607-7d9c-4fa2-e28b-d90a40d628bf",
             "display": "Fumador/vapeador moderado (de 10 a 19 al día)"
@@ -101,7 +97,6 @@
         },
         {
           "valueCoding": {
-            "id": "3be141e0-75aa-4b0b-be6a-1a92946afc1d",
             "code": "heavy-smoker/vaper-(>20/day)",
             "system": "urn:uuid:dd27d607-7d9c-4fa2-e28b-d90a40d628bf",
             "display": "Fumador/vapeador intenso (más de 20 al día)"
@@ -113,11 +108,9 @@
       "linkId": "c304d2ba-1520-4758-94e6-02cc38e71b3e",
       "type": "choice",
       "text": "¿Tiene diabetes?",
-      "required": false,
       "answerOption": [
         {
           "valueCoding": {
-            "id": "ea122f71-9c92-4ad1-ffb0-cf7db889c043",
             "code": "no",
             "system": "urn:uuid:3691bc56-d6bc-4955-881c-a38bf72c6d27",
             "display": "No"
@@ -125,7 +118,6 @@
         },
         {
           "valueCoding": {
-            "id": "b52c40f6-c12a-4b8f-82cc-c9706b1c50db",
             "code": "yes,-type-1-diabetes",
             "system": "urn:uuid:3691bc56-d6bc-4955-881c-a38bf72c6d27",
             "display": "Sí, diabetes tipo 1"
@@ -133,7 +125,6 @@
         },
         {
           "valueCoding": {
-            "id": "2fcf6867-9079-4486-864f-bf0d634c51df",
             "code": "yes,-type-2-diabetes",
             "system": "urn:uuid:3691bc56-d6bc-4955-881c-a38bf72c6d27",
             "display": "Sí, diabetes tipo 2"
@@ -145,7 +136,6 @@
       "linkId": "1dd68d12-16b1-460c-81b2-580dd8abfa40",
       "type": "boolean",
       "text": "¿Toma medicamentos para tratar su diabetes?",
-      "required": false,
       "enableWhen": [
         {
           "question": "c304d2ba-1520-4758-94e6-02cc38e71b3e",
@@ -161,11 +151,9 @@
       "linkId": "15357960-92fb-4bf8-9a3e-4a6251377c8a",
       "type": "choice",
       "text": "¿Toma medicamentos para tratar los siguientes factores de riesgo?",
-      "required": false,
       "answerOption": [
         {
           "valueCoding": {
-            "id": "af63d826-c29b-4427-84f6-4dd95c3e946c",
             "code": "to-treat-and-lower-cholesterol",
             "system": "urn:uuid:01473766-ac06-45c3-8e92-7381de1645cc",
             "display": "Para tratar y reducir el colesterol"
@@ -173,7 +161,6 @@
         },
         {
           "valueCoding": {
-            "id": "54fdc16c-6412-4fc6-ab14-aa87fbfaefbc",
             "code": "to-treat-hypertension-and-lower-blood-pressure",
             "system": "urn:uuid:01473766-ac06-45c3-8e92-7381de1645cc",
             "display": "Para tratar la hipertensión y reducir la presión arterial"
@@ -181,7 +168,6 @@
         },
         {
           "valueCoding": {
-            "id": "6721de00-2a35-466b-d04f-2c13a6fed495",
             "code": "to-treat-diabetes/pre-diabetes-and-lower-blood-sugar",
             "system": "urn:uuid:01473766-ac06-45c3-8e92-7381de1645cc",
             "display": "Para tratar la diabetes/prediabetes y reducir el azúcar en sangre"
@@ -189,7 +175,6 @@
         },
         {
           "valueCoding": {
-            "id": "e0d37b4b-a48b-42fa-b720-e24d680c30e4",
             "code": "on-an-atypical-antipsychotic",
             "system": "urn:uuid:01473766-ac06-45c3-8e92-7381de1645cc",
             "display": "Tomo un antipsicótico atípico"
@@ -197,7 +182,6 @@
         },
         {
           "valueCoding": {
-            "id": "ecd677f6-0573-405f-bfdd-e29540cf5087",
             "code": "on-a-regular-steroid-tablet",
             "system": "urn:uuid:01473766-ac06-45c3-8e92-7381de1645cc",
             "display": "Tomo regularmente una tableta de esteroide"
@@ -205,7 +189,6 @@
         },
         {
           "valueCoding": {
-            "id": "dfe5633c-6415-4a96-b11d-b9f99d0c1f00",
             "code": "to-treat-erectile-disfunction",
             "system": "urn:uuid:01473766-ac06-45c3-8e92-7381de1645cc",
             "display": "Para tratar la disfunción eréctil"
@@ -213,7 +196,6 @@
         },
         {
           "valueCoding": {
-            "id": "2e8e3160-dc31-4483-d6f1-73202e9a8472",
             "code": "none-of-the-above",
             "system": "urn:uuid:01473766-ac06-45c3-8e92-7381de1645cc",
             "display": "Ninguna de las anteriores"
@@ -226,7 +208,7 @@
           "valueCodeableConcept": {
             "coding": [
               {
-                "system": "http://hl7.org/fhir/ValueSet/questionnaire-item-control",
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
                 "code": "check-box"
               }
             ]
@@ -238,11 +220,9 @@
       "linkId": "ef7dc16c-56dd-4d15-f19b-96234b49ffb2",
       "type": "open-choice",
       "text": "¿Le han diagnosticado alguna de las siguientes enfermedades cardíacas?",
-      "required": false,
       "answerOption": [
         {
           "valueCoding": {
-            "id": "6dbe3066-b9e0-422c-b0dd-395541877db0",
             "code": "heart-attack/myocardial-infarction",
             "system": "urn:uuid:7192d033-7193-4d84-a603-dd02bc9bd062",
             "display": "Ataque cardíaco/Infarto de miocardio"
@@ -250,7 +230,6 @@
         },
         {
           "valueCoding": {
-            "id": "5f849ef4-a60e-4b9b-8c73-75ce4bf6095c",
             "code": "heart-bypass-surgery",
             "system": "urn:uuid:7192d033-7193-4d84-a603-dd02bc9bd062",
             "display": "Cirugía de bypass cardíaco"
@@ -258,7 +237,6 @@
         },
         {
           "valueCoding": {
-            "id": "68bb79c3-4e53-4b26-8c87-9bf8dbf2603a",
             "code": "coronary-blockage/stenosis",
             "system": "urn:uuid:7192d033-7193-4d84-a603-dd02bc9bd062",
             "display": "Bloqueo/estenosis coronaria"
@@ -266,7 +244,6 @@
         },
         {
           "valueCoding": {
-            "id": "93e457dc-03e5-453a-8687-425df0c9b20b",
             "code": "coronary-stent/angioplasty",
             "system": "urn:uuid:7192d033-7193-4d84-a603-dd02bc9bd062",
             "display": "Stent coronario/angioplastia"
@@ -274,7 +251,6 @@
         },
         {
           "valueCoding": {
-            "id": "047fb847-3193-4119-990f-4310d3ce0702",
             "code": "angina-(heart-chest-pains)",
             "system": "urn:uuid:7192d033-7193-4d84-a603-dd02bc9bd062",
             "display": "Angina (dolores de pecho cardíacos)"
@@ -282,7 +258,6 @@
         },
         {
           "valueCoding": {
-            "id": "f21d5166-576e-4832-8782-fc837f7e6fc9",
             "code": "high-coronary-calcium-score",
             "system": "urn:uuid:7192d033-7193-4d84-a603-dd02bc9bd062",
             "display": "Puntuación alta de calcio coronario"
@@ -290,7 +265,6 @@
         },
         {
           "valueCoding": {
-            "id": "640fafdd-166b-49d2-9d66-d0a9ab18dc64",
             "code": "heart-failure-or-chf",
             "system": "urn:uuid:7192d033-7193-4d84-a603-dd02bc9bd062",
             "display": "Insuficiencia cardíaca o ICC"
@@ -298,7 +272,6 @@
         },
         {
           "valueCoding": {
-            "id": "6f431dfa-7540-415b-8f24-679a4421b3b6",
             "code": "atrial-fibrillation-(afib)",
             "system": "urn:uuid:7192d033-7193-4d84-a603-dd02bc9bd062",
             "display": "Fibrilación auricular ( FA)"
@@ -306,7 +279,6 @@
         },
         {
           "valueCoding": {
-            "id": "847a7efb-550b-4ee3-9e22-769584d7a452",
             "code": "congenital-heart-defect",
             "system": "urn:uuid:7192d033-7193-4d84-a603-dd02bc9bd062",
             "display": "Defecto cardíaco congénito"
@@ -314,7 +286,6 @@
         },
         {
           "valueCoding": {
-            "id": "d74115a0-a063-4114-8186-c12aa3ba9bd0",
             "code": "pulmonary-hypertension",
             "system": "urn:uuid:7192d033-7193-4d84-a603-dd02bc9bd062",
             "display": "Hipertensión pulmonar"
@@ -322,7 +293,6 @@
         },
         {
           "valueCoding": {
-            "id": "7f470550-519a-4598-8062-468dbf4bb0d0",
             "code": "none-of-the-above",
             "system": "urn:uuid:7192d033-7193-4d84-a603-dd02bc9bd062",
             "display": "Ninguna de las anteriores"
@@ -335,7 +305,7 @@
           "valueCodeableConcept": {
             "coding": [
               {
-                "system": "http://hl7.org/fhir/ValueSet/questionnaire-item-control",
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
                 "code": "check-box"
               }
             ]
@@ -347,11 +317,9 @@
       "linkId": "6adb64f0-e7bb-4709-fd86-83e54f7e8e40",
       "type": "choice",
       "text": "¿Qué diagnóstico de enfermedad vascular ha recibido?",
-      "required": false,
       "answerOption": [
         {
           "valueCoding": {
-            "id": "edc47153-08d2-47be-8ab5-6792aca9e90f",
             "code": "stroke",
             "system": "urn:uuid:a50507d6-752d-4fb3-8fc5-230cd1825d62",
             "display": "Accidente cerebrovascular"
@@ -359,7 +327,6 @@
         },
         {
           "valueCoding": {
-            "id": "06dc2231-7b8f-485f-8984-2bae70679d3a",
             "code": "transient-ischemic-attack-(tia)",
             "system": "urn:uuid:a50507d6-752d-4fb3-8fc5-230cd1825d62",
             "display": "Ataque isquémico transitorio (AIT)"
@@ -367,7 +334,6 @@
         },
         {
           "valueCoding": {
-            "id": "8ee53a4f-a22d-46ea-bb54-f174b7d12b6c",
             "code": "carotid-artery-blockage/stenosis",
             "system": "urn:uuid:a50507d6-752d-4fb3-8fc5-230cd1825d62",
             "display": "Bloqueo/estenosis de la arteria carótida"
@@ -375,7 +341,6 @@
         },
         {
           "valueCoding": {
-            "id": "c4a67edd-af04-4239-8416-45d7d97a69e1",
             "code": "carotid-artery-surgery-or-stent",
             "system": "urn:uuid:a50507d6-752d-4fb3-8fc5-230cd1825d62",
             "display": "Cirugía o stent de la arteria carótida"
@@ -383,7 +348,6 @@
         },
         {
           "valueCoding": {
-            "id": "dfffe139-201f-40c9-cffb-86515fd63a2d",
             "code": "peripheral-vascular-disease-(blockage/stenosis,-surgery,-or-stent)",
             "system": "urn:uuid:a50507d6-752d-4fb3-8fc5-230cd1825d62",
             "display": "Enfermedad vascular periférica (bloqueo/estenosis, cirugía o stent)"
@@ -391,7 +355,6 @@
         },
         {
           "valueCoding": {
-            "id": "5ab96824-d885-4cab-860d-6c8b657b0a3f",
             "code": "abdominal-aortic-aneurysm",
             "system": "urn:uuid:a50507d6-752d-4fb3-8fc5-230cd1825d62",
             "display": "Aneurisma aórtico abdominal"
@@ -399,7 +362,6 @@
         },
         {
           "valueCoding": {
-            "id": "89a32d2c-5011-43c6-8e92-135077984282",
             "code": "pulmonary-arterial-hypertension",
             "system": "urn:uuid:a50507d6-752d-4fb3-8fc5-230cd1825d62",
             "display": "Hipertensión arterial pulmonar"
@@ -407,7 +369,6 @@
         },
         {
           "valueCoding": {
-            "id": "58204971-9def-4f72-8e5a-1ad562efc30d",
             "code": "none-of-the-above",
             "system": "urn:uuid:a50507d6-752d-4fb3-8fc5-230cd1825d62",
             "display": "Ninguna de las anteriores"
@@ -419,7 +380,6 @@
       "linkId": "69864f3a-cf8d-4204-97da-f76e378ccee4",
       "type": "boolean",
       "text": "¿Toma medicamentos para tratar su enfermedad vascular?",
-      "required": false,
       "enableWhen": [
         {
           "question": "6adb64f0-e7bb-4709-fd86-83e54f7e8e40",
@@ -435,11 +395,9 @@
       "linkId": "46b0db46-b4a7-4d2f-97af-32e2230ec9f7",
       "type": "choice",
       "text": "¿Su historial médico incluye alguna de las siguientes condiciones?",
-      "required": false,
       "answerOption": [
         {
           "valueCoding": {
-            "id": "bec4055a-8664-40a3-92c8-bfaaa917ae2e",
             "code": "chronic-kidney-disease-(stage-3,-4-or-5)",
             "system": "urn:uuid:d89c2847-960b-43df-86fe-42c094c8d271",
             "display": "Enfermedad renal crónica (etapa 3, 4 o 5)"
@@ -447,7 +405,6 @@
         },
         {
           "valueCoding": {
-            "id": "9962c22a-7653-4736-8d0b-e6536a17bd42",
             "code": "migraines",
             "system": "urn:uuid:d89c2847-960b-43df-86fe-42c094c8d271",
             "display": "Migrañas"
@@ -455,7 +412,6 @@
         },
         {
           "valueCoding": {
-            "id": "c4e20162-a3fc-485b-f1e8-c4df52bba9c9",
             "code": "rheumatoid-arthritis",
             "system": "urn:uuid:d89c2847-960b-43df-86fe-42c094c8d271",
             "display": "Artritis reumatoide"
@@ -463,7 +419,6 @@
         },
         {
           "valueCoding": {
-            "id": "d18863a5-9574-4cf7-804a-c7b3e28d2435",
             "code": "systemic-lupus-erythematosus-(sle)",
             "system": "urn:uuid:d89c2847-960b-43df-86fe-42c094c8d271",
             "display": "Lupus eritematoso sistémico (LES)"
@@ -471,7 +426,6 @@
         },
         {
           "valueCoding": {
-            "id": "81afa37a-2c67-4dc5-8fdb-b54f75f0e40e",
             "code": "raynaud's-phenomenon",
             "system": "urn:uuid:d89c2847-960b-43df-86fe-42c094c8d271",
             "display": "Fenómeno de Raynaud"
@@ -479,7 +433,6 @@
         },
         {
           "valueCoding": {
-            "id": "27dc7fb1-3987-4747-86f0-e4a2c3c59606",
             "code": "systemic-sclerosis-or-scleroderma",
             "system": "urn:uuid:d89c2847-960b-43df-86fe-42c094c8d271",
             "display": "Esclerosis sistémica o esclerodermia"
@@ -487,7 +440,6 @@
         },
         {
           "valueCoding": {
-            "id": "2759e67c-7f65-40b6-b81e-aa44d77dc4c0",
             "code": "other-auto-immune-disease",
             "system": "urn:uuid:d89c2847-960b-43df-86fe-42c094c8d271",
             "display": "Otra enfermedad autoinmune"
@@ -495,7 +447,6 @@
         },
         {
           "valueCoding": {
-            "id": "f2d26e22-2553-4c0b-bfc1-cd9f268491be",
             "code": "erectile-disfunction",
             "system": "urn:uuid:d89c2847-960b-43df-86fe-42c094c8d271",
             "display": "Disfunción eréctil"
@@ -503,7 +454,6 @@
         },
         {
           "valueCoding": {
-            "id": "cd67d50f-5dad-472d-8604-1247a4480a4d",
             "code": "none-of-the-above",
             "system": "urn:uuid:d89c2847-960b-43df-86fe-42c094c8d271",
             "display": "Ninguna de las anteriores"
@@ -516,7 +466,7 @@
           "valueCodeableConcept": {
             "coding": [
               {
-                "system": "http://hl7.org/fhir/ValueSet/questionnaire-item-control",
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
                 "code": "check-box"
               }
             ]
@@ -528,7 +478,6 @@
       "linkId": "138179bf-4817-4595-95bc-4ff9d1439723",
       "type": "boolean",
       "text": "¿Toma medicamentos para tratar su otra enfermedad?",
-      "required": false,
       "enableWhen": [
         {
           "question": "46b0db46-b4a7-4d2f-97af-32e2230ec9f7",
@@ -544,10 +493,9 @@
       "linkId": "7cec349c-495c-4ef6-834e-cc9708625736",
       "type": "quantity",
       "text": "¿Cuál es su presión arterial sistólica más reciente? (mmHg, la presión arterial se muestra típicamente como sistólica/diastólica)",
-      "required": false,
       "extension": [
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
           "valueCoding": {
             "system": "http://unitsofmeasure.org",
             "code": "mm[Hg]",
@@ -555,12 +503,22 @@
           }
         },
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/minValue",
-          "valueInteger": 60
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-minQuantity",
+          "valueQuantity": {
+            "value": 60,
+            "unit": "millimeters of mercury",
+            "system": "http://unitsofmeasure.org",
+            "code": "mm[Hg]"
+          }
         },
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-          "valueInteger": 250
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-maxQuantity",
+          "valueQuantity": {
+            "value": 250,
+            "unit": "millimeters of mercury",
+            "system": "http://unitsofmeasure.org",
+            "code": "mm[Hg]"
+          }
         }
       ]
     },
@@ -568,10 +526,9 @@
       "linkId": "b25ac0aa-4528-47dc-951f-97f411ec5cc2",
       "type": "quantity",
       "text": "¿Cuál es su presión arterial diastólica más reciente? (mmHg, la presión arterial se muestra típicamente como sistólica/diastólica)",
-      "required": false,
       "extension": [
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
           "valueCoding": {
             "system": "http://unitsofmeasure.org",
             "code": "mm[Hg]",
@@ -579,12 +536,22 @@
           }
         },
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/minValue",
-          "valueInteger": 30
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-minQuantity",
+          "valueQuantity": {
+            "value": 30,
+            "unit": "millimeters of mercury",
+            "system": "http://unitsofmeasure.org",
+            "code": "mm[Hg]"
+          }
         },
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-          "valueInteger": 150
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-maxQuantity",
+          "valueQuantity": {
+            "value": 150,
+            "unit": "millimeters of mercury",
+            "system": "http://unitsofmeasure.org",
+            "code": "mm[Hg]"
+          }
         }
       ]
     },
@@ -592,10 +559,9 @@
       "linkId": "78edc19f-e409-49f0-8e42-a0adf5e777b0",
       "type": "quantity",
       "text": "¿Cuál es su segundo valor más reciente de presión arterial sistólica? (mmHg, la presión arterial se muestra típicamente como sistólica/diastólica)",
-      "required": false,
       "extension": [
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
           "valueCoding": {
             "system": "http://unitsofmeasure.org",
             "code": "mm[Hg]",
@@ -603,23 +569,32 @@
           }
         },
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/minValue",
-          "valueInteger": 60
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-minQuantity",
+          "valueQuantity": {
+            "value": 60,
+            "unit": "millimeters of mercury",
+            "system": "http://unitsofmeasure.org",
+            "code": "mm[Hg]"
+          }
         },
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-          "valueInteger": 250
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-maxQuantity",
+          "valueQuantity": {
+            "value": 250,
+            "unit": "millimeters of mercury",
+            "system": "http://unitsofmeasure.org",
+            "code": "mm[Hg]"
+          }
         }
       ]
     },
     {
       "linkId": "7309938e-ea24-4e31-8427-82f3a1a44f83",
       "type": "quantity",
-      "text": "¿Cuál es su glucosa en sangre en ayunas? ",
-      "required": false,
+      "text": "¿Cuál es su glucosa en sangre en ayunas?",
       "extension": [
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
           "valueCoding": {
             "system": "http://unitsofmeasure.org",
             "code": "mg/dL",
@@ -627,23 +602,32 @@
           }
         },
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/minValue",
-          "valueInteger": 40
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-minQuantity",
+          "valueQuantity": {
+            "value": 40,
+            "unit": "milligram per deciliter",
+            "system": "http://unitsofmeasure.org",
+            "code": "mg/dL"
+          }
         },
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-          "valueInteger": 400
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-maxQuantity",
+          "valueQuantity": {
+            "value": 400,
+            "unit": "milligram per deciliter",
+            "system": "http://unitsofmeasure.org",
+            "code": "mg/dL"
+          }
         }
       ]
     },
     {
       "linkId": "ad91308f-3d7c-407e-b4eb-6dcbfade7497",
       "type": "quantity",
-      "text": "¿Cuál es su valor más reciente de Hemoglobina A1C (HbA1C)? ",
-      "required": false,
+      "text": "¿Cuál es su valor más reciente de Hemoglobina A1C (HbA1C)?",
       "extension": [
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
           "valueCoding": {
             "system": "http://unitsofmeasure.org",
             "code": "%",
@@ -651,23 +635,32 @@
           }
         },
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/minValue",
-          "valueInteger": 3
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-minQuantity",
+          "valueQuantity": {
+            "value": 3,
+            "unit": "percent",
+            "system": "http://unitsofmeasure.org",
+            "code": "%"
+          }
         },
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-          "valueInteger": 15
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-maxQuantity",
+          "valueQuantity": {
+            "value": 15,
+            "unit": "percent",
+            "system": "http://unitsofmeasure.org",
+            "code": "%"
+          }
         }
       ]
     },
     {
       "linkId": "1ebba05f-4c3e-448a-ccb5-977bb6b0b3a3",
       "type": "quantity",
-      "text": "¿Cuál es su nivel de colesterol HDL? ",
-      "required": false,
+      "text": "¿Cuál es su nivel de colesterol HDL?",
       "extension": [
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
           "valueCoding": {
             "system": "http://unitsofmeasure.org",
             "code": "mg/dL",
@@ -675,23 +668,32 @@
           }
         },
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/minValue",
-          "valueInteger": 10
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-minQuantity",
+          "valueQuantity": {
+            "value": 10,
+            "unit": "milligram per deciliter",
+            "system": "http://unitsofmeasure.org",
+            "code": "mg/dL"
+          }
         },
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-          "valueInteger": 150
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-maxQuantity",
+          "valueQuantity": {
+            "value": 150,
+            "unit": "milligram per deciliter",
+            "system": "http://unitsofmeasure.org",
+            "code": "mg/dL"
+          }
         }
       ]
     },
     {
       "linkId": "1574e238-8804-4a17-fa5e-a764f094bd2b",
       "type": "quantity",
-      "text": "¿Cuál es su nivel de colesterol LDL? ",
-      "required": false,
+      "text": "¿Cuál es su nivel de colesterol LDL?",
       "extension": [
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
           "valueCoding": {
             "system": "http://unitsofmeasure.org",
             "code": "mg/dL",
@@ -699,23 +701,32 @@
           }
         },
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/minValue",
-          "valueInteger": 30
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-minQuantity",
+          "valueQuantity": {
+            "value": 30,
+            "unit": "milligram per deciliter",
+            "system": "http://unitsofmeasure.org",
+            "code": "mg/dL"
+          }
         },
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-          "valueInteger": 400
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-maxQuantity",
+          "valueQuantity": {
+            "value": 400,
+            "unit": "milligram per deciliter",
+            "system": "http://unitsofmeasure.org",
+            "code": "mg/dL"
+          }
         }
       ]
     },
     {
       "linkId": "dea0c9f8-dd41-4142-853c-780c2667b952",
       "type": "quantity",
-      "text": "¿Cuál es su colesterol total? ",
-      "required": false,
+      "text": "¿Cuál es su colesterol total?",
       "extension": [
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unit",
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
           "valueCoding": {
             "system": "http://unitsofmeasure.org",
             "code": "mg/dL",
@@ -723,20 +734,29 @@
           }
         },
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/minValue",
-          "valueInteger": 80
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-minQuantity",
+          "valueQuantity": {
+            "value": 80,
+            "unit": "milligram per deciliter",
+            "system": "http://unitsofmeasure.org",
+            "code": "mg/dL"
+          }
         },
         {
-          "url": "http://hl7.org/fhir/StructureDefinition/maxValue",
-          "valueInteger": 600
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-maxQuantity",
+          "valueQuantity": {
+            "value": 600,
+            "unit": "milligram per deciliter",
+            "system": "http://unitsofmeasure.org",
+            "code": "mg/dL"
+          }
         }
       ]
     },
     {
       "linkId": "8222d56e-1f6c-4ddc-cf8e-3033566d7c26",
       "type": "display",
-      "text": "Gracias por completar esta encuesta.",
-      "required": false
+      "text": "Gracias por completar esta encuesta."
     }
   ]
 }
