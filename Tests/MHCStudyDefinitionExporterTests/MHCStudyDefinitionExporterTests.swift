@@ -68,7 +68,7 @@ struct MHCStudyDefinitionExporterTests {
                 directoryHint: .isDirectory
             )
             let bundle = try StudyBundle.unarchive(archiveUrl, to: bundleUrl)
-            #expect(bundle.studyDefinition.studyRevision == 45)
+            #expect(bundle.studyDefinition.studyRevision == 46)
         } catch StudyBundle.CreateBundleError.failedValidation(let issues) {
             let desc = issues.enumerated().reduce(into: "Failed Validation:\n") { desc, element in
                 let (idx, issue) = element
