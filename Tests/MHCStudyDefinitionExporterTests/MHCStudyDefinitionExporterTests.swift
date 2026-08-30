@@ -7,8 +7,10 @@
 //
 
 import Foundation
+#if canImport(GroveQuestionnaire) && canImport(GroveQuestionnaireFHIR)
 import GroveQuestionnaire
 import GroveQuestionnaireFHIR
+#endif
 @_spi(APISupport)
 import GroveStudyDefinition
 import MHCStudyDefinitionExporter
@@ -129,6 +131,8 @@ extension MHCStudyDefinitionExporterTests {
 
     private func questionnaireJSON(named name: String, locale: Locale, in bundle: StudyBundle) throws -> [String: Any] {
         let questionnaire = try #require(bundle.questionnaire(named: name, in: locale))
+        let originalJSON = try jsonObject(questionnaire)
+        #if canImport(GroveQuestionnaire) && canImport(GroveQuestionnaireFHIR)
         let label = "\(name)+\(locale.identifier)"
         let evaluationInstant = Date(timeIntervalSince1970: 1_700_000_000)
         let diagnostics = GroveQuestionnaire.Questionnaire.authoringDiagnostics(
@@ -142,7 +146,6 @@ extension MHCStudyDefinitionExporterTests {
             evaluationInstant: evaluationInstant
         )
         let exportedQuestionnaire = try ResourceBuilder().questionnaire(from: nativeQuestionnaire)
-        let originalJSON = try jsonObject(questionnaire)
         let exportedJSON = try jsonObject(exportedQuestionnaire)
 
         for key in ["url", "version", "status"] {
@@ -154,6 +157,7 @@ extension MHCStudyDefinitionExporterTests {
             exportedStructure == originalStructure,
             "\(label): round trip changed the ordered linkId/type item hierarchy"
         )
+        #endif
         return originalJSON
     }
 

@@ -69,8 +69,8 @@ let package = Package(
             dependencies: [
                 "MHCStudyDefinition",
                 "MHCStudyDefinitionExporter",
-                .product(name: "GroveQuestionnaire", package: "Grove"),
-                .product(name: "GroveQuestionnaireFHIR", package: "Grove"),
+                .product(name: "GroveQuestionnaire", package: "Grove", condition: .when(platforms: [.macOS])),
+                .product(name: "GroveQuestionnaireFHIR", package: "Grove", condition: .when(platforms: [.macOS])),
                 .product(name: "GroveStudyDefinition", package: "Grove")
             ]
         )
