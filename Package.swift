@@ -28,7 +28,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/SchmiedmayerLab/Grove.git",
-            revision: "1fdfc3f2416060cf07176ee1fd69cd2f8d63ab8e"
+            revision: "83cf971ccb1ead1c80f0da23d684322be85e96da"
         ),
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.6.2")
     ],
@@ -69,9 +69,12 @@ let package = Package(
             dependencies: [
                 "MHCStudyDefinition",
                 "MHCStudyDefinitionExporter",
+                .product(name: "GroveStudyDefinition", package: "Grove"),
+                .product(name: "GroveFHIRContract", package: "Grove"),
+                .product(name: "GroveQuestionnaireExtraction", package: "Grove"),
+                // Grove's questionnaire authoring products do not build on the Linux CI leg.
                 .product(name: "GroveQuestionnaire", package: "Grove", condition: .when(platforms: [.macOS])),
-                .product(name: "GroveQuestionnaireFHIR", package: "Grove", condition: .when(platforms: [.macOS])),
-                .product(name: "GroveStudyDefinition", package: "Grove")
+                .product(name: "GroveQuestionnaireFHIR", package: "Grove", condition: .when(platforms: [.macOS]))
             ]
         )
     ]
