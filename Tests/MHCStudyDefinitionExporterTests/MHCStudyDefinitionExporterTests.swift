@@ -35,6 +35,10 @@ struct MHCStudyDefinitionExporterTests {
         "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-minQuantity"
     private static let maxQuantityURL =
         "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-maxQuantity"
+    private static let observationExtractURL =
+        "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-observationExtract"
+    private static let observationExtractCategoryURL =
+        "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-observation-extract-category"
     private static let languageTagSystem = "urn:ietf:bcp:47"
     /// The IG's `qg-version-1` invariant: Semantic Versioning 2.0.0.
     ///
@@ -280,12 +284,77 @@ extension MHCStudyDefinitionExporterTests {
                     #expect(extensionsByURL[url] == nil, "\(path): \(url) is only valid on quantity")
                 }
             }
+            validateExtractionContract(item, type: type, extensionsByURL: extensionsByURL, path: path)
+
             validateItems(
                 item["item"] as? [[String: Any]] ?? [],
                 questionnaire: name,
                 linkIDs: &linkIDs
             )
         }
+    }
+
+
+    /// The SDC extraction contract every marked item owes, whatever the instrument.
+    ///
+    /// Extraction keys off `item.code`, so a marking without one produces nothing; a marked group
+    /// produces an Observation whose components are exactly its marked, coded question children.
+    private func validateExtractionContract(
+        _ item: [String: Any],
+        type: String,
+        extensionsByURL: [String: [[String: Any]]],
+        path: String
+    ) {
+        let markings = extensionsByURL[Self.observationExtractURL] ?? []
+        let categories = extensionsByURL[Self.observationExtractCategoryURL] ?? []
+        #expect(markings.count <= 1, "\(path): at most one observationExtract marking is allowed")
+        guard let marking = markings.first else {
+            #expect(categories.isEmpty, "\(path): observationExtractCategory requires an observationExtract marking")
+            return
+        }
+        let extractsObservation = marking["valueBoolean"] as? Bool == true
+        #expect(
+            extractsObservation || marking["valueCode"] as? String == "component",
+            "\(path): observationExtract must be true or the component code"
+        )
+        #expect(carriesOneCode(item), "\(path): an extract-marked item must carry one coded item.code")
+        #expect(categories.count <= 1, "\(path): at most one observationExtractCategory is allowed")
+        #expect(extractsObservation || categories.isEmpty, "\(path): only an extracted Observation carries a category")
+        for category in categories {
+            let concept = category["valueCodeableConcept"] as? [String: Any]
+            let codings = concept?["coding"] as? [[String: Any]] ?? []
+            #expect(
+                codings.count == 1 && isCoded(codings.first ?? [:]),
+                "\(path): observationExtractCategory must carry one coded category"
+            )
+        }
+        guard extractsObservation, type == "group" else {
+            return
+        }
+        let children = (item["item"] as? [[String: Any]] ?? []).filter { $0["type"] as? String != "display" }
+        #expect(!children.isEmpty, "\(path): a marked group needs the questions its components come from")
+        for child in children {
+            let childPath = "\(path)/\(child["linkId"] as? String ?? "")"
+            let childExtensions = child["extension"] as? [[String: Any]] ?? []
+            #expect(
+                childExtensions.contains {
+                    $0["url"] as? String == Self.observationExtractURL && $0["valueCode"] as? String == "component"
+                },
+                "\(childPath): every question under a marked group must be marked component"
+            )
+            #expect(carriesOneCode(child), "\(childPath): a component question must carry one coded item.code")
+        }
+    }
+
+
+    private func isCoded(_ coding: [String: Any]) -> Bool {
+        !(coding["system"] as? String ?? "").isEmpty && !(coding["code"] as? String ?? "").isEmpty
+    }
+
+
+    private func carriesOneCode(_ item: [String: Any]) -> Bool {
+        let codings = item["code"] as? [[String: Any]] ?? []
+        return codings.count == 1 && isCoded(codings[0])
     }
 
 
