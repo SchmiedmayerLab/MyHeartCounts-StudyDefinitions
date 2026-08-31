@@ -21,8 +21,8 @@
     "tag": [
       {
         "system": "urn:ietf:bcp:47",
-        "code": "en-US",
-        "display": "English"
+        "code": "es-US",
+        "display": "Spanish"
       }
     ]
   },

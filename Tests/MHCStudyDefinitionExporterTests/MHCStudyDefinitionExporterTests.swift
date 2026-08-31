@@ -37,6 +37,7 @@ struct MHCStudyDefinitionExporterTests {
     ]
     private static let questionnaireProfile =
         "https://grovealliance.org/fhir/questionnaire/StructureDefinition/grove-questionnaire"
+    private static let languageTagSystem = "urn:ietf:bcp:47"
     private static let itemControlURL = "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl"
     private static let usageContextSystem = "http://terminology.hl7.org/CodeSystem/usage-context-type"
     private static let versionAlgorithmURL =
@@ -92,8 +93,8 @@ struct MHCStudyDefinitionExporterTests {
                 let english = try questionnaireJSON(named: name, locale: Locale(identifier: "en_US"), in: bundle)
                 let spanish = try questionnaireJSON(named: name, locale: Locale(identifier: "es_US"), in: bundle)
 
-                validateQuestionnaire(english, named: "\(name)+en-US")
-                validateQuestionnaire(spanish, named: "\(name)+es-US")
+                validateQuestionnaire(english, named: "\(name)+en-US", locale: "en-US")
+                validateQuestionnaire(spanish, named: "\(name)+es-US", locale: "es-US")
 
                 let englishContract = try contractProjection(of: english)
                 let spanishContract = try contractProjection(of: spanish)
@@ -189,7 +190,27 @@ extension MHCStudyDefinitionExporterTests {
     }
 
 
-    private func validateQuestionnaire(_ questionnaire: [String: Any], named name: String) {
+    private func validateLocaleMetadata(_ questionnaire: [String: Any], named name: String, locale: String) {
+        expect(questionnaire["language"] as? String == locale, "\(name): language must be \(locale)")
+
+        let meta = questionnaire["meta"] as? [String: Any]
+        expect(
+            meta?["profile"] as? [String] == [Self.questionnaireProfile],
+            "\(name): meta.profile must declare the Grove Questionnaire profile"
+        )
+        let tags = meta?["tag"] as? [[String: Any]] ?? []
+        expect(tags.count == 1, "\(name): exactly one meta.tag is required")
+        expect(
+            tags.first?["system"] as? String == Self.languageTagSystem
+                && tags.first?["code"] as? String == locale,
+            "\(name): meta.tag must be the BCP-47 coding for \(locale)"
+        )
+        let display = tags.first?["display"] as? String
+        expect(!(display ?? "").isEmpty, "\(name): meta.tag requires a display name")
+    }
+
+
+    private func validateQuestionnaire(_ questionnaire: [String: Any], named name: String, locale: String) {
         expect(questionnaire["resourceType"] as? String == "Questionnaire", "\(name): resourceType must be Questionnaire")
         expect(questionnaire["status"] as? String == "active", "\(name): status must be active")
         expect(questionnaire["version"] as? String == "0.0.0", "\(name): version must be 0.0.0")
@@ -203,14 +224,8 @@ extension MHCStudyDefinitionExporterTests {
             "\(name): url must be the exact My Heart Counts HTTP(S) canonical"
         )
 
-        let meta = questionnaire["meta"] as? [String: Any]
-        expect(
-            meta?["profile"] as? [String] == [Self.questionnaireProfile],
-            "\(name): meta.profile must declare the Grove Questionnaire profile"
-        )
+        validateLocaleMetadata(questionnaire, named: name, locale: locale)
 
-        let contacts = questionnaire["contact"] as? [[String: Any]] ?? []
-        expect(contacts.allSatisfy { !$0.isEmpty }, "\(name): contact entries must not be empty")
         let useContexts = questionnaire["useContext"] as? [[String: Any]] ?? []
         expect(useContexts.count == 1, "\(name): exactly one clinical-focus useContext is required")
         for useContext in useContexts {
@@ -376,7 +391,7 @@ extension MHCStudyDefinitionExporterTests {
 
     private func projectContract(_ value: Any, key: String?) -> Any? {
         let localizedKeys: Set<String> = [
-            "contact", "copyright", "description", "display", "language", "publisher", "purpose", "text", "title", "unit"
+            "copyright", "description", "display", "language", "publisher", "purpose", "text", "title", "unit"
         ]
         if let key, localizedKeys.contains(key) {
             return nil
