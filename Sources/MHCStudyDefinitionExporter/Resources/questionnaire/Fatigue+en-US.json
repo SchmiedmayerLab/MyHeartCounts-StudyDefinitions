@@ -2,11 +2,21 @@
   "title": "Fatigue Assessment Scale (FAS)",
   "resourceType": "Questionnaire",
   "language": "en-US",
-  "status": "draft",
+  "status": "active",
+  "version": "0.0.0",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
+      "valueCoding": {
+        "system": "http://hl7.org/fhir/version-algorithm",
+        "code": "semver"
+      }
+    }
+  ],
   "id": "337753B7-D353-4535-A2CC-DEECD2B49439",
   "meta": {
     "profile": [
-      "https://grovealliance.org/fhir/core/StructureDefinition/sdf-Questionnaire"
+      "https://grovealliance.org/fhir/questionnaire/StructureDefinition/grove-questionnaire"
     ],
     "tag": [
       {
@@ -19,22 +29,13 @@
   "useContext": [
     {
       "code": {
-        "system": "http://hl7.org/fhir/ValueSet/usage-context-type",
-        "code": "focus",
-        "display": "Clinical Focus"
+        "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+        "code": "focus"
       },
       "valueCodeableConcept": {
-        "coding": [
-          {
-            "system": "urn:oid:2.16.578.1.12.4.1.1.8655",
-            "display": "Fatigue Assessment Scale (FAS)"
-          }
-        ]
+        "text": "Fatigue Assessment Scale (FAS)"
       }
     }
-  ],
-  "contact": [
-    {}
   ],
   "subjectType": [
     "Patient"
@@ -44,36 +45,18 @@
     {
       "linkId": "a9246b23-686b-460e-8353-1015316ce410",
       "type": "display",
-      "text": "The FAS is a 10-item scale evaluating symptoms of chronic fatigue. ",
-      "required": false
+      "text": "The FAS is a 10-item scale evaluating symptoms of chronic fatigue."
     },
     {
       "linkId": "b964d9f6-74f8-45a0-8768-fac791775b58",
       "type": "group",
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-          "valueCodeableConcept": {
-            "coding": [
-              {
-                "system": "http://hl7.org/fhir/ValueSet/questionnaire-item-control",
-                "code": "page",
-                "display": "Page"
-              }
-            ],
-            "text": "Page"
-          }
-        }
-      ],
       "item": [
         {
           "linkId": "24c279ee-9a43-42f9-8cb5-2c036fa78bb7",
           "type": "choice",
-          "required": false,
           "answerOption": [
             {
               "valueCoding": {
-                "id": "4a539603-d265-4127-8419-32b3a1a17a16",
                 "code": "never",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Never"
@@ -81,7 +64,6 @@
             },
             {
               "valueCoding": {
-                "id": "bf3a6386-2a05-4848-a20b-a69a74c7d072",
                 "code": "sometimes",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Sometimes"
@@ -89,7 +71,6 @@
             },
             {
               "valueCoding": {
-                "id": "1958bc85-1aab-458f-ae02-b762b32410dc",
                 "code": "regularly",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Regularly"
@@ -97,7 +78,6 @@
             },
             {
               "valueCoding": {
-                "id": "3eceb183-16e4-4276-891e-74b41ee8a67b",
                 "code": "often",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Often"
@@ -105,7 +85,6 @@
             },
             {
               "valueCoding": {
-                "id": "0ae759e9-3f26-4d3b-dd12-44e3e192b69b",
                 "code": "always",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Always"
@@ -117,11 +96,9 @@
         {
           "linkId": "79c6549a-e08e-4bec-c914-0fc5ba684666",
           "type": "choice",
-          "required": false,
           "answerOption": [
             {
               "valueCoding": {
-                "id": "4a539603-d265-4127-8419-32b3a1a17a16",
                 "code": "never",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Never"
@@ -129,7 +106,6 @@
             },
             {
               "valueCoding": {
-                "id": "bf3a6386-2a05-4848-a20b-a69a74c7d072",
                 "code": "sometimes",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Sometimes"
@@ -137,7 +113,6 @@
             },
             {
               "valueCoding": {
-                "id": "1958bc85-1aab-458f-ae02-b762b32410dc",
                 "code": "regularly",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Regularly"
@@ -145,7 +120,6 @@
             },
             {
               "valueCoding": {
-                "id": "3eceb183-16e4-4276-891e-74b41ee8a67b",
                 "code": "often",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Often"
@@ -153,7 +127,6 @@
             },
             {
               "valueCoding": {
-                "id": "0ae759e9-3f26-4d3b-dd12-44e3e192b69b",
                 "code": "always",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Always"
@@ -165,11 +138,9 @@
         {
           "linkId": "57b556ce-a5f2-41e5-832c-90305cddf920",
           "type": "choice",
-          "required": false,
           "answerOption": [
             {
               "valueCoding": {
-                "id": "4a539603-d265-4127-8419-32b3a1a17a16",
                 "code": "never",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Never"
@@ -177,7 +148,6 @@
             },
             {
               "valueCoding": {
-                "id": "bf3a6386-2a05-4848-a20b-a69a74c7d072",
                 "code": "sometimes",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Sometimes"
@@ -185,7 +155,6 @@
             },
             {
               "valueCoding": {
-                "id": "1958bc85-1aab-458f-ae02-b762b32410dc",
                 "code": "regularly",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Regularly"
@@ -193,7 +162,6 @@
             },
             {
               "valueCoding": {
-                "id": "3eceb183-16e4-4276-891e-74b41ee8a67b",
                 "code": "often",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Often"
@@ -201,7 +169,6 @@
             },
             {
               "valueCoding": {
-                "id": "0ae759e9-3f26-4d3b-dd12-44e3e192b69b",
                 "code": "always",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Always"
@@ -213,11 +180,9 @@
         {
           "linkId": "044bc55a-1834-4145-92b3-32187dfacce5",
           "type": "choice",
-          "required": false,
           "answerOption": [
             {
               "valueCoding": {
-                "id": "4a539603-d265-4127-8419-32b3a1a17a16",
                 "code": "never",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Never"
@@ -225,7 +190,6 @@
             },
             {
               "valueCoding": {
-                "id": "bf3a6386-2a05-4848-a20b-a69a74c7d072",
                 "code": "sometimes",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Sometimes"
@@ -233,7 +197,6 @@
             },
             {
               "valueCoding": {
-                "id": "1958bc85-1aab-458f-ae02-b762b32410dc",
                 "code": "regularly",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Regularly"
@@ -241,7 +204,6 @@
             },
             {
               "valueCoding": {
-                "id": "3eceb183-16e4-4276-891e-74b41ee8a67b",
                 "code": "often",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Often"
@@ -249,7 +211,6 @@
             },
             {
               "valueCoding": {
-                "id": "0ae759e9-3f26-4d3b-dd12-44e3e192b69b",
                 "code": "always",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Always"
@@ -261,11 +222,9 @@
         {
           "linkId": "a3f43859-8b8c-4c51-e491-1f827dfa173f",
           "type": "choice",
-          "required": false,
           "answerOption": [
             {
               "valueCoding": {
-                "id": "4a539603-d265-4127-8419-32b3a1a17a16",
                 "code": "never",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Never"
@@ -273,7 +232,6 @@
             },
             {
               "valueCoding": {
-                "id": "bf3a6386-2a05-4848-a20b-a69a74c7d072",
                 "code": "sometimes",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Sometimes"
@@ -281,7 +239,6 @@
             },
             {
               "valueCoding": {
-                "id": "1958bc85-1aab-458f-ae02-b762b32410dc",
                 "code": "regularly",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Regularly"
@@ -289,7 +246,6 @@
             },
             {
               "valueCoding": {
-                "id": "3eceb183-16e4-4276-891e-74b41ee8a67b",
                 "code": "often",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Often"
@@ -297,7 +253,6 @@
             },
             {
               "valueCoding": {
-                "id": "0ae759e9-3f26-4d3b-dd12-44e3e192b69b",
                 "code": "always",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Always"
@@ -309,11 +264,9 @@
         {
           "linkId": "24b82ce0-a4ef-4a79-ac70-34c2805338d7",
           "type": "choice",
-          "required": false,
           "answerOption": [
             {
               "valueCoding": {
-                "id": "4a539603-d265-4127-8419-32b3a1a17a16",
                 "code": "never",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Never"
@@ -321,7 +274,6 @@
             },
             {
               "valueCoding": {
-                "id": "bf3a6386-2a05-4848-a20b-a69a74c7d072",
                 "code": "sometimes",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Sometimes"
@@ -329,7 +281,6 @@
             },
             {
               "valueCoding": {
-                "id": "1958bc85-1aab-458f-ae02-b762b32410dc",
                 "code": "regularly",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Regularly"
@@ -337,7 +288,6 @@
             },
             {
               "valueCoding": {
-                "id": "3eceb183-16e4-4276-891e-74b41ee8a67b",
                 "code": "often",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Often"
@@ -345,7 +295,6 @@
             },
             {
               "valueCoding": {
-                "id": "0ae759e9-3f26-4d3b-dd12-44e3e192b69b",
                 "code": "always",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Always"
@@ -357,11 +306,9 @@
         {
           "linkId": "4807a8a0-63a4-4aea-87dc-e25a064e18cc",
           "type": "choice",
-          "required": false,
           "answerOption": [
             {
               "valueCoding": {
-                "id": "4a539603-d265-4127-8419-32b3a1a17a16",
                 "code": "never",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Never"
@@ -369,7 +316,6 @@
             },
             {
               "valueCoding": {
-                "id": "bf3a6386-2a05-4848-a20b-a69a74c7d072",
                 "code": "sometimes",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Sometimes"
@@ -377,7 +323,6 @@
             },
             {
               "valueCoding": {
-                "id": "1958bc85-1aab-458f-ae02-b762b32410dc",
                 "code": "regularly",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Regularly"
@@ -385,7 +330,6 @@
             },
             {
               "valueCoding": {
-                "id": "3eceb183-16e4-4276-891e-74b41ee8a67b",
                 "code": "often",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Often"
@@ -393,7 +337,6 @@
             },
             {
               "valueCoding": {
-                "id": "0ae759e9-3f26-4d3b-dd12-44e3e192b69b",
                 "code": "always",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Always"
@@ -405,11 +348,9 @@
         {
           "linkId": "41cc0961-2723-44c3-f13b-babd26998323",
           "type": "choice",
-          "required": false,
           "answerOption": [
             {
               "valueCoding": {
-                "id": "4a539603-d265-4127-8419-32b3a1a17a16",
                 "code": "never",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Never"
@@ -417,7 +358,6 @@
             },
             {
               "valueCoding": {
-                "id": "bf3a6386-2a05-4848-a20b-a69a74c7d072",
                 "code": "sometimes",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Sometimes"
@@ -425,7 +365,6 @@
             },
             {
               "valueCoding": {
-                "id": "1958bc85-1aab-458f-ae02-b762b32410dc",
                 "code": "regularly",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Regularly"
@@ -433,7 +372,6 @@
             },
             {
               "valueCoding": {
-                "id": "3eceb183-16e4-4276-891e-74b41ee8a67b",
                 "code": "often",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Often"
@@ -441,7 +379,6 @@
             },
             {
               "valueCoding": {
-                "id": "0ae759e9-3f26-4d3b-dd12-44e3e192b69b",
                 "code": "always",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Always"
@@ -453,11 +390,9 @@
         {
           "linkId": "e10d061a-f3d1-464f-83e3-558f4e9061ba",
           "type": "choice",
-          "required": false,
           "answerOption": [
             {
               "valueCoding": {
-                "id": "4a539603-d265-4127-8419-32b3a1a17a16",
                 "code": "never",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Never"
@@ -465,7 +400,6 @@
             },
             {
               "valueCoding": {
-                "id": "bf3a6386-2a05-4848-a20b-a69a74c7d072",
                 "code": "sometimes",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Sometimes"
@@ -473,7 +407,6 @@
             },
             {
               "valueCoding": {
-                "id": "1958bc85-1aab-458f-ae02-b762b32410dc",
                 "code": "regularly",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Regularly"
@@ -481,7 +414,6 @@
             },
             {
               "valueCoding": {
-                "id": "3eceb183-16e4-4276-891e-74b41ee8a67b",
                 "code": "often",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Often"
@@ -489,7 +421,6 @@
             },
             {
               "valueCoding": {
-                "id": "0ae759e9-3f26-4d3b-dd12-44e3e192b69b",
                 "code": "always",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Always"
@@ -501,11 +432,9 @@
         {
           "linkId": "fb50134e-885f-4816-8e25-b4786df424ad",
           "type": "choice",
-          "required": false,
           "answerOption": [
             {
               "valueCoding": {
-                "id": "4a539603-d265-4127-8419-32b3a1a17a16",
                 "code": "never",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Never"
@@ -513,7 +442,6 @@
             },
             {
               "valueCoding": {
-                "id": "bf3a6386-2a05-4848-a20b-a69a74c7d072",
                 "code": "sometimes",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Sometimes"
@@ -521,7 +449,6 @@
             },
             {
               "valueCoding": {
-                "id": "1958bc85-1aab-458f-ae02-b762b32410dc",
                 "code": "regularly",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Regularly"
@@ -529,7 +456,6 @@
             },
             {
               "valueCoding": {
-                "id": "3eceb183-16e4-4276-891e-74b41ee8a67b",
                 "code": "often",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Often"
@@ -537,7 +463,6 @@
             },
             {
               "valueCoding": {
-                "id": "0ae759e9-3f26-4d3b-dd12-44e3e192b69b",
                 "code": "always",
                 "system": "urn:uuid:121c36dc-eb47-4a9a-ac6e-2d1c8f21ad8a",
                 "display": "Always"
@@ -547,14 +472,12 @@
           "text": "When I am doing something, I can concentrate quite well"
         }
       ],
-      "required": false,
-      "text": "The following 10 statements refer to how you usually feel. For each statement, choose one answer category. "
+      "text": "The following 10 statements refer to how you usually feel. For each statement, choose one answer category."
     },
     {
       "linkId": "020d4883-ac3b-4c93-e848-0055f9a214a0",
       "type": "display",
-      "text": "Thank you for completing this survey. ",
-      "required": false
+      "text": "Thank you for completing this survey."
     }
   ]
 }

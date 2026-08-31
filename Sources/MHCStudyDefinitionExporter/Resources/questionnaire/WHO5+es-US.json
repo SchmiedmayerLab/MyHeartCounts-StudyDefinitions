@@ -3,10 +3,20 @@
   "language": "es-US",
   "id": "05E37E76-1308-456C-815D-90BCAA26814F",
   "title": "WHO-5",
-  "status": "draft",
+  "status": "active",
+  "version": "0.0.0",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
+      "valueCoding": {
+        "system": "http://hl7.org/fhir/version-algorithm",
+        "code": "semver"
+      }
+    }
+  ],
   "meta": {
     "profile": [
-      "https://grovealliance.org/fhir/core/StructureDefinition/sdf-Questionnaire"
+      "https://grovealliance.org/fhir/questionnaire/StructureDefinition/grove-questionnaire"
     ],
     "tag": [
       {
@@ -19,17 +29,11 @@
   "useContext": [
     {
       "code": {
-        "system": "http://hl7.org/fhir/ValueSet/usage-context-type",
-        "code": "focus",
-        "display": "Clinical Focus"
+        "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+        "code": "focus"
       },
       "valueCodeableConcept": {
-        "coding": [
-          {
-            "system": "urn:oid:2.16.578.1.12.4.1.1.8655",
-            "display": "WHO-5"
-          }
-        ]
+        "text": "WHO-5"
       }
     }
   ],
@@ -43,28 +47,11 @@
       "linkId": "1041166e-83d7-4800-81bf-1aec166b0384",
       "type": "group",
       "text": "Le damos la bienvenida al Índice de Bienestar de la Organización Mundial de la Salud (OMS-5)",
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-          "valueCodeableConcept": {
-            "coding": [
-              {
-                "system": "http://hl7.org/fhir/ValueSet/questionnaire-item-control",
-                "code": "page",
-                "display": "Page"
-              }
-            ],
-            "text": "Page"
-          }
-        }
-      ],
-      "required": false,
       "item": [
         {
           "linkId": "23b8f1c4-f93c-4ca8-aee1-6ef683a67e1f",
           "type": "display",
           "text": "El OMS-5 es un instrumento de autoevaluación que mide el bienestar mental. Consta de cinco afirmaciones relacionadas con las últimas dos semanas.",
-          "required": false,
           "_text": {
             "extension": [
               {
@@ -80,32 +67,14 @@
       "linkId": "eef3a036-f914-4f0f-8a53-5240369fa100",
       "type": "group",
       "text": "Por favor, indique para cada una de las cinco afirmaciones cuál se aproxima más a cómo se ha sentido durante las últimas dos semanas.",
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-          "valueCodeableConcept": {
-            "coding": [
-              {
-                "system": "http://hl7.org/fhir/ValueSet/questionnaire-item-control",
-                "code": "page",
-                "display": "Page"
-              }
-            ],
-            "text": "Page"
-          }
-        }
-      ],
-      "required": false,
       "item": [
         {
           "linkId": "f641ae63-47d5-447e-8dd4-afe1685d4b1f",
           "type": "choice",
           "text": "Me he sentido alegre y de buen humor",
-          "required": false,
           "answerOption": [
             {
               "valueCoding": {
-                "id": "5ff4e961-e8ee-4e76-92dd-a0abe1079a4a",
                 "code": "all-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Todo el tiempo"
@@ -113,7 +82,6 @@
             },
             {
               "valueCoding": {
-                "id": "f036be70-9001-403c-86f0-7da8ad0e5522",
                 "code": "most-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "La mayor parte del tiempo"
@@ -121,7 +89,6 @@
             },
             {
               "valueCoding": {
-                "id": "9f2410ab-4681-4502-d430-f196672e46fe",
                 "code": "more-than-half-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Más de la mitad del tiempo"
@@ -129,7 +96,6 @@
             },
             {
               "valueCoding": {
-                "id": "fd3caa39-7263-4c41-87f4-b687c3908672",
                 "code": "less-than-half-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Menos de la mitad del tiempo"
@@ -137,7 +103,6 @@
             },
             {
               "valueCoding": {
-                "id": "ad92f7dc-6084-46c8-ed64-93e85886c48e",
                 "code": "some-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Algunas veces"
@@ -145,7 +110,6 @@
             },
             {
               "valueCoding": {
-                "id": "4d5e14ac-094e-4b31-b397-5e60b50a82d3",
                 "code": "at-no-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "En ningún momento"
@@ -157,11 +121,9 @@
           "linkId": "a07c0c00-3f05-4273-f7fc-ca6a15686efe",
           "type": "choice",
           "text": "Me he sentido tranquilo y relajado",
-          "required": false,
           "answerOption": [
             {
               "valueCoding": {
-                "id": "5ff4e961-e8ee-4e76-92dd-a0abe1079a4a",
                 "code": "all-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Todo el tiempo"
@@ -169,7 +131,6 @@
             },
             {
               "valueCoding": {
-                "id": "f036be70-9001-403c-86f0-7da8ad0e5522",
                 "code": "most-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "La mayor parte del tiempo"
@@ -177,7 +138,6 @@
             },
             {
               "valueCoding": {
-                "id": "9f2410ab-4681-4502-d430-f196672e46fe",
                 "code": "more-than-half-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Más de la mitad del tiempo"
@@ -185,7 +145,6 @@
             },
             {
               "valueCoding": {
-                "id": "fd3caa39-7263-4c41-87f4-b687c3908672",
                 "code": "less-than-half-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Menos de la mitad del tiempo"
@@ -193,7 +152,6 @@
             },
             {
               "valueCoding": {
-                "id": "ad92f7dc-6084-46c8-ed64-93e85886c48e",
                 "code": "some-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Algunas veces"
@@ -201,7 +159,6 @@
             },
             {
               "valueCoding": {
-                "id": "4d5e14ac-094e-4b31-b397-5e60b50a82d3",
                 "code": "at-no-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "En ningún momento"
@@ -213,11 +170,9 @@
           "linkId": "76b48a80-9eb9-4a14-8a8d-a09e980d2be3",
           "type": "choice",
           "text": "Me he sentido activo y enérgico",
-          "required": false,
           "answerOption": [
             {
               "valueCoding": {
-                "id": "5ff4e961-e8ee-4e76-92dd-a0abe1079a4a",
                 "code": "all-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Todo el tiempo"
@@ -225,7 +180,6 @@
             },
             {
               "valueCoding": {
-                "id": "f036be70-9001-403c-86f0-7da8ad0e5522",
                 "code": "most-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "La mayor parte del tiempo"
@@ -233,7 +187,6 @@
             },
             {
               "valueCoding": {
-                "id": "9f2410ab-4681-4502-d430-f196672e46fe",
                 "code": "more-than-half-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Más de la mitad del tiempo"
@@ -241,7 +194,6 @@
             },
             {
               "valueCoding": {
-                "id": "fd3caa39-7263-4c41-87f4-b687c3908672",
                 "code": "less-than-half-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Menos de la mitad del tiempo"
@@ -249,7 +201,6 @@
             },
             {
               "valueCoding": {
-                "id": "ad92f7dc-6084-46c8-ed64-93e85886c48e",
                 "code": "some-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Algunas veces"
@@ -257,7 +208,6 @@
             },
             {
               "valueCoding": {
-                "id": "4d5e14ac-094e-4b31-b397-5e60b50a82d3",
                 "code": "at-no-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "En ningún momento"
@@ -268,11 +218,9 @@
         {
           "linkId": "23c4edfa-fdbe-4884-8d26-173599f7dffb",
           "type": "choice",
-          "required": false,
           "answerOption": [
             {
               "valueCoding": {
-                "id": "5ff4e961-e8ee-4e76-92dd-a0abe1079a4a",
                 "code": "all-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Todo el tiempo"
@@ -280,7 +228,6 @@
             },
             {
               "valueCoding": {
-                "id": "f036be70-9001-403c-86f0-7da8ad0e5522",
                 "code": "most-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "La mayor parte del tiempo"
@@ -288,7 +235,6 @@
             },
             {
               "valueCoding": {
-                "id": "9f2410ab-4681-4502-d430-f196672e46fe",
                 "code": "more-than-half-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Más de la mitad del tiempo"
@@ -296,7 +242,6 @@
             },
             {
               "valueCoding": {
-                "id": "fd3caa39-7263-4c41-87f4-b687c3908672",
                 "code": "less-than-half-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Menos de la mitad del tiempo"
@@ -304,7 +249,6 @@
             },
             {
               "valueCoding": {
-                "id": "ad92f7dc-6084-46c8-ed64-93e85886c48e",
                 "code": "some-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Algunas veces"
@@ -312,7 +256,6 @@
             },
             {
               "valueCoding": {
-                "id": "4d5e14ac-094e-4b31-b397-5e60b50a82d3",
                 "code": "at-no-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "En ningún momento"
@@ -325,11 +268,9 @@
           "linkId": "80c92e40-1223-4cd8-806c-896e0868703f",
           "type": "choice",
           "text": "Mi vida cotidiana ha estado llena de cosas que me interesan",
-          "required": false,
           "answerOption": [
             {
               "valueCoding": {
-                "id": "5ff4e961-e8ee-4e76-92dd-a0abe1079a4a",
                 "code": "all-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Todo el tiempo"
@@ -337,7 +278,6 @@
             },
             {
               "valueCoding": {
-                "id": "f036be70-9001-403c-86f0-7da8ad0e5522",
                 "code": "most-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "La mayor parte del tiempo"
@@ -345,7 +285,6 @@
             },
             {
               "valueCoding": {
-                "id": "9f2410ab-4681-4502-d430-f196672e46fe",
                 "code": "more-than-half-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Más de la mitad del tiempo"
@@ -353,7 +292,6 @@
             },
             {
               "valueCoding": {
-                "id": "fd3caa39-7263-4c41-87f4-b687c3908672",
                 "code": "less-than-half-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Menos de la mitad del tiempo"
@@ -361,7 +299,6 @@
             },
             {
               "valueCoding": {
-                "id": "ad92f7dc-6084-46c8-ed64-93e85886c48e",
                 "code": "some-of-the-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "Algunas veces"
@@ -369,7 +306,6 @@
             },
             {
               "valueCoding": {
-                "id": "4d5e14ac-094e-4b31-b397-5e60b50a82d3",
                 "code": "at-no-time",
                 "system": "urn:uuid:be70ecb9-67a8-45c9-9ba5-810a7d6dc6ff",
                 "display": "En ningún momento"
@@ -383,28 +319,11 @@
       "linkId": "6e37f8bc-c5dd-4579-faaf-fa1cf894f231",
       "type": "group",
       "text": "Puntuación:",
-      "extension": [
-        {
-          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
-          "valueCodeableConcept": {
-            "coding": [
-              {
-                "system": "http://hl7.org/fhir/ValueSet/questionnaire-item-control",
-                "code": "page",
-                "display": "Page"
-              }
-            ],
-            "text": "Page"
-          }
-        }
-      ],
-      "required": false,
       "item": [
         {
           "linkId": "33a710dd-1577-4538-858d-c57c601a4274",
           "type": "display",
           "text": "La puntuación bruta se calcula sumando las puntuaciones de cada una de las cinco preguntas. La puntuación bruta oscila entre cero y 25, representando cero el peor bienestar mental posible y 25 el mejor bienestar mental posible.",
-          "required": false,
           "_text": {
             "extension": [
               {
@@ -417,16 +336,14 @@
         {
           "linkId": "b467c308-ac8f-4c10-ee89-8c22a710a6f0",
           "type": "display",
-          "text": "Para obtener una puntuación porcentual de cero a cien, la puntuación bruta se multiplica por cuatro. Una puntuación porcentual de cero representa el peor bienestar mental posible; una puntuación de 100 representa el mejor bienestar mental posible.",
-          "required": false
+          "text": "Para obtener una puntuación porcentual de cero a cien, la puntuación bruta se multiplica por cuatro. Una puntuación porcentual de cero representa el peor bienestar mental posible; una puntuación de 100 representa el mejor bienestar mental posible."
         }
       ]
     },
     {
       "linkId": "c934e4b1-8195-45c7-868a-d0de72394379",
       "type": "display",
-      "text": "¡Gracias por completar esta encuesta!",
-      "required": false
+      "text": "¡Gracias por completar esta encuesta!"
     }
   ]
 }

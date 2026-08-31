@@ -3,10 +3,20 @@
   "language": "es-US",
   "id": "0BB5A269-14F2-4597-8D30-7C96C22C2CC3",
   "title": "Encuesta de Usabilidad del Sistema",
-  "status": "draft",
+  "status": "active",
+  "version": "0.0.0",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
+      "valueCoding": {
+        "system": "http://hl7.org/fhir/version-algorithm",
+        "code": "semver"
+      }
+    }
+  ],
   "meta": {
     "profile": [
-      "https://grovealliance.org/fhir/core/StructureDefinition/sdf-Questionnaire"
+      "https://grovealliance.org/fhir/questionnaire/StructureDefinition/grove-questionnaire"
     ],
     "tag": [
       {
@@ -19,17 +29,11 @@
   "useContext": [
     {
       "code": {
-        "system": "http://hl7.org/fhir/ValueSet/usage-context-type",
-        "code": "focus",
-        "display": "Clinical Focus"
+        "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+        "code": "focus"
       },
       "valueCodeableConcept": {
-        "coding": [
-          {
-            "system": "urn:oid:2.16.578.1.12.4.1.1.8655",
-            "display": "Encuesta de Usabilidad del Sistema"
-          }
-        ]
+        "text": "Encuesta de Usabilidad del Sistema"
       }
     }
   ],
@@ -42,18 +46,15 @@
     {
       "linkId": "cc4c3ec5-36fe-4fe5-e6e3-186119bf3534",
       "type": "display",
-      "text": "Esta encuesta le pedirá que evalúe cuán fácil y amigable para el usuario encuentra la versión actual de My Heart Counts.",
-      "required": false
+      "text": "Esta encuesta le pedirá que evalúe cuán fácil y amigable para el usuario encuentra la versión actual de My Heart Counts."
     },
     {
       "linkId": "d1e62932-74f9-4c60-bbbb-9f0574ab95bf",
       "type": "choice",
       "text": "Creo que me gustaría utilizar este sistema con frecuencia.",
-      "required": false,
       "answerOption": [
         {
           "valueCoding": {
-            "id": "91a5ee6a-7d6d-41b9-b9d3-53851d8d1300",
             "code": "strongly-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente en desacuerdo"
@@ -61,7 +62,6 @@
         },
         {
           "valueCoding": {
-            "id": "81bda86d-c587-4667-e510-4adf2fd9214b",
             "code": "disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "En desacuerdo"
@@ -69,7 +69,6 @@
         },
         {
           "valueCoding": {
-            "id": "7f01502e-9f08-4df4-c826-f6a837b6c19f",
             "code": "neither-agree-nor-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Ni de acuerdo ni en desacuerdo"
@@ -77,7 +76,6 @@
         },
         {
           "valueCoding": {
-            "id": "c265633f-8cfe-4494-d299-a63c5dfd4bc6",
             "code": "agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "De acuerdo"
@@ -85,7 +83,6 @@
         },
         {
           "valueCoding": {
-            "id": "557053f3-7c29-4675-8acc-e24a6a4114be",
             "code": "strongly-agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente de acuerdo"
@@ -97,11 +94,9 @@
       "linkId": "935d494c-adc5-4b58-c6dd-91fb3a534adf",
       "type": "choice",
       "text": "Encontré el sistema innecesariamente complejo.",
-      "required": false,
       "answerOption": [
         {
           "valueCoding": {
-            "id": "91a5ee6a-7d6d-41b9-b9d3-53851d8d1300",
             "code": "strongly-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente en desacuerdo"
@@ -109,7 +104,6 @@
         },
         {
           "valueCoding": {
-            "id": "81bda86d-c587-4667-e510-4adf2fd9214b",
             "code": "disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "En desacuerdo"
@@ -117,7 +111,6 @@
         },
         {
           "valueCoding": {
-            "id": "7f01502e-9f08-4df4-c826-f6a837b6c19f",
             "code": "neither-agree-nor-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Ni de acuerdo ni en desacuerdo"
@@ -125,7 +118,6 @@
         },
         {
           "valueCoding": {
-            "id": "c265633f-8cfe-4494-d299-a63c5dfd4bc6",
             "code": "agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "De acuerdo"
@@ -133,7 +125,6 @@
         },
         {
           "valueCoding": {
-            "id": "557053f3-7c29-4675-8acc-e24a6a4114be",
             "code": "strongly-agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente de acuerdo"
@@ -145,11 +136,9 @@
       "linkId": "51b8123b-922e-416f-868e-dcf9d030e5d0",
       "type": "choice",
       "text": "Pensé que el sistema era fácil de usar.",
-      "required": false,
       "answerOption": [
         {
           "valueCoding": {
-            "id": "91a5ee6a-7d6d-41b9-b9d3-53851d8d1300",
             "code": "strongly-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente en desacuerdo"
@@ -157,7 +146,6 @@
         },
         {
           "valueCoding": {
-            "id": "81bda86d-c587-4667-e510-4adf2fd9214b",
             "code": "disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "En desacuerdo"
@@ -165,7 +153,6 @@
         },
         {
           "valueCoding": {
-            "id": "7f01502e-9f08-4df4-c826-f6a837b6c19f",
             "code": "neither-agree-nor-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Ni de acuerdo ni en desacuerdo"
@@ -173,7 +160,6 @@
         },
         {
           "valueCoding": {
-            "id": "c265633f-8cfe-4494-d299-a63c5dfd4bc6",
             "code": "agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "De acuerdo"
@@ -181,7 +167,6 @@
         },
         {
           "valueCoding": {
-            "id": "557053f3-7c29-4675-8acc-e24a6a4114be",
             "code": "strongly-agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente de acuerdo"
@@ -193,11 +178,9 @@
       "linkId": "f0d8c9d3-5225-46a4-d7fa-22b421e0f29f",
       "type": "choice",
       "text": "Creo que necesitaría el apoyo de una persona técnica para poder utilizar este sistema.",
-      "required": false,
       "answerOption": [
         {
           "valueCoding": {
-            "id": "91a5ee6a-7d6d-41b9-b9d3-53851d8d1300",
             "code": "strongly-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente en desacuerdo"
@@ -205,7 +188,6 @@
         },
         {
           "valueCoding": {
-            "id": "81bda86d-c587-4667-e510-4adf2fd9214b",
             "code": "disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "En desacuerdo"
@@ -213,7 +195,6 @@
         },
         {
           "valueCoding": {
-            "id": "7f01502e-9f08-4df4-c826-f6a837b6c19f",
             "code": "neither-agree-nor-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Ni de acuerdo ni en desacuerdo"
@@ -221,7 +202,6 @@
         },
         {
           "valueCoding": {
-            "id": "c265633f-8cfe-4494-d299-a63c5dfd4bc6",
             "code": "agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "De acuerdo"
@@ -229,7 +209,6 @@
         },
         {
           "valueCoding": {
-            "id": "557053f3-7c29-4675-8acc-e24a6a4114be",
             "code": "strongly-agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente de acuerdo"
@@ -241,11 +220,9 @@
       "linkId": "b8f647f7-f0bf-4706-ee67-97d96a7894b7",
       "type": "choice",
       "text": "Encontré que las diversas funciones de este sistema estaban bien integradas.",
-      "required": false,
       "answerOption": [
         {
           "valueCoding": {
-            "id": "91a5ee6a-7d6d-41b9-b9d3-53851d8d1300",
             "code": "strongly-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente en desacuerdo"
@@ -253,7 +230,6 @@
         },
         {
           "valueCoding": {
-            "id": "81bda86d-c587-4667-e510-4adf2fd9214b",
             "code": "disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "En desacuerdo"
@@ -261,7 +237,6 @@
         },
         {
           "valueCoding": {
-            "id": "7f01502e-9f08-4df4-c826-f6a837b6c19f",
             "code": "neither-agree-nor-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Ni de acuerdo ni en desacuerdo"
@@ -269,7 +244,6 @@
         },
         {
           "valueCoding": {
-            "id": "c265633f-8cfe-4494-d299-a63c5dfd4bc6",
             "code": "agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "De acuerdo"
@@ -277,7 +251,6 @@
         },
         {
           "valueCoding": {
-            "id": "557053f3-7c29-4675-8acc-e24a6a4114be",
             "code": "strongly-agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente de acuerdo"
@@ -289,11 +262,9 @@
       "linkId": "42b2e94b-b8b8-4682-e032-c0e11f5edf28",
       "type": "choice",
       "text": "Pensé que había demasiada inconsistencia en este sistema.",
-      "required": false,
       "answerOption": [
         {
           "valueCoding": {
-            "id": "91a5ee6a-7d6d-41b9-b9d3-53851d8d1300",
             "code": "strongly-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente en desacuerdo"
@@ -301,7 +272,6 @@
         },
         {
           "valueCoding": {
-            "id": "81bda86d-c587-4667-e510-4adf2fd9214b",
             "code": "disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "En desacuerdo"
@@ -309,7 +279,6 @@
         },
         {
           "valueCoding": {
-            "id": "7f01502e-9f08-4df4-c826-f6a837b6c19f",
             "code": "neither-agree-nor-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Ni de acuerdo ni en desacuerdo"
@@ -317,7 +286,6 @@
         },
         {
           "valueCoding": {
-            "id": "c265633f-8cfe-4494-d299-a63c5dfd4bc6",
             "code": "agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "De acuerdo"
@@ -325,7 +293,6 @@
         },
         {
           "valueCoding": {
-            "id": "557053f3-7c29-4675-8acc-e24a6a4114be",
             "code": "strongly-agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente de acuerdo"
@@ -337,11 +304,9 @@
       "linkId": "0be851ff-5975-4665-8df2-50bc93f6823a",
       "type": "choice",
       "text": "Imagino que la mayoría de las personas aprenderían a usar este sistema muy rápidamente.",
-      "required": false,
       "answerOption": [
         {
           "valueCoding": {
-            "id": "91a5ee6a-7d6d-41b9-b9d3-53851d8d1300",
             "code": "strongly-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente en desacuerdo"
@@ -349,7 +314,6 @@
         },
         {
           "valueCoding": {
-            "id": "81bda86d-c587-4667-e510-4adf2fd9214b",
             "code": "disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "En desacuerdo"
@@ -357,7 +321,6 @@
         },
         {
           "valueCoding": {
-            "id": "7f01502e-9f08-4df4-c826-f6a837b6c19f",
             "code": "neither-agree-nor-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Ni de acuerdo ni en desacuerdo"
@@ -365,7 +328,6 @@
         },
         {
           "valueCoding": {
-            "id": "c265633f-8cfe-4494-d299-a63c5dfd4bc6",
             "code": "agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "De acuerdo"
@@ -373,7 +335,6 @@
         },
         {
           "valueCoding": {
-            "id": "557053f3-7c29-4675-8acc-e24a6a4114be",
             "code": "strongly-agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente de acuerdo"
@@ -385,11 +346,9 @@
       "linkId": "22ce6f6b-3303-46c4-876f-6c5a102533be",
       "type": "choice",
       "text": "Encontré el sistema muy engorroso de usar.",
-      "required": false,
       "answerOption": [
         {
           "valueCoding": {
-            "id": "91a5ee6a-7d6d-41b9-b9d3-53851d8d1300",
             "code": "strongly-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente en desacuerdo"
@@ -397,7 +356,6 @@
         },
         {
           "valueCoding": {
-            "id": "81bda86d-c587-4667-e510-4adf2fd9214b",
             "code": "disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "En desacuerdo"
@@ -405,7 +363,6 @@
         },
         {
           "valueCoding": {
-            "id": "7f01502e-9f08-4df4-c826-f6a837b6c19f",
             "code": "neither-agree-nor-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Ni de acuerdo ni en desacuerdo"
@@ -413,7 +370,6 @@
         },
         {
           "valueCoding": {
-            "id": "c265633f-8cfe-4494-d299-a63c5dfd4bc6",
             "code": "agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "De acuerdo"
@@ -421,7 +377,6 @@
         },
         {
           "valueCoding": {
-            "id": "557053f3-7c29-4675-8acc-e24a6a4114be",
             "code": "strongly-agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente de acuerdo"
@@ -433,11 +388,9 @@
       "linkId": "2928c455-7e63-4603-8418-3c5d7707401d",
       "type": "choice",
       "text": "Me sentí muy seguro utilizando el sistema.",
-      "required": false,
       "answerOption": [
         {
           "valueCoding": {
-            "id": "91a5ee6a-7d6d-41b9-b9d3-53851d8d1300",
             "code": "strongly-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente en desacuerdo"
@@ -445,7 +398,6 @@
         },
         {
           "valueCoding": {
-            "id": "81bda86d-c587-4667-e510-4adf2fd9214b",
             "code": "disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "En desacuerdo"
@@ -453,7 +405,6 @@
         },
         {
           "valueCoding": {
-            "id": "7f01502e-9f08-4df4-c826-f6a837b6c19f",
             "code": "neither-agree-nor-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Ni de acuerdo ni en desacuerdo"
@@ -461,7 +412,6 @@
         },
         {
           "valueCoding": {
-            "id": "c265633f-8cfe-4494-d299-a63c5dfd4bc6",
             "code": "agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "De acuerdo"
@@ -469,7 +419,6 @@
         },
         {
           "valueCoding": {
-            "id": "557053f3-7c29-4675-8acc-e24a6a4114be",
             "code": "strongly-agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente de acuerdo"
@@ -481,11 +430,9 @@
       "linkId": "ed16aea3-c18b-4499-93c6-73a511047d0c",
       "type": "choice",
       "text": "Necesité aprender muchas cosas antes de poder comenzar a utilizar este sistema.",
-      "required": false,
       "answerOption": [
         {
           "valueCoding": {
-            "id": "91a5ee6a-7d6d-41b9-b9d3-53851d8d1300",
             "code": "strongly-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente en desacuerdo"
@@ -493,7 +440,6 @@
         },
         {
           "valueCoding": {
-            "id": "81bda86d-c587-4667-e510-4adf2fd9214b",
             "code": "disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "En desacuerdo"
@@ -501,7 +447,6 @@
         },
         {
           "valueCoding": {
-            "id": "7f01502e-9f08-4df4-c826-f6a837b6c19f",
             "code": "neither-agree-nor-disagree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Ni de acuerdo ni en desacuerdo"
@@ -509,7 +454,6 @@
         },
         {
           "valueCoding": {
-            "id": "c265633f-8cfe-4494-d299-a63c5dfd4bc6",
             "code": "agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "De acuerdo"
@@ -517,7 +461,6 @@
         },
         {
           "valueCoding": {
-            "id": "557053f3-7c29-4675-8acc-e24a6a4114be",
             "code": "strongly-agree",
             "system": "urn:uuid:322e980f-47e7-4e8a-83c0-c95227c1d051",
             "display": "Totalmente de acuerdo"
@@ -528,14 +471,12 @@
     {
       "linkId": "b1b7b075-5405-4a59-f188-93ce784546e5",
       "type": "text",
-      "text": "¿Tiene algún comentario para nosotros?",
-      "required": false
+      "text": "¿Tiene algún comentario para nosotros?"
     },
     {
       "linkId": "f38f2395-ef02-41d6-de0b-fcecdfab1a46",
       "type": "display",
-      "text": "Gracias por tomarse el tiempo de proporcionar comentarios sobre My Heart Counts. Utilizaremos estos comentarios para mejorar todos los aspectos de MHC.",
-      "required": false
+      "text": "Gracias por tomarse el tiempo de proporcionar comentarios sobre My Heart Counts. Utilizaremos estos comentarios para mejorar todos los aspectos de MHC."
     }
   ]
 }
