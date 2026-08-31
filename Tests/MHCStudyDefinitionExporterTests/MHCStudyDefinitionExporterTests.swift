@@ -57,7 +57,7 @@ struct MHCStudyDefinitionExporterTests {
     @Test
     func export() throws {
         try StudyBundleFixture.withExportedStudyBundle {
-            #expect($0.studyDefinition.studyRevision == 46)
+            #expect($0.studyDefinition.studyRevision == 47)
         }
     }
 

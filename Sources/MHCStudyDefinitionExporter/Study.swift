@@ -39,7 +39,7 @@ extension StudyBundle.FileReference {
 
 
 let mhcStudyDefinition = StudyDefinition(
-    studyRevision: 46,
+    studyRevision: 47,
     metadata: .init(
         id: .mhcStudy,
         title: [.enUS: "My Heart Counts"],
