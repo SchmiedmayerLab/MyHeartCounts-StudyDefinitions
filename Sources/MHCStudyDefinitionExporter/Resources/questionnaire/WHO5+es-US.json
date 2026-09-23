@@ -51,15 +51,7 @@
         {
           "linkId": "23b8f1c4-f93c-4ca8-aee1-6ef683a67e1f",
           "type": "display",
-          "text": "El OMS-5 es un instrumento de autoevaluación que mide el bienestar mental. Consta de cinco afirmaciones relacionadas con las últimas dos semanas.",
-          "_text": {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinition/rendering-markdown",
-                "valueMarkdown": "GROUPING TEST Welcome to the **World Health Organization-Five Well-Being Index** (WHO-5)"
-              }
-            ]
-          }
+          "text": "El OMS-5 es un instrumento de autoevaluación que mide el bienestar mental. Consta de cinco afirmaciones relacionadas con las últimas dos semanas."
         }
       ]
     },
@@ -323,15 +315,7 @@
         {
           "linkId": "33a710dd-1577-4538-858d-c57c601a4274",
           "type": "display",
-          "text": "La puntuación bruta se calcula sumando las puntuaciones de cada una de las cinco preguntas. La puntuación bruta oscila entre cero y 25, representando cero el peor bienestar mental posible y 25 el mejor bienestar mental posible.",
-          "_text": {
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinition/rendering-markdown",
-                "valueMarkdown": "**Scoring**: The World Health Organization-Five Well-Being Index (WHO-5) Scoring The raw score is calculated by totalling the scores on each of the five questions. The raw score ranges from zero to 25, zero representing worst possible mental well-being and 25 representing best possible mental well-being. To get a percentage score ranging from zero to 100, the raw score is multiplied by four. A percentage score of zero represents worst possible mental well-being; a score of 100 represents best possible mental well-being."
-              }
-            ]
-          }
+          "text": "La puntuación bruta se calcula sumando las puntuaciones de cada una de las cinco preguntas. La puntuación bruta oscila entre cero y 25, representando cero el peor bienestar mental posible y 25 el mejor bienestar mental posible."
         },
         {
           "linkId": "b467c308-ac8f-4c10-ee89-8c22a710a6f0",
