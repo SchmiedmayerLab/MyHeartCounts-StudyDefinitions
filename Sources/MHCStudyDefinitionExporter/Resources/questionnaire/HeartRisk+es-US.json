@@ -535,14 +535,14 @@
                   "valueCoding": {
                     "system": "http://unitsofmeasure.org",
                     "code": "mm[Hg]",
-                    "display": "millimeters of mercury"
+                    "display": "milímetros de mercurio"
                   }
                 },
                 {
                   "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-minQuantity",
                   "valueQuantity": {
                     "value": 60,
-                    "unit": "millimeters of mercury",
+                    "unit": "milímetros de mercurio",
                     "system": "http://unitsofmeasure.org",
                     "code": "mm[Hg]"
                   }
@@ -551,7 +551,7 @@
                   "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-maxQuantity",
                   "valueQuantity": {
                     "value": 250,
-                    "unit": "millimeters of mercury",
+                    "unit": "milímetros de mercurio",
                     "system": "http://unitsofmeasure.org",
                     "code": "mm[Hg]"
                   }
@@ -578,14 +578,14 @@
                   "valueCoding": {
                     "system": "http://unitsofmeasure.org",
                     "code": "mm[Hg]",
-                    "display": "millimeters of mercury"
+                    "display": "milímetros de mercurio"
                   }
                 },
                 {
                   "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-minQuantity",
                   "valueQuantity": {
                     "value": 30,
-                    "unit": "millimeters of mercury",
+                    "unit": "milímetros de mercurio",
                     "system": "http://unitsofmeasure.org",
                     "code": "mm[Hg]"
                   }
@@ -594,7 +594,7 @@
                   "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-maxQuantity",
                   "valueQuantity": {
                     "value": 150,
-                    "unit": "millimeters of mercury",
+                    "unit": "milímetros de mercurio",
                     "system": "http://unitsofmeasure.org",
                     "code": "mm[Hg]"
                   }
@@ -619,14 +619,14 @@
               "valueCoding": {
                 "system": "http://unitsofmeasure.org",
                 "code": "mm[Hg]",
-                "display": "millimeters of mercury"
+                "display": "milímetros de mercurio"
               }
             },
             {
               "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-minQuantity",
               "valueQuantity": {
                 "value": 60,
-                "unit": "millimeters of mercury",
+                "unit": "milímetros de mercurio",
                 "system": "http://unitsofmeasure.org",
                 "code": "mm[Hg]"
               }
@@ -635,7 +635,7 @@
               "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-maxQuantity",
               "valueQuantity": {
                 "value": 250,
-                "unit": "millimeters of mercury",
+                "unit": "milímetros de mercurio",
                 "system": "http://unitsofmeasure.org",
                 "code": "mm[Hg]"
               }
@@ -656,14 +656,14 @@
               "valueCoding": {
                 "system": "http://unitsofmeasure.org",
                 "code": "mg/dL",
-                "display": "milligram per deciliter"
+                "display": "miligramos por decilitro"
               }
             },
             {
               "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-minQuantity",
               "valueQuantity": {
                 "value": 40,
-                "unit": "milligram per deciliter",
+                "unit": "miligramos por decilitro",
                 "system": "http://unitsofmeasure.org",
                 "code": "mg/dL"
               }
@@ -672,7 +672,7 @@
               "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-maxQuantity",
               "valueQuantity": {
                 "value": 400,
-                "unit": "milligram per deciliter",
+                "unit": "miligramos por decilitro",
                 "system": "http://unitsofmeasure.org",
                 "code": "mg/dL"
               }
@@ -695,14 +695,14 @@
               "valueCoding": {
                 "system": "http://unitsofmeasure.org",
                 "code": "%",
-                "display": "percent"
+                "display": "por ciento"
               }
             },
             {
               "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-minQuantity",
               "valueQuantity": {
                 "value": 3,
-                "unit": "percent",
+                "unit": "por ciento",
                 "system": "http://unitsofmeasure.org",
                 "code": "%"
               }
@@ -711,7 +711,7 @@
               "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-maxQuantity",
               "valueQuantity": {
                 "value": 15,
-                "unit": "percent",
+                "unit": "por ciento",
                 "system": "http://unitsofmeasure.org",
                 "code": "%"
               }
@@ -728,14 +728,14 @@
               "valueCoding": {
                 "system": "http://unitsofmeasure.org",
                 "code": "mg/dL",
-                "display": "milligram per deciliter"
+                "display": "miligramos por decilitro"
               }
             },
             {
               "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-minQuantity",
               "valueQuantity": {
                 "value": 10,
-                "unit": "milligram per deciliter",
+                "unit": "miligramos por decilitro",
                 "system": "http://unitsofmeasure.org",
                 "code": "mg/dL"
               }
@@ -744,7 +744,7 @@
               "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-maxQuantity",
               "valueQuantity": {
                 "value": 150,
-                "unit": "milligram per deciliter",
+                "unit": "miligramos por decilitro",
                 "system": "http://unitsofmeasure.org",
                 "code": "mg/dL"
               }
@@ -761,14 +761,14 @@
               "valueCoding": {
                 "system": "http://unitsofmeasure.org",
                 "code": "mg/dL",
-                "display": "milligram per deciliter"
+                "display": "miligramos por decilitro"
               }
             },
             {
               "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-minQuantity",
               "valueQuantity": {
                 "value": 30,
-                "unit": "milligram per deciliter",
+                "unit": "miligramos por decilitro",
                 "system": "http://unitsofmeasure.org",
                 "code": "mg/dL"
               }
@@ -777,7 +777,7 @@
               "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-maxQuantity",
               "valueQuantity": {
                 "value": 400,
-                "unit": "milligram per deciliter",
+                "unit": "miligramos por decilitro",
                 "system": "http://unitsofmeasure.org",
                 "code": "mg/dL"
               }
@@ -794,14 +794,14 @@
               "valueCoding": {
                 "system": "http://unitsofmeasure.org",
                 "code": "mg/dL",
-                "display": "milligram per deciliter"
+                "display": "miligramos por decilitro"
               }
             },
             {
               "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-minQuantity",
               "valueQuantity": {
                 "value": 80,
-                "unit": "milligram per deciliter",
+                "unit": "miligramos por decilitro",
                 "system": "http://unitsofmeasure.org",
                 "code": "mg/dL"
               }
@@ -810,7 +810,7 @@
               "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-maxQuantity",
               "valueQuantity": {
                 "value": 600,
-                "unit": "milligram per deciliter",
+                "unit": "miligramos por decilitro",
                 "system": "http://unitsofmeasure.org",
                 "code": "mg/dL"
               }
