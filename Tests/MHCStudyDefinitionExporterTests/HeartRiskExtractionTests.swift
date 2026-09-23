@@ -39,13 +39,11 @@ struct HeartRiskExtractionTests {
     @Test
     func heartRiskKeepsOneTopLevelGroup() throws {
         try StudyBundleFixture.withExportedStudyBundle { bundle in
-            for (_, locale) in StudyBundleFixture.locales {
-                let items = try #require(bundle.questionnaire(named: "HeartRisk", in: locale)).item ?? []
-                // Grove renders every top-level group as its own section, so the wrapper keeps HeartRisk one page.
-                #expect(items.count == 1, "HeartRisk must keep exactly one top-level group")
-                #expect(items.first?.linkId.value?.string == "heart-risk")
-                #expect(items.first?.type.value == .group)
-            }
+            let items = try #require(bundle.questionnaire(named: "HeartRisk")).item ?? []
+            // Grove renders every top-level group as its own section, so the wrapper keeps HeartRisk one page.
+            #expect(items.count == 1, "HeartRisk must keep exactly one top-level group")
+            #expect(items.first?.linkId.value?.string == "heart-risk")
+            #expect(items.first?.type.value == .group)
         }
     }
 
@@ -53,7 +51,7 @@ struct HeartRiskExtractionTests {
     @Test
     func markedMeasurementsProjectIntoConformingObservations() throws {
         try StudyBundleFixture.withExportedStudyBundle { bundle in
-            let questionnaire = try #require(bundle.questionnaire(named: "HeartRisk", in: Locale(identifier: "en_US")))
+            let questionnaire = try #require(bundle.questionnaire(named: "HeartRisk"))
             let response = try Self.response(for: questionnaire)
             #if canImport(GroveQuestionnaireFHIR)
             let issues = PairValidator().issues(questionnaire: questionnaire, response: response)
@@ -123,7 +121,7 @@ struct HeartRiskExtractionTests {
         }
         #expect(coding.code?.value?.string == "manual-entry")
         #expect(coding.system == Canonicals.recordingMethodCodeSystem)
-        #expect(observation.effective == .dateTime(Self.authored), "the response's authored instant is the effective time")
+        #expect(observation.effective == .dateTime(ResponseFixture.authored), "the response's authored instant is the effective time")
         #expect(observation.derivedFrom?.count == 1, "an extracted Observation derives from its response")
     }
 }
@@ -132,12 +130,6 @@ struct HeartRiskExtractionTests {
 // MARK: Fixtures
 
 extension HeartRiskExtractionTests {
-    private static let authored: FHIRPrimitive<DateTime> = "2026-08-28T08:32:00-07:00"
-    private static let completionModeURL: FHIRPrimitive<FHIRURI> =
-        "http://hl7.org/fhir/StructureDefinition/questionnaireresponse-completionMode"
-    private static let participationModeSystem: FHIRPrimitive<FHIRURI> =
-        "http://terminology.hl7.org/CodeSystem/v3-ParticipationMode"
-
     private static func code(of observation: Observation) -> String? {
         observation.code.coding?.first?.code?.value?.string
     }
@@ -162,64 +154,28 @@ extension HeartRiskExtractionTests {
         )))
     }
 
-    private static func item(
-        _ linkID: String,
-        answer: QuestionnaireResponseItemAnswer? = nil,
-        children: [QuestionnaireResponseItem] = []
-    ) -> QuestionnaireResponseItem {
-        QuestionnaireResponseItem(
-            answer: answer.map { [$0] },
-            item: children.isEmpty ? nil : children,
-            linkId: linkID.asFHIRStringPrimitive()
-        )
-    }
-
-    /// A completed response answering exactly the marked items, mirroring the instrument's hierarchy.
-    ///
-    /// Written out here rather than converted from Grove's own response type, which is macOS-only and
-    /// would take this suite off the Linux leg.
+    /// A completed response in the instrument's base language, answering exactly the marked items and
+    /// mirroring the instrument's hierarchy.
     private static func response(for questionnaire: ModelsR4.Questionnaire) throws -> ModelsR4.QuestionnaireResponse {
-        let url = try #require(questionnaire.url?.value?.url.absoluteString)
-        let version = try #require(questionnaire.version?.value?.string)
-        let participant = Reference(reference: "Patient/MHCExtractionContractParticipant")
-        return QuestionnaireResponse(
-            author: participant,
-            authored: authored,
-            extension: [
-                Extension(
-                    url: completionModeURL,
-                    value: .codeableConcept(CodeableConcept(coding: [
-                        Coding(
-                            code: "ELECTRONIC".asFHIRStringPrimitive(),
-                            display: "electronic data".asFHIRStringPrimitive(),
-                            system: participationModeSystem
-                        )
-                    ]))
-                )
-            ],
-            identifier: Identifier(
-                system: "https://myheartcounts.stanford.edu/fhir/NamingSystem/questionnaire-response",
-                value: "heart-risk-extraction-contract".asFHIRStringPrimitive()
-            ),
-            item: [
-                item("heart-risk", children: [
-                    item(bloodPressurePanelLinkID, children: [
-                        item(systolicLinkID, answer: answer(118, code: "mm[Hg]", unit: "mmHg")),
-                        item(diastolicLinkID, answer: answer(76, code: "mm[Hg]", unit: "mmHg"))
+        try ResponseFixture.completed(
+            questionnaire,
+            in: try #require(questionnaire.language),
+            identifier: "heart-risk-extraction-contract",
+            items: [
+                ResponseFixture.item("heart-risk", children: [
+                    ResponseFixture.item(bloodPressurePanelLinkID, children: [
+                        ResponseFixture.item(systolicLinkID, answer: answer(118, code: "mm[Hg]", unit: "mmHg")),
+                        ResponseFixture.item(diastolicLinkID, answer: answer(76, code: "mm[Hg]", unit: "mmHg"))
                     ]),
-                    item(glucoseLinkID, answer: answer(95, code: "mg/dL", unit: "mg/dL"))
+                    ResponseFixture.item(glucoseLinkID, answer: answer(95, code: "mg/dL", unit: "mg/dL"))
                 ])
-            ],
-            meta: Meta(profile: [Profile.groveQuestionnaireResponse]),
-            questionnaire: FHIRPrimitive(Canonical(stringLiteral: "\(url)|\(version)")),
-            status: FHIRPrimitive(.completed),
-            subject: participant
+            ]
         )
     }
 
     private static func extractionContext() throws -> QuestionnaireExtractionContext {
         var patient = ModelsR4.Patient()
-        patient.id = "MHCExtractionContractParticipant"
+        patient.id = ResponseFixture.participantID.asFHIRStringPrimitive()
         patient.identifier = [
             Identifier(
                 system: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-participant",

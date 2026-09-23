@@ -15,11 +15,17 @@ import Testing
 
 /// Exports the study into a temporary directory and hands the unarchived bundle to `operation`.
 enum StudyBundleFixture {
-    /// The locales every instrument ships, tagged as the resource filenames spell them.
-    static let locales: [(tag: String, locale: Locale)] = [
-        (tag: "en-US", locale: Locale(identifier: "en_US")),
-        (tag: "es-US", locale: Locale(identifier: "es_US"))
-    ]
+    /// The language of every exported Questionnaire's base strings.
+    static let baseLocale = "en-US"
+    /// The language every exported Questionnaire carries as translations.
+    static let translationLocale = "es-US"
+    /// The locales every instrument is authored in, as the source filenames spell them.
+    static let locales = [baseLocale, translationLocale]
+
+    private static let sourceDirectory = URL(filePath: #filePath)
+        .deletingLastPathComponent()
+        .appending(path: "../../Sources/MHCStudyDefinitionExporter/Resources/questionnaire", directoryHint: .isDirectory)
+        .standardized
 
     static func withExportedStudyBundle(_ operation: (StudyBundle) throws -> Void) throws {
         let fileManager = FileManager.default
@@ -53,5 +59,12 @@ enum StudyBundleFixture {
             }
             return questionnaire.fileRef.filename
         }
+    }
+
+
+    /// The per-locale source an instrument is authored in, before the export merges it.
+    static func source(named name: String, in locale: String) throws -> [String: Any] {
+        let data = try Data(contentsOf: sourceDirectory.appending(component: "\(name)+\(locale).json"))
+        return try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
     }
 }

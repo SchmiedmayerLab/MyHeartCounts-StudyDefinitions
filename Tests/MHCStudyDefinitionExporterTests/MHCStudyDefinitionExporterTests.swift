@@ -69,20 +69,31 @@ struct MHCStudyDefinitionExporterTests {
             #expect(names.count == 14, "the study must declare 14 questionnaire components")
             var canonicalURLs: Set<String> = []
             for name in names {
+                let questionnaire = try #require(bundle.questionnaire(named: name))
+                let json = try jsonObject(questionnaire)
+                validateQuestionnaire(json, named: name, locale: StudyBundleFixture.baseLocale)
+                try validateGroveRoundTrip(questionnaire, original: json, named: name)
+                if let canonicalURL = json["url"] as? String {
+                    #expect(canonicalURLs.insert(canonicalURL).inserted, "\(name): canonical URL must be unique")
+                }
+            }
+        }
+    }
+
+
+    @Test
+    func localizedSourcesShareOneContract() throws {
+        try StudyBundleFixture.withExportedStudyBundle { bundle in
+            for name in StudyBundleFixture.questionnaireNames(in: bundle) {
                 var projections: [Data] = []
-                for (tag, locale) in StudyBundleFixture.locales {
-                    let questionnaire = try #require(bundle.questionnaire(named: name, in: locale))
-                    let json = try jsonObject(questionnaire)
-                    validateQuestionnaire(json, named: "\(name)+\(tag)", locale: tag)
-                    try validateGroveRoundTrip(questionnaire, original: json, named: "\(name)+\(tag)")
-                    projections.append(try contractProjection(of: json))
-                    if tag == "en-US", let canonicalURL = json["url"] as? String {
-                        #expect(canonicalURLs.insert(canonicalURL).inserted, "\(name): canonical URL must be unique")
-                    }
+                for locale in StudyBundleFixture.locales {
+                    let source = try StudyBundleFixture.source(named: name, in: locale)
+                    validateLocaleMetadata(source, named: "\(name)+\(locale)", locale: locale)
+                    projections.append(try contractProjection(of: source))
                 }
                 #expect(
                     projections.allSatisfy { $0 == projections[0] },
-                    "\(name): the localized resources must be identical outside their localized text"
+                    "\(name): the localized sources must be identical outside their localized text"
                 )
             }
         }
@@ -92,7 +103,7 @@ struct MHCStudyDefinitionExporterTests {
 
 extension MHCStudyDefinitionExporterTests {
     /// Runs the Grove authoring diagnostics, native construction, and FHIR export, and holds the
-    /// result to the shape it started from.
+    /// result to the shape and languages it started from.
     private func validateGroveRoundTrip(
         _ questionnaire: ModelsR4.Questionnaire,
         original: [String: Any],
@@ -105,9 +116,13 @@ extension MHCStudyDefinitionExporterTests {
 
         let nativeQuestionnaire = try GroveQuestionnaire.Questionnaire(questionnaire, clock: clock)
         let exported = try jsonObject(try ResourceBuilder().questionnaire(from: nativeQuestionnaire))
-        for key in ["url", "version", "status"] {
+        for key in ["url", "version", "status", "language"] {
             #expect(exported[key] as? String == original[key] as? String, "\(name): round trip changed \(key)")
         }
+        #expect(
+            Translations.all(in: exported) == Translations.all(in: original),
+            "\(name): round trip changed the translations"
+        )
         let exportedStructure = try itemStructure(of: exported)
         let originalStructure = try itemStructure(of: original)
         #expect(
