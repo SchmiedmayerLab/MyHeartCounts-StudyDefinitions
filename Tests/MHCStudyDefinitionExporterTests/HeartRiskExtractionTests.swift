@@ -14,6 +14,9 @@ import Crypto
 import Foundation
 import GroveFHIRContract
 import GroveQuestionnaireExtraction
+#if canImport(GroveQuestionnaireFHIR)
+import GroveQuestionnaireFHIR
+#endif
 @_spi(APISupport)
 import GroveStudyDefinition
 import ModelsR4
@@ -51,9 +54,14 @@ struct HeartRiskExtractionTests {
     func markedMeasurementsProjectIntoConformingObservations() throws {
         try StudyBundleFixture.withExportedStudyBundle { bundle in
             let questionnaire = try #require(bundle.questionnaire(named: "HeartRisk", in: Locale(identifier: "en_US")))
+            let response = try Self.response(for: questionnaire)
+            #if canImport(GroveQuestionnaireFHIR)
+            let issues = PairValidator().issues(questionnaire: questionnaire, response: response)
+            #expect(issues.isEmpty, "\(issues.map(\.message))")
+            #endif
             let graph = try QuestionnaireExchangeProjection.exchangeGraph(
                 questionnaire: questionnaire,
-                response: try Self.response(for: questionnaire),
+                response: response,
                 context: try Self.extractionContext()
             )
             let observations = (graph.bundle.entry ?? []).compactMap { entry -> Observation? in
