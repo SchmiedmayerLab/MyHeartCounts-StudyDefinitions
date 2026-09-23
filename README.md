@@ -31,7 +31,7 @@ Instead, the package only implements the code that exports the study bundle, in 
 The instruments live under `Sources/MHCStudyDefinitionExporter/Resources/questionnaire/` as `en-US`/`es-US` pairs.
 The pair must stay structurally identical: only the display text and the locale metadata differ, and the contract suite compares the two projections to enforce it.
 Any change to instrument content bumps `studyRevision` in `Study.swift` together with the pinned expectation in the tests.
-A change that alters how a response is interpreted — item meaning, datatype, answer choices, required state, a constraint, the hierarchy, or an extraction marking — also increments that instrument's `Questionnaire.version`, because `url|version` names one immutable definition.
+A change that alters how a response is interpreted — item meaning, datatype, answer choices, required state, a condition, a constraint, the hierarchy, or an extraction marking — also increments that instrument's `Questionnaire.version`, because `url|version` names one immutable definition.
 
 `linkId`s are persisted identifiers.
 Submitted `QuestionnaireResponse`s reference them, so a `linkId` is renamed only with a migration, never for tidiness.
@@ -40,7 +40,7 @@ HeartRisk keeps exactly one top-level group because Grove renders every top-leve
 
 ### Marking Measurements for Extraction
 
-A marked item is extracted into a profiled Observation, following [Grove's measurement extraction guide](https://grovealliance.org/fhir/questionnaire/measurements.html).
+A marked item is extracted into a profiled Observation, following [Grove's measurement extraction guide](https://schmiedmayerlab.github.io/grove-fhir/questionnaire/ci-build/measurements.html).
 Marking one takes an `sdc-questionnaire-observationExtract` extension, a single coded `item.code` naming the measurement, and a UCUM `questionnaire-unitOption` for quantities.
 A panel is a group carrying the panel LOINC and `valueBoolean: true`; each of its question children carries its own component LOINC and `valueCode: "component"`.
 When the target profile fixes a category — the blood-pressure panel's `vital-signs`, for instance — the item must also carry `sdc-questionnaire-observation-extract-category`, or the extracted Observation does not conform.
