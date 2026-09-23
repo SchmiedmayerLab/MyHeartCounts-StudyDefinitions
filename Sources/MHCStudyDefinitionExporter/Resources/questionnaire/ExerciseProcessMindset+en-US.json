@@ -4,7 +4,7 @@
   "id": "9C6F4F2B-B436-4B96-B493-032051AB681F",
   "title": "Exercise Process Mindset Measure",
   "status": "active",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",

@@ -4,7 +4,7 @@
   "id": "09BE8C43-4501-4861-B6C9-A15F94BE6E14",
   "title": "Riesgo Cardíaco",
   "status": "active",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",

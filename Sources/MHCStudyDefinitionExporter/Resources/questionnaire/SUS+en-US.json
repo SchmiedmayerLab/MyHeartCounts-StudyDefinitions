@@ -4,7 +4,7 @@
   "id": "0BB5A269-14F2-4597-8D30-7C96C22C2CC3",
   "title": "System Usability Survey",
   "status": "active",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",

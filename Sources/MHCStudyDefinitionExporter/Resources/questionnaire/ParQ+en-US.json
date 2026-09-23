@@ -4,7 +4,7 @@
   "id": "F20016D9-28F8-4B91-93E5-0FDE17B88CC8",
   "title": "Par-Q+",
   "status": "active",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",

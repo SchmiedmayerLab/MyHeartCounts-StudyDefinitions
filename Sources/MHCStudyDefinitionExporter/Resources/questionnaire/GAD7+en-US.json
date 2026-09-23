@@ -4,7 +4,7 @@
   "id": "1FF524AE-C159-496A-B0BD-E81B2FAD3E8B",
   "title": "GAD-7",
   "status": "active",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",

@@ -28,10 +28,14 @@ Instead, the package only implements the code that exports the study bundle, in 
 
 ## Questionnaire Conventions
 
-The instruments live under `Sources/MHCStudyDefinitionExporter/Resources/questionnaire/` as `en-US`/`es-US` pairs.
-The pair must stay structurally identical: only the display text and the locale metadata differ, and the contract suite compares the two projections to enforce it.
+The instruments are authored under `Sources/MHCStudyDefinitionExporter/Resources/questionnaire/` as `en-US`/`es-US` pairs, each declaring its own `language`.
+The pair must stay structurally identical, with the same `url` and `version`: only the display text and the locale metadata differ, and the contract suite compares the two projections to enforce it.
+The export merges each pair into one multilingual Questionnaire: the `en-US` source supplies the base strings and `language`, and every `es-US` string becomes a `translation` extension on the string it translates.
+The study bundle therefore carries exactly one Questionnaire per instrument, which is what a `QuestionnaireResponse` references and what the app loads and renders in the participant's language.
+
 Any change to instrument content bumps `studyRevision` in `Study.swift` together with the pinned expectation in the tests.
-A change that alters how a response is interpreted — item meaning, datatype, answer choices, required state, a condition, a constraint, the hierarchy, or an extraction marking — also increments that instrument's `Questionnaire.version`, because `url|version` names one immutable definition.
+Every change to the exported content also increments that instrument's `Questionnaire.version` in both sources, because `url|version` names one immutable definition.
+That covers anything that alters how a response is interpreted — item meaning, datatype, answer choices, required state, a condition, a constraint, the hierarchy, or an extraction marking — and any added, removed or changed translation.
 
 `linkId`s are persisted identifiers.
 Submitted `QuestionnaireResponse`s reference them, so a `linkId` is renamed only with a migration, never for tidiness.

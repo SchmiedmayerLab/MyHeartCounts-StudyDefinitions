@@ -4,7 +4,7 @@
   "id": "9D384C8A-897C-440C-8B04-B2BD622D3423",
   "title": "Panel - Tabaquismo",
   "status": "active",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",

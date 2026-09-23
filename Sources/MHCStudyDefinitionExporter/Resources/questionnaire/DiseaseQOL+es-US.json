@@ -3,7 +3,7 @@
   "language": "es-US",
   "title": "Calidad de vida en enfermedades",
   "status": "active",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",

@@ -4,7 +4,7 @@
   "id": "7F0E807D-2B29-4366-A19C-731FC40C5892",
   "title": "Dieta",
   "status": "active",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",

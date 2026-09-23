@@ -4,7 +4,7 @@
   "id": "990CA274-07E0-4EEE-ACFB-0B8FF6900695",
   "title": "Actividad/Aptitud Física",
   "status": "active",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",

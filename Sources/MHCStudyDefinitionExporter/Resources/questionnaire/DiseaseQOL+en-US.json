@@ -4,7 +4,7 @@
   "id": "343982A4-907C-4E59-8E8F-9C379F9579DA",
   "title": "Disease QOL",
   "status": "active",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",

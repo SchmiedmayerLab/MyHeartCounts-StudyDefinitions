@@ -4,7 +4,7 @@
   "id": "05E37E76-1308-456C-815D-90BCAA26814F",
   "title": "WHO-5",
   "status": "active",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",

@@ -4,7 +4,7 @@
   "id": "A6F08E4E-519C-4E49-B1F7-EE2BDA12AFC7",
   "title": "Exercise Adequacy Measure",
   "status": "active",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
