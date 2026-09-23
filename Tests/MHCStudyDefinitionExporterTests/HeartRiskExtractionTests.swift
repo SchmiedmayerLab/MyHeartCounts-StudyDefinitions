@@ -6,6 +6,11 @@
 // SPDX-License-Identifier: MIT
 //
 
+#if canImport(CryptoKit)
+import CryptoKit
+#else
+import Crypto
+#endif
 import Foundation
 import GroveFHIRContract
 import GroveQuestionnaireExtraction
@@ -213,24 +218,30 @@ extension HeartRiskExtractionTests {
                 value: "participant-001".asFHIRStringPrimitive()
             )
         ]
+        let keyID = "mhc-contract-test"
+        let epoch = EventSequence(1)
+        let systems = try DeploymentIdentifierSystems.derived(
+            root: "https://myheartcounts.stanford.edu/fhir",
+            keyID: keyID,
+            epoch: epoch
+        )
         return QuestionnaireExtractionContext(
             patient: patient,
             eventIdentifier: try ExchangeEventIdentifier(
-                system: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-event",
+                system: systems.event,
                 producerInstance: try #require(UUID(uuidString: "6f9d1c4a-2b7e-4f18-9c33-5a1d0e7b2c48")),
-                sequence: 1
+                sequence: EventSequence(1)
             ),
-            identityScope: try PseudonymousIdentityScope(
-                systems: try identitySystems(),
-                keyID: "mhc-contract-test",
-                epoch: 1,
-                key: Data(repeating: 0x2A, count: 32)
+            identityScope: try OpaqueIdentityScope(
+                systems: systems,
+                keyID: keyID,
+                epoch: epoch,
+                key: SymmetricKey(data: Data(repeating: 0x2A, count: 32))
             ),
             repositoryScope: try BusinessIdentifier(
                 system: "urn:uuid:1f5c58aa-6ec6-4e79-a682-829a9debd3f5",
                 value: "default"
             ),
-            entryNodeIdentifierSystem: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-entry-node",
             conversionInstant: Date(timeIntervalSince1970: 1_787_931_125),
             localWriter: try QuestionnaireWriterContext(
                 applicationIdentifier: try BusinessIdentifier(
@@ -240,21 +251,6 @@ extension HeartRiskExtractionTests {
                 applicationName: "My Heart Counts",
                 applicationVersion: "1.0.0"
             )
-        )
-    }
-
-    private static func identitySystems() throws -> PseudonymousIdentitySystems {
-        try PseudonymousIdentitySystems(
-            sourceRecord: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-source-record",
-            sourceOutput: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-source-output",
-            writerRecord: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-writer-record",
-            providerRecord: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-provider-record",
-            providerOutput: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-provider-output",
-            sourceArtifact: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-source-artifact",
-            providerArtifact: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-provider-artifact",
-            sourceContext: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-source-context",
-            recordingDevice: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-recording-device",
-            deviceSnapshot: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-device-snapshot"
         )
     }
 }

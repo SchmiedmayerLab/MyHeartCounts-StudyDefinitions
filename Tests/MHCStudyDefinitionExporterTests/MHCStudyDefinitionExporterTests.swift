@@ -99,17 +99,11 @@ extension MHCStudyDefinitionExporterTests {
         named name: String
     ) throws {
         #if canImport(GroveQuestionnaire) && canImport(GroveQuestionnaireFHIR)
-        let evaluationInstant = Date(timeIntervalSince1970: 1_700_000_000)
-        let diagnostics = GroveQuestionnaire.Questionnaire.authoringDiagnostics(
-            for: questionnaire,
-            evaluationInstant: evaluationInstant
-        )
+        let clock = QuestionnaireClock.fixed(at: Date(timeIntervalSince1970: 1_700_000_000), in: .gmt)
+        let diagnostics = GroveQuestionnaire.Questionnaire.authoringDiagnostics(for: questionnaire, clock: clock)
         #expect(diagnostics.isEmpty, "\(name): Grove import diagnostics: \(diagnostics.joined(separator: "; "))")
 
-        let nativeQuestionnaire = try GroveQuestionnaire.Questionnaire(
-            questionnaire,
-            evaluationInstant: evaluationInstant
-        )
+        let nativeQuestionnaire = try GroveQuestionnaire.Questionnaire(questionnaire, clock: clock)
         let exported = try jsonObject(try ResourceBuilder().questionnaire(from: nativeQuestionnaire))
         for key in ["url", "version", "status"] {
             #expect(exported[key] as? String == original[key] as? String, "\(name): round trip changed \(key)")

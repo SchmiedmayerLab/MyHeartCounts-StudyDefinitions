@@ -28,9 +28,10 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/SchmiedmayerLab/Grove.git",
-            revision: "83cf971ccb1ead1c80f0da23d684322be85e96da"
+            revision: "42e27e4779e2a9b14d28a3274f553695246981fe"
         ),
-        .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.6.2")
+        .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.6.2"),
+        .package(url: "https://github.com/apple/swift-crypto.git", "4.0.0"..<"6.0.0")
     ],
     targets: [
         .target(
@@ -72,6 +73,7 @@ let package = Package(
                 .product(name: "GroveStudyDefinition", package: "Grove"),
                 .product(name: "GroveFHIRContract", package: "Grove"),
                 .product(name: "GroveQuestionnaireExtraction", package: "Grove"),
+                .product(name: "Crypto", package: "swift-crypto", condition: .when(platforms: [.linux])),
                 // Grove's questionnaire authoring products do not build on the Linux CI leg.
                 .product(name: "GroveQuestionnaire", package: "Grove", condition: .when(platforms: [.macOS])),
                 .product(name: "GroveQuestionnaireFHIR", package: "Grove", condition: .when(platforms: [.macOS]))
