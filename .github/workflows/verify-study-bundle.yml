@@ -33,3 +33,5 @@ jobs:
       contents: read
     with:
       runs_on_labels: '["ubuntu-latest"]'
+      # Swift 6.4.0's default build system compiles Grove's Apple-only targets on Linux (swiftlang/swift-package-manager#10538).
+      build_flags: '--build-system native'

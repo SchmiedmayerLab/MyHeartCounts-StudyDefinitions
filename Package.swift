@@ -26,8 +26,12 @@ let package = Package(
         .executable(name: "MHCStudyDefinitionExporterCLI", targets: ["MHCStudyDefinitionExporterCLI"])
     ],
     dependencies: [
-        .package(url: "https://github.com/SchmiedmayerLab/Grove.git", exact: "0.3.0-beta.2"),
-        .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.6.2")
+        .package(
+            url: "https://github.com/SchmiedmayerLab/Grove.git",
+            revision: "66f0a88e111bcf8c985f71c41890c0850d9acd73"
+        ),
+        .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.6.2"),
+        .package(url: "https://github.com/apple/swift-crypto.git", "4.0.0"..<"6.0.0")
     ],
     targets: [
         .target(
@@ -66,7 +70,13 @@ let package = Package(
             dependencies: [
                 "MHCStudyDefinition",
                 "MHCStudyDefinitionExporter",
-                .product(name: "GroveStudyDefinition", package: "Grove")
+                .product(name: "GroveStudyDefinition", package: "Grove"),
+                .product(name: "GroveFHIRContract", package: "Grove"),
+                .product(name: "GroveQuestionnaireExtraction", package: "Grove"),
+                .product(name: "Crypto", package: "swift-crypto", condition: .when(platforms: [.linux])),
+                // Grove's questionnaire authoring products do not build on the Linux CI leg.
+                .product(name: "GroveQuestionnaire", package: "Grove", condition: .when(platforms: [.macOS])),
+                .product(name: "GroveQuestionnaireFHIR", package: "Grove", condition: .when(platforms: [.macOS]))
             ]
         )
     ]

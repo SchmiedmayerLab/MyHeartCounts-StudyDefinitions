@@ -1,0 +1,220 @@
+//
+// This source file is part of the My Heart Counts Study Definitions open-source project
+//
+// SPDX-FileCopyrightText: 2025 Stanford University and the project authors (see CONTRIBUTORS.md)
+//
+// SPDX-License-Identifier: MIT
+//
+
+#if canImport(CryptoKit)
+import CryptoKit
+#else
+import Crypto
+#endif
+import Foundation
+import GroveFHIRContract
+import GroveQuestionnaireExtraction
+#if canImport(GroveQuestionnaireFHIR)
+import GroveQuestionnaireFHIR
+#endif
+@_spi(APISupport)
+import GroveStudyDefinition
+import ModelsR4
+import Testing
+
+
+/// Holds the HeartRisk instrument to the measurements it promises to extract.
+///
+/// The exported instrument meets a hand-written response conforming to the Grove QuestionnaireResponse
+/// profile, and Grove projects the pair, so a dropped marking, a drifted LOINC, a renamed linkId, or a
+/// missing category fails here rather than in a study's data.
+@Suite
+struct HeartRiskExtractionTests {
+    private static let bloodPressurePanelLinkID = "blood-pressure-panel"
+    private static let systolicLinkID = "7cec349c-495c-4ef6-834e-cc9708625736"
+    private static let diastolicLinkID = "b25ac0aa-4528-47dc-951f-97f411ec5cc2"
+    private static let glucoseLinkID = "7309938e-ea24-4e31-8427-82f3a1a44f83"
+    private static let observationCategorySystem = "http://terminology.hl7.org/CodeSystem/observation-category"
+
+    @Test
+    func heartRiskKeepsOneTopLevelGroup() throws {
+        try StudyBundleFixture.withExportedStudyBundle { bundle in
+            let items = try #require(bundle.questionnaire(named: "HeartRisk")).item ?? []
+            // Grove renders every top-level group as its own section, so the wrapper keeps HeartRisk one page.
+            #expect(items.count == 1, "HeartRisk must keep exactly one top-level group")
+            #expect(items.first?.linkId.value?.string == "heart-risk")
+            #expect(items.first?.type.value == .group)
+        }
+    }
+
+
+    @Test
+    func markedMeasurementsProjectIntoConformingObservations() throws {
+        try StudyBundleFixture.withExportedStudyBundle { bundle in
+            let questionnaire = try #require(bundle.questionnaire(named: "HeartRisk"))
+            let response = try Self.response(for: questionnaire)
+            #if canImport(GroveQuestionnaireFHIR)
+            let issues = PairValidator().issues(questionnaire: questionnaire, response: response)
+            #expect(issues.isEmpty, "\(issues.map(\.message))")
+            #endif
+            let graph = try QuestionnaireExchangeProjection.exchangeGraph(
+                questionnaire: questionnaire,
+                response: response,
+                context: try Self.extractionContext()
+            )
+            let observations = (graph.bundle.entry ?? []).compactMap { entry -> Observation? in
+                guard case .observation(let observation) = entry.resource else {
+                    return nil
+                }
+                return observation
+            }
+            #expect(observations.count == 2, "HeartRisk extracts the blood-pressure panel and the fasting glucose")
+            try validateBloodPressure(try #require(observations.first { Self.code(of: $0) == "85354-9" }))
+            try validateGlucose(try #require(observations.first { Self.code(of: $0) == "2339-0" }))
+        }
+    }
+
+
+    private func validateBloodPressure(_ observation: Observation) throws {
+        #expect(observation.meta?.profile == [Profile.groveMobileBloodPressure])
+        #expect(
+            observation.category?.count == 1,
+            "the blood-pressure panel must extract into the one category its profile requires"
+        )
+        let category = try #require(observation.category?.first)
+        #expect(category.coding?.count == 1, "the vital-signs category carries exactly one coding")
+        #expect(category.coding?.first?.system?.value?.url.absoluteString == Self.observationCategorySystem)
+        #expect(category.coding?.first?.code?.value?.string == "vital-signs")
+        let components = observation.component ?? []
+        #expect(components.count == 2)
+        #expect(Self.quantity(of: components.first { Self.code(of: $0) == "8480-6" }) == (118, "mm[Hg]"))
+        #expect(Self.quantity(of: components.first { Self.code(of: $0) == "8462-4" }) == (76, "mm[Hg]"))
+        #expect(observation.value == nil, "a panel carries its readings as components")
+        validateProvenanceContract(observation)
+    }
+
+
+    private func validateGlucose(_ observation: Observation) throws {
+        #expect(observation.meta?.profile == [Profile.groveMobileBloodGlucoseUnspecifiedSpecimen])
+        // The glucose profile fixes no category, so the instrument deliberately declares none.
+        #expect(observation.category == nil)
+        #expect(observation.component == nil)
+        guard case .quantity(let quantity)? = observation.value else {
+            Issue.record("the fasting glucose must extract as a Quantity")
+            return
+        }
+        #expect(quantity.value?.value?.decimal == 95)
+        #expect(quantity.code?.value?.string == "mg/dL")
+        validateProvenanceContract(observation)
+    }
+
+
+    /// Every extracted Observation states report-time semantics and manual entry, which is what the
+    /// IG's recall relaxation requires of a self-reported measurement.
+    private func validateProvenanceContract(_ observation: Observation) {
+        let recordingMethods = (observation.extension ?? []).filter { $0.url == Canonicals.recordingMethod }
+        #expect(recordingMethods.count == 1, "an extracted Observation must state its recording method")
+        // GroveRecordingMethod fixes `value[x] only Coding`, so a CodeableConcept here is off-profile.
+        guard case .coding(let coding)? = recordingMethods.first?.value else {
+            Issue.record("the recording method must be a Coding")
+            return
+        }
+        #expect(coding.code?.value?.string == "manual-entry")
+        #expect(coding.system == Canonicals.recordingMethodCodeSystem)
+        #expect(observation.effective == .dateTime(ResponseFixture.authored), "the response's authored instant is the effective time")
+        #expect(observation.derivedFrom?.count == 1, "an extracted Observation derives from its response")
+    }
+}
+
+
+// MARK: Fixtures
+
+extension HeartRiskExtractionTests {
+    private static func code(of observation: Observation) -> String? {
+        observation.code.coding?.first?.code?.value?.string
+    }
+
+    private static func code(of component: ObservationComponent) -> String? {
+        component.code.coding?.first?.code?.value?.string
+    }
+
+    private static func quantity(of component: ObservationComponent?) -> (value: Decimal?, code: String?) {
+        guard case .quantity(let quantity)? = component?.value else {
+            return (nil, nil)
+        }
+        return (quantity.value?.value?.decimal, quantity.code?.value?.string)
+    }
+
+    private static func answer(_ value: Decimal, code: String, unit: String) -> QuestionnaireResponseItemAnswer {
+        QuestionnaireResponseItemAnswer(value: .quantity(Quantity(
+            code: code.asFHIRStringPrimitive(),
+            system: "http://unitsofmeasure.org",
+            unit: unit.asFHIRStringPrimitive(),
+            value: FHIRPrimitive(FHIRDecimal(value))
+        )))
+    }
+
+    /// A completed response in the instrument's base language, answering exactly the marked items and
+    /// mirroring the instrument's hierarchy.
+    private static func response(for questionnaire: ModelsR4.Questionnaire) throws -> ModelsR4.QuestionnaireResponse {
+        try ResponseFixture.completed(
+            questionnaire,
+            in: try #require(questionnaire.language),
+            identifier: "heart-risk-extraction-contract",
+            items: [
+                ResponseFixture.item("heart-risk", children: [
+                    ResponseFixture.item(bloodPressurePanelLinkID, children: [
+                        ResponseFixture.item(systolicLinkID, answer: answer(118, code: "mm[Hg]", unit: "mmHg")),
+                        ResponseFixture.item(diastolicLinkID, answer: answer(76, code: "mm[Hg]", unit: "mmHg"))
+                    ]),
+                    ResponseFixture.item(glucoseLinkID, answer: answer(95, code: "mg/dL", unit: "mg/dL"))
+                ])
+            ]
+        )
+    }
+
+    private static func extractionContext() throws -> QuestionnaireExtractionContext {
+        var patient = ModelsR4.Patient()
+        patient.id = ResponseFixture.participantID.asFHIRStringPrimitive()
+        patient.identifier = [
+            Identifier(
+                system: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-participant",
+                value: "participant-001".asFHIRStringPrimitive()
+            )
+        ]
+        let keyID = "mhc-contract-test"
+        let epoch = EventSequence(1)
+        let systems = try DeploymentIdentifierSystems.derived(
+            root: "https://myheartcounts.stanford.edu/fhir",
+            keyID: keyID,
+            epoch: epoch
+        )
+        return QuestionnaireExtractionContext(
+            patient: patient,
+            eventIdentifier: try ExchangeEventIdentifier(
+                system: systems.event,
+                producerInstance: try #require(UUID(uuidString: "6f9d1c4a-2b7e-4f18-9c33-5a1d0e7b2c48")),
+                sequence: EventSequence(1)
+            ),
+            identityScope: try OpaqueIdentityScope(
+                systems: systems,
+                keyID: keyID,
+                epoch: epoch,
+                key: SymmetricKey(data: Data(repeating: 0x2A, count: 32))
+            ),
+            repositoryScope: try BusinessIdentifier(
+                system: "urn:uuid:1f5c58aa-6ec6-4e79-a682-829a9debd3f5",
+                value: "default"
+            ),
+            conversionInstant: Date(timeIntervalSince1970: 1_787_931_125),
+            localWriter: try QuestionnaireWriterContext(
+                applicationIdentifier: try BusinessIdentifier(
+                    system: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-application",
+                    value: "edu.stanford.myheartcounts"
+                ),
+                applicationName: "My Heart Counts",
+                applicationVersion: "1.0.0"
+            )
+        )
+    }
+}
