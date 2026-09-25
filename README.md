@@ -26,6 +26,12 @@ This package consists of 3 (three) targets:
 Note that the package does not make the actual study definition available as an SPM package; this is intentional.
 Instead, the package only implements the code that exports the study bundle, in a format the MHC app can then download from a server and consume.
 
+## UK consent for internal testing
+
+The shared bundle includes `Consent+en-GB.md`, a clearly labelled placeholder for testing the Imperial onboarding and signature flow. It uses the existing consent response identifiers and must be replaced with an approved document before public UK enrollment.
+
+The app selects consent by the enrolled study variant's locale, not the device's region or the backend hosting the bundle. Stanford enrollment uses the US region, so an English-speaking participant with a UK device locale still receives `Consent+en-US.md`. Imperial test enrollment uses the GB region and receives the placeholder. The app controls access to the test variant; the bundle itself does not distinguish TestFlight from App Store builds.
+
 ## Testing and Study Defitition Integrity Validation
 The `swift test` command may be used to run a dry-run export of the study definition, which will fail if the integrity verification step performed as part of the export finds any issues with the study definition (e.g., invalid references, invalid questionnaire definitions, etc).
 

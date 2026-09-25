@@ -32,7 +32,19 @@ struct MHCStudyDefinitionExporterTests {
                 directoryHint: .isDirectory
             )
             let bundle = try StudyBundle.unarchive(archiveUrl, to: bundleUrl)
-            #expect(bundle.studyDefinition.studyRevision == 44)
+            #expect(bundle.studyDefinition.studyRevision == 45)
+
+            let consentRef = try #require(bundle.studyDefinition.metadata.consentFileRef)
+            let stanfordConsent = try #require(bundle.consentText(
+                for: consentRef, in: Locale(identifier: "en-US"), using: .requirePerfectMatch, fallbackLocale: .enUS
+            ))
+            #expect(stanfordConsent.contains("# STANFORD UNIVERSITY"))
+            #expect(!stanfordConsent.contains("INTERNAL TESTING ONLY"))
+
+            let imperialConsent = try #require(bundle.consentText(
+                for: consentRef, in: Locale(identifier: "en-GB"), using: .requirePerfectMatch, fallbackLocale: nil
+            ))
+            #expect(imperialConsent.contains("# IMPERIAL VARIANT — INTERNAL TESTING ONLY"))
         } catch StudyBundle.CreateBundleError.failedValidation(let issues) {
             let desc = issues.enumerated().reduce(into: "Failed Validation:\n") { desc, element in
                 let (idx, issue) = element
