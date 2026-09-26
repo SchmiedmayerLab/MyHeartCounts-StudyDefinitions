@@ -100,7 +100,7 @@ private func appleArchive(bundleAt bundleUrl: URL) throws -> URL {
     return archiveUrl
     #else
     throw NSError(domain: "edu.stanford.MHCStudyDefinitionExporter", code: 0, userInfo: [
-        NSLocalizedDescriptionKey: "The Apple Archive format requires AppleArchive. Export with --format \(Format.zstd.rawValue)."
+        NSLocalizedDescriptionKey: "The Apple Archive format requires AppleArchive. Export with --format \(StudyBundle.Format.zstd.rawValue)."
     ])
     #endif
 }
