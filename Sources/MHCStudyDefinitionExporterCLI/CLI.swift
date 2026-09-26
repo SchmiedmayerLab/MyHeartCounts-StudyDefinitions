@@ -12,6 +12,7 @@ import ArgumentParser
 import Foundation
 @_spi(APISupport)
 import GroveStudyDefinition
+import MHCStudyDefinition
 import MHCStudyDefinitionExporter
 
 
@@ -38,8 +39,11 @@ struct Export: ParsableCommand {
     }
     
     @Option(help: "The desired output format")
-    var format: Format = .zstd
+    var format: StudyBundle.Format = .zstd
     
+    @Option(help: "The study variant to export")
+    var variant: StudyVariant = .stanford
+
     @Argument(help: "Directory into which the output file should be stored.")
     var outputDir: String = "."
     
@@ -47,7 +51,8 @@ struct Export: ParsableCommand {
     
     init() {}
     
-    fileprivate init(format: Format, outputDir: URL, isValidation: Bool) {
+    fileprivate init(variant: StudyVariant, format: StudyBundle.Format, outputDir: URL, isValidation: Bool) {
+        self.variant = variant
         self.format = format
         self.outputDir = outputDir.absoluteURL.path(percentEncoded: false)
         self.isValidation = isValidation
@@ -56,12 +61,12 @@ struct Export: ParsableCommand {
     func run() throws {
         do {
             let outputDir = URL(filePath: outputDir, relativeTo: .currentDirectory())
-            let outputUrl = try export(to: outputDir, as: format)
+            let outputUrl = try export(variant, to: outputDir, as: format)
             if !isValidation {
                 print("Exported to \(outputUrl.absoluteURL.path(percentEncoded: false))")
             }
         } catch StudyBundle.CreateBundleError.failedValidation(let issues) {
-            print("Failed Validation: found \(issues.count) issue\(issues.count == 1 ? "" : "s")")
+            print("Failed Validation (\(variant.rawValue)): found \(issues.count) issue\(issues.count == 1 ? "" : "s")")
             for (idx, issue) in issues.enumerated() {
                 print("\n[\(String(format: "%02li", idx + 1))] \(issue)")
             }
@@ -75,7 +80,7 @@ struct Export: ParsableCommand {
 
 struct Validate: ParsableCommand {
     static var configuration: CommandConfiguration {
-        CommandConfiguration(abstract: "Validate the study definition without actually exporting it to disk.")
+        CommandConfiguration(abstract: "Validate both study variants using temporary exports.")
     }
     
     func run() throws {
@@ -85,13 +90,22 @@ struct Validate: ParsableCommand {
         defer {
             try? fileManager.removeItem(at: dir)
         }
-        try Export(format: .zstd, outputDir: dir, isValidation: true).run()
+        for variant in StudyVariant.allCases {
+            try Export(variant: variant, format: .zstd, outputDir: dir, isValidation: true).run()
+        }
         print("Validation succeeded.")
     }
 }
 
 
-extension Format: ExpressibleByArgument {
+extension StudyBundle.Format: ExpressibleByArgument {
+    nonisolated public init?(argument: String) {
+        self.init(rawValue: argument)
+    }
+}
+
+
+extension StudyVariant: ExpressibleByArgument {
     nonisolated public init?(argument: String) {
         self.init(rawValue: argument)
     }

@@ -8,72 +8,36 @@
 
 import Foundation
 import GroveFoundation
-import GroveLocalization
 @_spi(APISupport)
 import GroveStudyDefinition
-
-
-public enum Format: String, Codable, CaseIterable {
-    /// A zstd-compressed tar archive, readable on every platform. The default.
-    case zstd
-    /// The uncompressed bundle directory.
-    case package
-    /// An Apple Archive, readable only on Apple platforms.
-    @available(*, deprecated, message: "Use the cross-platform 'zstd' format instead.")
-    case archive
-
-    // Manual so the deprecated Apple Archive case neither breaks the synthesis nor
-    // appears in the CLI's format suggestions.
-    public static var allCases: [Format] {
-        [.zstd, .package]
-    }
-}
+import MHCStudyDefinition
 
 
 /// Exports the My Heart Counts study bundle to the specified `outputDir`, in the given ``Format``.
-@discardableResult
-public func export(to outputDir: URL, as format: Format) throws -> URL {
+///
+/// - returns: The `URL` of the exported study bundle.
+public func export(_ variant: StudyVariant, to outputDir: URL, as format: StudyBundle.Format) throws -> URL {
     let fileManager = FileManager.default
     guard fileManager.itemExists(at: outputDir) && fileManager.isDirectory(at: outputDir) else {
         throw NSError(domain: "edu.stanford.MHCStudyDefinitionExporter", code: 0, userInfo: [
             NSLocalizedDescriptionKey: "Output directory '\(outputDir.path())' does not exist."
         ])
     }
-    let filename = "mhcStudyBundle"
-    let bundleUrl = outputDir.appending(path: "\(filename).\(StudyBundle.fileExtension)", directoryHint: .isDirectory)
-    
-    let inputFiles: [StudyBundle.FileResourceInput] = try Array {
-        let bundleResourceUrl = try tryUnwrap(Bundle.module.resourceURL, "Unable to find Bundle /Resources URL")
-        /// key: category; value: folder in which that category's files are stored.
-        let categories: [StudyBundle.FileReference.Category: URL] = [
-            .consent: bundleResourceUrl.appending(path: "consent"),
-            .questionnaire: bundleResourceUrl.appending(path: "questionnaire"),
-            .informationalArticle: bundleResourceUrl.appending(path: "article"),
-            .hhdExplainer: bundleResourceUrl.appending(path: "hhdExplainer")
-        ]
-        for (category, dirUrl) in categories {
-            for url in try fileManager.contents(of: dirUrl) {
-                if let (unlocalizedUrl, localizationInfo) = LocalizedFileResolution.parse(url) {
-                    let (filename, fileExt) = (
-                        unlocalizedUrl.deletingPathExtension().lastPathComponent,
-                        url.pathExtension
-                    )
-                    StudyBundle.FileResourceInput(
-                        fileRef: .init(category: category, filename: filename, fileExtension: fileExt),
-                        localization: localizationInfo,
-                        contentsOf: url
-                    )
-                }
-            }
-        }
-        StudyBundle.FileResourceInput(
-            pathInBundle: "\(StudyBundle.FileReference.Category.informationalArticle.rawValue)/assets",
-            contentsOf: try tryUnwrap(Bundle.module.url(forResource: "article/assets", withExtension: nil), "Unable to find assets dir in bundle")
-        )
+    let filename = switch variant {
+    case .stanford:
+        "mhcStudyBundle"
+    case .imperial:
+        "mhcStudyBundle-imperial"
     }
+    let bundleUrl = outputDir.appending(path: "\(filename).\(StudyBundle.fileExtension)", directoryHint: .isDirectory)
+    let definition = mhcStudyDefinition(for: variant)
+    let inputFiles = try resourceInputs(for: variant, consentFileRef: definition.metadata.consentFileRef)
+    let bundle = try StudyBundle.writeToDisk(
+        at: bundleUrl,
+        definition: definition,
+        files: inputFiles
+    )
     
-    let bundle = try StudyBundle.writeToDisk(at: bundleUrl, definition: mhcStudyDefinition, files: inputFiles)
-
     switch format {
     case .package:
         return bundleUrl
@@ -86,6 +50,40 @@ public func export(to outputDir: URL, as format: Format) throws -> URL {
     case .archive:
         return try appleArchive(bundleAt: bundleUrl)
     }
+}
+
+
+private func resourceInputs(
+    for variant: StudyVariant,
+    consentFileRef: StudyBundle.FileReference?
+) throws -> [StudyBundle.FileResourceInput] {
+    let bundleResourceUrl = try tryUnwrap(Bundle.module.resourceURL, "Unable to find Bundle /Resources URL")
+    /// key: category; value: folder in which that category's files are stored.
+    let categories: [StudyBundle.FileReference.Category: URL] = [
+        .consent: bundleResourceUrl.appending(path: "consent"),
+        .questionnaire: bundleResourceUrl.appending(path: "questionnaire"),
+        .informationalArticle: bundleResourceUrl.appending(path: "article"),
+        .hhdExplainer: bundleResourceUrl.appending(path: "hhdExplainer")
+    ]
+    let resources = try categories.flatMap { category, dirUrl in
+        try FileManager.default.contents(of: dirUrl).compactMap { try StudyResource(url: $0, category: category) }
+    }
+    let selectedResources = try StudyResource.select(resources, for: variant)
+    if let consentRef = consentFileRef, !selectedResources.contains(where: { $0.fileRef == consentRef }) {
+        throw StudyBundle.CreateBundleError.failedValidation([.general(.noFilesMatchingFileRef(consentRef))])
+    }
+    var inputs = selectedResources.map { resource in
+        StudyBundle.FileResourceInput(
+            fileRef: resource.fileRef,
+            localization: resource.localization,
+            contentsOf: resource.url
+        )
+    }
+    inputs.append(StudyBundle.FileResourceInput(
+        pathInBundle: "\(StudyBundle.FileReference.Category.informationalArticle.rawValue)/assets",
+        contentsOf: try tryUnwrap(Bundle.module.url(forResource: "article/assets", withExtension: nil), "Unable to find assets dir in bundle")
+    ))
+    return inputs
 }
 
 

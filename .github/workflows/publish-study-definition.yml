@@ -70,7 +70,7 @@ jobs:
           echo "Injecting Environment Variables In Deployment Workflow: ${{ vars.FIREBASE_PROJECT_ID }} for staging/development, ${{ vars.FIREBASE_PROJECT_ID_PRODUCTION_US }} for production US, ${{ vars.FIREBASE_PROJECT_ID_PRODUCTION_UK }} for production UK"
 
   build:
-    name: Build Study Bundle
+    name: Build Study Bundles
     needs: [determineenvironment, vars]
     runs-on: ["self-hosted", "macOS"]
     environment: ${{ needs.determineenvironment.outputs.environment }}
@@ -82,18 +82,25 @@ jobs:
         with:
           xcode-version: latest-stable
 
-      - name: Build study bundle
+      - name: Build study bundles
         run: |
-          swift run MHCStudyDefinitionExporterCLI export .
+          for variant in stanford imperial; do
+            swift run MHCStudyDefinitionExporterCLI export --variant "$variant" .
+          done
+          test -s mhcStudyBundle.studybundle.tar.zst
+          test -s mhcStudyBundle-imperial.studybundle.tar.zst
 
-      - name: Upload study bundle artifact
+      - name: Upload study bundles artifact
         uses: actions/upload-artifact@v7
         with:
-          name: study-bundle
-          path: mhcStudyBundle.studybundle.tar.zst
+          name: study-bundles
+          path: |
+            mhcStudyBundle.studybundle.tar.zst
+            mhcStudyBundle-imperial.studybundle.tar.zst
+          if-no-files-found: error
 
   authenticate-and-publish:
-    name: (Development/Staging) Publish Study Bundle to Firebase Storage
+    name: (Development/Staging) Publish Study Bundles to Firebase Storage
     if: needs.determineenvironment.outputs.environment != 'production'
     needs: [build, determineenvironment, vars]
     runs-on: ubuntu-latest
@@ -102,10 +109,10 @@ jobs:
       - name: Setup Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v3
 
-      - name: Download study bundle artifact
+      - name: Download study bundles artifact
         uses: actions/download-artifact@v8
         with:
-          name: study-bundle
+          name: study-bundles
 
       - name: Decode and authenticate to Google Cloud
         run: |
@@ -128,19 +135,21 @@ jobs:
           gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
           gcloud config set project ${{ needs.vars.outputs.FIREBASE_PROJECT_ID }}
 
-      - name: Upload study bundle to Firebase Storage
+      - name: Upload study bundles to Firebase Storage
         run: |
-          gsutil cp mhcStudyBundle.studybundle.tar.zst gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID }}.firebasestorage.app/public/
-
-          gsutil acl ch -u AllUsers:R gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID }}.firebasestorage.app/public/mhcStudyBundle.studybundle.tar.zst
+          for bundle in mhcStudyBundle.studybundle.tar.zst mhcStudyBundle-imperial.studybundle.tar.zst; do
+            gsutil cp "$bundle" "gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID }}.firebasestorage.app/public/$bundle"
+            gsutil acl ch -u AllUsers:R "gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID }}.firebasestorage.app/public/$bundle"
+          done
 
       - name: Verify upload
         run: |
-          # List the files in the public directory to confirm
-          gsutil ls gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID }}.firebasestorage.app/public/
+          for bundle in mhcStudyBundle.studybundle.tar.zst mhcStudyBundle-imperial.studybundle.tar.zst; do
+            gsutil ls "gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID }}.firebasestorage.app/public/$bundle"
+          done
 
   authenticate-and-publish-production:
-    name: (Production) Publish Study Bundle to Firebase Storage
+    name: (Production) Publish Study Bundles to Firebase Storage
     if: needs.determineenvironment.outputs.environment == 'production'
     needs: [build, determineenvironment, vars]
     runs-on: ubuntu-latest
@@ -149,10 +158,10 @@ jobs:
       - name: Setup Google Cloud SDK for Production
         uses: google-github-actions/setup-gcloud@v3
 
-      - name: Download study bundle artifact
+      - name: Download study bundles artifact
         uses: actions/download-artifact@v8
         with:
-          name: study-bundle
+          name: study-bundles
 
       - name: (US production) Decode and authenticate to Google Cloud
         run: |
@@ -185,16 +194,18 @@ jobs:
           gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
           gcloud config set project ${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_US }}
 
-      - name: (US production) Upload study bundle to Firebase Storage
+      - name: (US production) Upload study bundles to Firebase Storage
         run: |
-          gsutil cp mhcStudyBundle.studybundle.tar.zst gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_US }}.firebasestorage.app/public/
-
-          gsutil acl ch -u AllUsers:R gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_US }}.firebasestorage.app/public/mhcStudyBundle.studybundle.tar.zst
+          for bundle in mhcStudyBundle.studybundle.tar.zst mhcStudyBundle-imperial.studybundle.tar.zst; do
+            gsutil cp "$bundle" "gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_US }}.firebasestorage.app/public/$bundle"
+            gsutil acl ch -u AllUsers:R "gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_US }}.firebasestorage.app/public/$bundle"
+          done
 
       - name: (US production) Verify upload
         run: |
-          # List the files in the public directory to confirm
-          gsutil ls gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_US }}.firebasestorage.app/public/
+          for bundle in mhcStudyBundle.studybundle.tar.zst mhcStudyBundle-imperial.studybundle.tar.zst; do
+            gsutil ls "gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_US }}.firebasestorage.app/public/$bundle"
+          done
 
       - name: (UK production) Decode and authenticate to Google Cloud
         if: ${{ false }}
@@ -221,12 +232,11 @@ jobs:
       - name: (UK production) Upload study bundle to Firebase Storage
         if: ${{ false }}
         run: |
-          gsutil cp mhcStudyBundle.studybundle.tar.zst gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_UK }}.firebasestorage.app/public/
+          gsutil cp mhcStudyBundle-imperial.studybundle.tar.zst gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_UK }}.firebasestorage.app/public/
 
-          gsutil acl ch -u AllUsers:R gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_UK }}.firebasestorage.app/public/mhcStudyBundle.studybundle.tar.zst
+          gsutil acl ch -u AllUsers:R gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_UK }}.firebasestorage.app/public/mhcStudyBundle-imperial.studybundle.tar.zst
 
       - name: (UK production) Verify upload
         if: ${{ false }}
         run: |
-          # List the files in the public directory to confirm
-          gsutil ls gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_UK }}.firebasestorage.app/public/
+          gsutil ls gs://${{ needs.vars.outputs.FIREBASE_PROJECT_ID_PRODUCTION_UK }}.firebasestorage.app/public/mhcStudyBundle-imperial.studybundle.tar.zst
