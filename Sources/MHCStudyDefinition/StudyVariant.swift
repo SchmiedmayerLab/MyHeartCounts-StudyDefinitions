@@ -8,7 +8,7 @@
 
 
 /// MHC Study Variant
-public enum StudyVariant: String, CaseIterable, Hashable, Codable, Sendable {
+public enum StudyVariant: String, CaseIterable, Hashable, Codable, CaseIterable, Sendable {
     /// The Stanford study variant
     case stanford
     /// The Imperial study variant
