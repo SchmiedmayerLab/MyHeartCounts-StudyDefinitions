@@ -33,3 +33,5 @@ jobs:
       contents: read
     with:
       runs_on_labels: '["ubuntu-latest"]'
+      # Swift 6.4's default build engine ignores transitive platform conditions (Grove#105).
+      build_flags: '--build-system native'
