@@ -7,10 +7,10 @@
 //
 
 import Foundation
-import SpeziFoundation
-import SpeziLocalization
+import GroveFoundation
+import GroveLocalization
 @_spi(APISupport)
-import SpeziStudyDefinition
+import GroveStudyDefinition
 
 
 public enum Format: String, Codable, CaseIterable {

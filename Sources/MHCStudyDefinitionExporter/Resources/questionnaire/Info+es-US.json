@@ -6,7 +6,7 @@
   "id": "FCB840EB-D08A-4DDE-8E26-6611369E2C3C",
   "meta": {
     "profile": [
-      "http://spezi.health/fhir/StructureDefinition/sdf-Questionnaire"
+      "https://grovealliance.org/fhir/core/StructureDefinition/sdf-Questionnaire"
     ],
     "tag": [
       {
@@ -36,6 +36,7 @@
   "subjectType": [
     "Patient"
   ],
+  "url": "https://myheartcounts.stanford.edu/fhir/survey/info",
   "item": [
     {
       "linkId": "2446d581-7a02-46da-831f-8ad568e6c471",

@@ -6,7 +6,7 @@
   "id": "C7BE4197-FD34-4741-9C6D-CD939F9CC232",
   "meta": {
     "profile": [
-      "http://spezi.health/fhir/StructureDefinition/sdf-Questionnaire"
+      "https://grovealliance.org/fhir/core/StructureDefinition/sdf-Questionnaire"
     ],
     "tag": [
       {
@@ -37,6 +37,7 @@
     "Patient"
   ],
   "purpose": "Workday vs. weekend sleep pattern snapshot",
+  "url": "https://myheartcounts.stanford.edu/fhir/survey/chronotype",
   "item": [
     {
       "linkId": "90cb3e9c-71f6-4a48-8fca-47776be52a99",

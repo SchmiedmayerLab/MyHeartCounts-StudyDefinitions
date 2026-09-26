@@ -6,7 +6,7 @@
   "status": "draft",
   "meta": {
     "profile": [
-      "http://spezi.health/fhir/StructureDefinition/sdf-Questionnaire"
+      "https://grovealliance.org/fhir/core/StructureDefinition/sdf-Questionnaire"
     ],
     "tag": [
       {

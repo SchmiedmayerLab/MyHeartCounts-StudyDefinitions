@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SpeziStudyDefinition
+import GroveStudyDefinition
 
 
 func tryUnwrap<T>(_ value: T?, _ message: @autoclosure () -> String) throws -> T {

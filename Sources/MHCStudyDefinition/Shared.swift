@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: MIT
 //
 
-import SpeziLocalization
-import SpeziStudyDefinition
+import GroveLocalization
+import GroveStudyDefinition
 
 
 extension StudyBundle.FileReference.Category {

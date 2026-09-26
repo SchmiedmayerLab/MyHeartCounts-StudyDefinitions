@@ -6,7 +6,7 @@
   "id": "337753B7-D353-4535-A2CC-DEECD2B49439",
   "meta": {
     "profile": [
-      "http://spezi.health/fhir/StructureDefinition/sdf-Questionnaire"
+      "https://grovealliance.org/fhir/core/StructureDefinition/sdf-Questionnaire"
     ],
     "tag": [
       {
@@ -36,6 +36,7 @@
   "subjectType": [
     "Patient"
   ],
+  "url": "https://myheartcounts.stanford.edu/fhir/survey/fatigue",
   "item": [
     {
       "linkId": "a9246b23-686b-460e-8353-1015316ce410",

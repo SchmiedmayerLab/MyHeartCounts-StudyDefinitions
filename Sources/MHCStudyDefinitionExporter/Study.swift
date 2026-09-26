@@ -9,12 +9,12 @@
 // swiftlint:disable closure_body_length
 
 import Foundation
+import GroveHealthKit
+import enum GroveHealthKitBulkExport.ExportSessionStartDate
+import GroveLocalization
+import GroveScheduler
+import GroveStudyDefinition
 import MHCStudyDefinition
-import SpeziHealthKit
-import enum SpeziHealthKitBulkExport.ExportSessionStartDate
-import SpeziLocalization
-import SpeziScheduler
-import SpeziStudyDefinition
 
 
 extension StudyBundle.FileReference {
@@ -39,7 +39,7 @@ extension StudyBundle.FileReference {
 
 
 let mhcStudyDefinition = StudyDefinition(
-    studyRevision: 43,
+    studyRevision: 44,
     metadata: .init(
         id: .mhcStudy,
         title: [.enUS: "My Heart Counts"],
