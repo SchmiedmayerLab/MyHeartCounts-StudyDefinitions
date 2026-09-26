@@ -49,7 +49,7 @@ public func export(_ variant: StudyVariant, to outputDir: URL, as format: StudyB
     case .package:
         return bundleUrl
     case .zstd:
-        let archiveUrl = outputDir.appending(path: "\(filename).\(StudyBundle.archiveFileExtension)")
+        let archiveUrl = outputDir.appending(path: "\(variant.defaultFilenameForExport).\(StudyBundle.archiveFileExtension)")
         try? fileManager.removeItem(at: archiveUrl)
         try bundle.archive(to: archiveUrl, compressionLevel: .maxRegular)
         try? fileManager.removeItem(at: bundleUrl)
