@@ -13,6 +13,19 @@ import GroveStudyDefinition
 import MHCStudyDefinition
 
 
+extension StudyVariant {
+    /// The default filename used when exporting a study bundle for this variant.
+    public var defaultFilenameForExport: String {
+        switch self {
+        case .stanford:
+            "mhcStudyBundle"
+        case .imperial:
+            "mhcStudyBundle-imperial"
+        }
+    }
+}
+
+
 /// Exports the My Heart Counts study bundle to the specified `outputDir`, in the given ``Format``.
 ///
 /// - returns: The `URL` of the exported study bundle.
@@ -23,13 +36,7 @@ public func export(_ variant: StudyVariant, to outputDir: URL, as format: StudyB
             NSLocalizedDescriptionKey: "Output directory '\(outputDir.path())' does not exist."
         ])
     }
-    let filename = switch variant {
-    case .stanford:
-        "mhcStudyBundle"
-    case .imperial:
-        "mhcStudyBundle-imperial"
-    }
-    let bundleUrl = outputDir.appending(path: "\(filename).\(StudyBundle.fileExtension)", directoryHint: .isDirectory)
+    let bundleUrl = outputDir.appending(path: "\(variant.defaultFilenameForExport).\(StudyBundle.fileExtension)", directoryHint: .isDirectory)
     let definition = mhcStudyDefinition(for: variant)
     let inputFiles = try resourceInputs(for: variant, consentFileRef: definition.metadata.consentFileRef)
     let bundle = try StudyBundle.writeToDisk(
