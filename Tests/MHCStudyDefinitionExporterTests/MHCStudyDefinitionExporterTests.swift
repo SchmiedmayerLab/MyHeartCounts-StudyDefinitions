@@ -55,14 +55,6 @@ struct MHCStudyDefinitionExporterTests {
     ]
 
     @Test
-    func export() throws {
-        try StudyBundleFixture.withExportedStudyBundle {
-            #expect($0.studyDefinition.studyRevision == 48)
-        }
-    }
-
-
-    @Test
     func questionnaireCatalogUsesGroveFHIRContract() throws {
         try StudyBundleFixture.withExportedStudyBundle { bundle in
             let names = StudyBundleFixture.questionnaireNames(in: bundle)

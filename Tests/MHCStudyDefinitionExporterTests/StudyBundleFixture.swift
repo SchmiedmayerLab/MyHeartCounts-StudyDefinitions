@@ -36,7 +36,7 @@ enum StudyBundleFixture {
         }
 
         do {
-            let archive = try MHCStudyDefinitionExporter.export(to: destination, as: .zstd)
+            let archive = try MHCStudyDefinitionExporter.export(.stanford, to: destination, as: .zstd)
             let bundleURL = destination.appending(
                 path: "mhcStudyBundle.\(StudyBundle.fileExtension)",
                 directoryHint: .isDirectory
