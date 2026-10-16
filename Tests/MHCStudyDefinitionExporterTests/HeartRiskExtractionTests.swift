@@ -49,7 +49,8 @@ struct HeartRiskExtractionTests {
 
 
     @Test
-    func markedMeasurementsProjectIntoConformingObservations() throws {
+    func markedMeasurementsProjectIntoConformingObservations() async throws {
+        var record: QuestionnaireFHIRExporter.Record?
         try StudyBundleFixture.withExportedStudyBundle { bundle in
             let questionnaire = try #require(bundle.questionnaire(named: "HeartRisk"))
             let response = try Self.response(for: questionnaire)
@@ -57,21 +58,18 @@ struct HeartRiskExtractionTests {
             let issues = PairValidator().issues(questionnaire: questionnaire, response: response)
             #expect(issues.isEmpty, "\(issues.map(\.message))")
             #endif
-            let graph = try QuestionnaireExchangeProjection.exchangeGraph(
-                questionnaire: questionnaire,
-                response: response,
-                context: try Self.extractionContext()
-            )
-            let observations = (graph.bundle.entry ?? []).compactMap { entry -> Observation? in
-                guard case .observation(let observation) = entry.resource else {
-                    return nil
-                }
-                return observation
-            }
-            #expect(observations.count == 2, "HeartRisk extracts the blood-pressure panel and the fasting glucose")
-            try validateBloodPressure(try #require(observations.first { Self.code(of: $0) == "85354-9" }))
-            try validateGlucose(try #require(observations.first { Self.code(of: $0) == "2339-0" }))
+            record = QuestionnaireFHIRExporter.Record(questionnaire: questionnaire, response: response)
         }
+        let graph = try await Self.exchangeGraph(of: try #require(record))
+        let observations = (graph.bundle.entry ?? []).compactMap { entry -> Observation? in
+            guard case .observation(let observation) = entry.resource else {
+                return nil
+            }
+            return observation
+        }
+        #expect(observations.count == 2, "HeartRisk extracts the blood-pressure panel and the fasting glucose")
+        try validateBloodPressure(try #require(observations.first { Self.code(of: $0) == "85354-9" }))
+        try validateGlucose(try #require(observations.first { Self.code(of: $0) == "2339-0" }))
     }
 
 
@@ -155,9 +153,9 @@ extension HeartRiskExtractionTests {
     }
 
     /// A completed response in the instrument's base language, answering exactly the marked items and
-    /// mirroring the instrument's hierarchy.
+    /// mirroring the instrument's hierarchy, with the writer context Grove requires of every response it exports.
     private static func response(for questionnaire: ModelsR4.Questionnaire) throws -> ModelsR4.QuestionnaireResponse {
-        try ResponseFixture.completed(
+        var response = try ResponseFixture.completed(
             questionnaire,
             in: try #require(questionnaire.language),
             identifier: "heart-risk-extraction-contract",
@@ -171,50 +169,60 @@ extension HeartRiskExtractionTests {
                 ])
             ]
         )
+        response.apply(writerContext: try QuestionnaireWriterContext(
+            applicationIdentifier: try BusinessIdentifier(
+                system: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-application",
+                value: "edu.stanford.myheartcounts"
+            ),
+            applicationName: "My Heart Counts",
+            applicationVersion: "1.0.0"
+        ))
+        return response
     }
 
-    private static func extractionContext() throws -> QuestionnaireExtractionContext {
+    /// The graph Grove exports for `record`, through an exporter over a fresh in-memory ledger.
+    private static func exchangeGraph(of record: QuestionnaireFHIRExporter.Record) async throws -> ExchangeGraph {
         var patient = ModelsR4.Patient()
         patient.id = ResponseFixture.participantID.asFHIRStringPrimitive()
-        patient.identifier = [
-            Identifier(
-                system: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-participant",
-                value: "participant-001".asFHIRStringPrimitive()
-            )
-        ]
         let keyID = "mhc-contract-test"
         let epoch = EventSequence(1)
-        let systems = try DeploymentIdentifierSystems.derived(
-            root: "https://myheartcounts.stanford.edu/fhir",
-            keyID: keyID,
-            epoch: epoch
-        )
-        return QuestionnaireExtractionContext(
-            patient: patient,
-            eventIdentifier: try ExchangeEventIdentifier(
-                system: systems.event,
-                producerInstance: try #require(UUID(uuidString: "6f9d1c4a-2b7e-4f18-9c33-5a1d0e7b2c48")),
-                sequence: EventSequence(1)
-            ),
+        let producer = try ExchangeProducer(
             identityScope: try OpaqueIdentityScope(
-                systems: systems,
+                systems: try DeploymentIdentifierSystems.derived(
+                    root: "https://myheartcounts.stanford.edu/fhir",
+                    keyID: keyID,
+                    epoch: epoch
+                ),
                 keyID: keyID,
                 epoch: epoch,
                 key: SymmetricKey(data: Data(repeating: 0x2A, count: 32))
             ),
-            repositoryScope: try BusinessIdentifier(
-                system: "urn:uuid:1f5c58aa-6ec6-4e79-a682-829a9debd3f5",
-                value: "default"
-            ),
-            conversionInstant: Date(timeIntervalSince1970: 1_787_931_125),
-            localWriter: try QuestionnaireWriterContext(
-                applicationIdentifier: try BusinessIdentifier(
-                    system: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-application",
-                    value: "edu.stanford.myheartcounts"
+            subject: .bundled(
+                try BusinessIdentifier(
+                    system: "https://myheartcounts.stanford.edu/fhir/NamingSystem/test-participant",
+                    value: "participant-001"
                 ),
-                applicationName: "My Heart Counts",
-                applicationVersion: "1.0.0"
-            )
+                patient
+            ),
+            application: try ApplicationDevice(
+                name: "My Heart Counts",
+                bundleIdentifier: "edu.stanford.myheartcounts",
+                version: "1.0.0"
+            ),
+            host: try HostDevice(operatingSystemVersion: "26.0", modelNumber: "iPhone17,1"),
+            storage: ExchangeProducer.InMemoryStorage()
         )
+        let exporter = QuestionnaireFHIRExporter(
+            producer: producer,
+            repositoryScope: try BusinessIdentifier(system: "urn:uuid:1f5c58aa-6ec6-4e79-a682-829a9debd3f5", value: "default")
+        )
+        var exports: [QuestionnaireFHIRExporter.Export] = []
+        let receipt = try await exporter.export([record], at: Date(timeIntervalSince1970: 1_787_931_125)) { exports.append($0) }
+        receipt.release()
+        #expect(exports.count == 1)
+        if case .refused(let error)? = exports.first?.outcome {
+            throw error
+        }
+        return try #require(exports.first?.graph)
     }
 }
