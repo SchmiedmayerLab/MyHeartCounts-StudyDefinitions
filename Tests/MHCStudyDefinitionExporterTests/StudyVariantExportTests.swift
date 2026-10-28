@@ -37,7 +37,7 @@ struct StudyVariantExportTests {
             let bundleURL = destination.appending(component: "roundtrip.studybundle", directoryHint: .isDirectory)
             bundle = try StudyBundle.unarchive(output, to: bundleURL)
         }
-        #expect(bundle.studyDefinition.studyRevision == 48)
+        #expect(bundle.studyDefinition.studyRevision == 49)
         try checkConsent(in: bundle, variant: variant)
         checkEligibility(in: bundle, variant: variant)
 

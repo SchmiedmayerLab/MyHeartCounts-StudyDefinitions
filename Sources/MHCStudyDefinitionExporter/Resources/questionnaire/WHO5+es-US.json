@@ -4,7 +4,7 @@
   "id": "05E37E76-1308-456C-815D-90BCAA26814F",
   "title": "WHO-5",
   "status": "active",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
@@ -64,6 +64,7 @@
           "linkId": "f641ae63-47d5-447e-8dd4-afe1685d4b1f",
           "type": "choice",
           "text": "Me he sentido alegre y de buen humor",
+          "required": true,
           "answerOption": [
             {
               "valueCoding": {
@@ -113,6 +114,7 @@
           "linkId": "a07c0c00-3f05-4273-f7fc-ca6a15686efe",
           "type": "choice",
           "text": "Me he sentido tranquilo y relajado",
+          "required": true,
           "answerOption": [
             {
               "valueCoding": {
@@ -162,6 +164,7 @@
           "linkId": "76b48a80-9eb9-4a14-8a8d-a09e980d2be3",
           "type": "choice",
           "text": "Me he sentido activo y enérgico",
+          "required": true,
           "answerOption": [
             {
               "valueCoding": {
@@ -254,12 +257,14 @@
               }
             }
           ],
-          "text": "Me he despertado fresco y descansado"
+          "text": "Me he despertado fresco y descansado",
+          "required": true
         },
         {
           "linkId": "80c92e40-1223-4cd8-806c-896e0868703f",
           "type": "choice",
           "text": "Mi vida cotidiana ha estado llena de cosas que me interesan",
+          "required": true,
           "answerOption": [
             {
               "valueCoding": {

@@ -4,7 +4,7 @@
   "id": "9D384C8A-897C-440C-8B04-B2BD622D3423",
   "title": "Dashboard - Smoking",
   "status": "active",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
@@ -46,6 +46,7 @@
       "linkId": "dcb2277e-fe96-4f45-844a-ef58a9516380",
       "type": "choice",
       "text": "What is your smoking status?",
+      "required": true,
       "answerOption": [
         {
           "valueCoding": {

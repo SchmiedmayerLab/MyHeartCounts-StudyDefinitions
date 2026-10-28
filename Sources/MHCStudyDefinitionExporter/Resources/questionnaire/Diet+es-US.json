@@ -4,7 +4,7 @@
   "id": "7F0E807D-2B29-4366-A19C-731FC40C5892",
   "title": "Dieta",
   "status": "active",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
@@ -56,17 +56,20 @@
         {
           "linkId": "92a6518b-61dd-442c-8082-09c3457daada",
           "type": "boolean",
-          "text": "¿Come frutas y/o verduras todos los días?"
+          "text": "¿Come frutas y/o verduras todos los días?",
+          "required": true
         },
         {
           "linkId": "bbf31b7d-ea50-45bf-88a9-5c5c21466ce8",
           "type": "boolean",
-          "text": "¿Come múltiples variedades de frutas cada semana?"
+          "text": "¿Come múltiples variedades de frutas cada semana?",
+          "required": true
         },
         {
           "linkId": "6616bfe1-d22f-488f-8ba6-0695cf19f634",
           "type": "boolean",
-          "text": "¿Come múltiples variedades de verduras cada semana?"
+          "text": "¿Come múltiples variedades de verduras cada semana?",
+          "required": true
         },
         {
           "linkId": "21a4f38b-bf69-41d5-9bc2-daf704b13c07",
@@ -88,22 +91,26 @@
         {
           "linkId": "fee4378b-c67a-4bf3-d99f-e94092207ee2",
           "type": "boolean",
-          "text": "¿Elige opciones horneadas, al vapor o a la parrilla cuando están disponibles, en lugar de alimentos fritos?"
+          "text": "¿Elige opciones horneadas, al vapor o a la parrilla cuando están disponibles, en lugar de alimentos fritos?",
+          "required": true
         },
         {
           "linkId": "ff78ee6d-a8ad-4d7b-80e1-2894dca64065",
           "type": "boolean",
-          "text": "¿Opta por cortes magros de carne o elimina la grasa visible (por ejemplo, la piel del pollo, la corteza del tocino)?"
+          "text": "¿Opta por cortes magros de carne o elimina la grasa visible (por ejemplo, la piel del pollo, la corteza del tocino)?",
+          "required": true
         },
         {
           "linkId": "50a6fdb1-d90c-416a-86a8-bf07602b701c",
           "type": "boolean",
-          "text": "¿Comió algún pescado graso la semana pasada (por ejemplo, salmón, caballa, sardinas)?"
+          "text": "¿Comió algún pescado graso la semana pasada (por ejemplo, salmón, caballa, sardinas)?",
+          "required": true
         },
         {
           "linkId": "ba4c8cee-f422-4a8a-8abc-e4418d8a87d1",
           "type": "boolean",
-          "text": "¿Incluye algunas nueces y semillas sin sal en su dieta?"
+          "text": "¿Incluye algunas nueces y semillas sin sal en su dieta?",
+          "required": true
         },
         {
           "linkId": "0707e0b9-611c-43ec-fa8a-be6a7ad7c800",
@@ -125,12 +132,14 @@
         {
           "linkId": "055647aa-77aa-4877-81ae-40a2f08b8c5e",
           "type": "boolean",
-          "text": "¿Basa sus comidas principales en alimentos ricos en almidón (por ejemplo, papas, pasta, arroz, pan)?"
+          "text": "¿Basa sus comidas principales en alimentos ricos en almidón (por ejemplo, papas, pasta, arroz, pan)?",
+          "required": true
         },
         {
           "linkId": "784f7a2c-6ec8-414b-caa4-b59f1e8a6a1c",
           "type": "boolean",
-          "text": "¿Incluye regularmente frijoles y/o lentejas en su dieta?"
+          "text": "¿Incluye regularmente frijoles y/o lentejas en su dieta?",
+          "required": true
         },
         {
           "linkId": "e3f7d6b7-0e40-41cd-d800-b95d05b00535",
@@ -152,22 +161,26 @@
         {
           "linkId": "016e5729-7381-455d-b888-38e9e4365fa8",
           "type": "boolean",
-          "text": "¿Come regularmente cereales para el desayuno cubiertos de azúcar o agrega azúcar a sus cereales para el desayuno?"
+          "text": "¿Come regularmente cereales para el desayuno cubiertos de azúcar o agrega azúcar a sus cereales para el desayuno?",
+          "required": true
         },
         {
           "linkId": "99e55082-b818-44c7-878b-8da477b300cc",
           "type": "boolean",
-          "text": "¿Agrega azúcar a sus bebidas? (té dulce, azúcar en el café/té, etc.)"
+          "text": "¿Agrega azúcar a sus bebidas? (té dulce, azúcar en el café/té, etc.)",
+          "required": true
         },
         {
           "linkId": "a39e0c58-32a5-4ace-9980-e42363ae898d",
           "type": "boolean",
-          "text": "¿Bebe regularmente refrescos endulzados con azúcar? (Pepsi, Sprite, etc.)"
+          "text": "¿Bebe regularmente refrescos endulzados con azúcar? (Pepsi, Sprite, etc.)",
+          "required": true
         },
         {
           "linkId": "df1d2dcd-5087-4120-86b1-ca811498c655",
           "type": "boolean",
-          "text": "¿Come regularmente pasteles, dulces, chocolate o galletas?"
+          "text": "¿Come regularmente pasteles, dulces, chocolate o galletas?",
+          "required": true
         },
         {
           "linkId": "4c4823c3-75aa-483a-b0fe-d3e33d3ef838",
@@ -189,17 +202,20 @@
         {
           "linkId": "7d376d7b-4167-49b3-8600-683af1534e77",
           "type": "boolean",
-          "text": "¿Come regularmente yogur griego o 'vivo'?"
+          "text": "¿Come regularmente yogur griego o 'vivo'?",
+          "required": true
         },
         {
           "linkId": "e5208b21-21d1-4f88-8c22-0580d4457172",
           "type": "boolean",
-          "text": "¿Come regularmente alimentos fermentados (por ejemplo, kimchi, chucrut)?"
+          "text": "¿Come regularmente alimentos fermentados (por ejemplo, kimchi, chucrut)?",
+          "required": true
         },
         {
           "linkId": "96ee1662-9b70-4f72-8f48-08ee91252d49",
           "type": "boolean",
-          "text": "¿Consume regularmente bebidas fermentadas (por ejemplo, kombucha, kéfir)?"
+          "text": "¿Consume regularmente bebidas fermentadas (por ejemplo, kombucha, kéfir)?",
+          "required": true
         },
         {
           "linkId": "f3a3be27-474b-474a-b138-e8aeed7a2e87",
@@ -221,22 +237,26 @@
         {
           "linkId": "a713aac6-c812-46e7-896c-ab9209d197fc",
           "type": "boolean",
-          "text": "¿Agrega regularmente sal a la comida durante la cocción?"
+          "text": "¿Agrega regularmente sal a la comida durante la cocción?",
+          "required": true
         },
         {
           "linkId": "ed1856e6-5ba3-4ca2-85d3-1ff744ff492e",
           "type": "boolean",
-          "text": "¿Come regularmente bocadillos salados en el trabajo (por ejemplo, papas fritas, nueces saladas)?"
+          "text": "¿Come regularmente bocadillos salados en el trabajo (por ejemplo, papas fritas, nueces saladas)?",
+          "required": true
         },
         {
           "linkId": "7e2609d6-2b29-4d70-8cbb-69f60d985876",
           "type": "boolean",
-          "text": "¿Come regularmente comidas preparadas (por ejemplo, sándwiches, comidas listas, sopas enlatadas)?"
+          "text": "¿Come regularmente comidas preparadas (por ejemplo, sándwiches, comidas listas, sopas enlatadas)?",
+          "required": true
         },
         {
           "linkId": "a7ea3c2f-2f87-4fe3-811e-fe3c85a7c1b1",
           "type": "boolean",
-          "text": "¿Come regularmente carnes procesadas (por ejemplo, jamón, tocino, salami)?"
+          "text": "¿Come regularmente carnes procesadas (por ejemplo, jamón, tocino, salami)?",
+          "required": true
         },
         {
           "linkId": "b32457c7-368d-460c-a99e-f1b842851fba",
@@ -257,7 +277,8 @@
         {
           "linkId": "1ce40499-9d9c-4f91-e7c5-da0986503406",
           "type": "boolean",
-          "text": "¿Bebe menos de 1 unidad de alcohol al día (mujeres) o menos de 2 unidades al día (hombres)?"
+          "text": "¿Bebe menos de 1 unidad de alcohol al día (mujeres) o menos de 2 unidades al día (hombres)?",
+          "required": true
         },
         {
           "linkId": "0a709d20-1be4-45e0-b811-83c004df4129",
