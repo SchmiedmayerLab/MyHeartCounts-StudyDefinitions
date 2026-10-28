@@ -4,7 +4,7 @@
   "id": "05E37E76-1308-456C-815D-90BCAA26814F",
   "title": "WHO-5",
   "status": "active",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
@@ -64,7 +64,6 @@
           "linkId": "f641ae63-47d5-447e-8dd4-afe1685d4b1f",
           "type": "choice",
           "text": "Over the past two weeks, I have felt cheerful and in good spirits",
-          "required": true,
           "answerOption": [
             {
               "valueCoding": {
@@ -114,7 +113,6 @@
           "linkId": "a07c0c00-3f05-4273-f7fc-ca6a15686efe",
           "type": "choice",
           "text": "Over the past two weeks, I have felt calm and relaxed",
-          "required": true,
           "answerOption": [
             {
               "valueCoding": {
@@ -164,7 +162,6 @@
           "linkId": "76b48a80-9eb9-4a14-8a8d-a09e980d2be3",
           "type": "choice",
           "text": "Over the past two weeks, I have felt active and vigorous",
-          "required": true,
           "answerOption": [
             {
               "valueCoding": {
@@ -214,7 +211,6 @@
           "linkId": "23c4edfa-fdbe-4884-8d26-173599f7dffb",
           "type": "choice",
           "text": "Over the past two weeks, I woke up feeling fresh and rested",
-          "required": true,
           "answerOption": [
             {
               "valueCoding": {
@@ -264,7 +260,6 @@
           "linkId": "80c92e40-1223-4cd8-806c-896e0868703f",
           "type": "choice",
           "text": "Over the past two weeks, my daily life has been filled with things that interest me",
-          "required": true,
           "answerOption": [
             {
               "valueCoding": {

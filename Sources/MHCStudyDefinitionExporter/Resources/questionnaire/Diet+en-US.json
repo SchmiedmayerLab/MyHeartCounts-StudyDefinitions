@@ -4,7 +4,7 @@
   "id": "7F0E807D-2B29-4366-A19C-731FC40C5892",
   "title": "Diet",
   "status": "active",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
@@ -56,20 +56,17 @@
         {
           "linkId": "92a6518b-61dd-442c-8082-09c3457daada",
           "type": "boolean",
-          "text": "Do you eat fruit and/or vegetables every day?",
-          "required": true
+          "text": "Do you eat fruit and/or vegetables every day?"
         },
         {
           "linkId": "bbf31b7d-ea50-45bf-88a9-5c5c21466ce8",
           "type": "boolean",
-          "text": "Do you eat multiple varieties of fruit each week?",
-          "required": true
+          "text": "Do you eat multiple varieties of fruit each week?"
         },
         {
           "linkId": "6616bfe1-d22f-488f-8ba6-0695cf19f634",
           "type": "boolean",
-          "text": "Do you eat multiple varieties of vegetables each week?",
-          "required": true
+          "text": "Do you eat multiple varieties of vegetables each week?"
         },
         {
           "linkId": "21a4f38b-bf69-41d5-9bc2-daf704b13c07",
@@ -91,26 +88,22 @@
         {
           "linkId": "fee4378b-c67a-4bf3-d99f-e94092207ee2",
           "type": "boolean",
-          "text": "Do you choose baked, steamed or grilled options when available, rather than fried foods?",
-          "required": true
+          "text": "Do you choose baked, steamed or grilled options when available, rather than fried foods?"
         },
         {
           "linkId": "ff78ee6d-a8ad-4d7b-80e1-2894dca64065",
           "type": "boolean",
-          "text": "Do you opt for lean cuts of meat or remove visible fat (e.g. skin on chicken, rind on bacon)?",
-          "required": true
+          "text": "Do you opt for lean cuts of meat or remove visible fat (e.g. skin on chicken, rind on bacon)?"
         },
         {
           "linkId": "50a6fdb1-d90c-416a-86a8-bf07602b701c",
           "type": "boolean",
-          "text": "Did you eat any oily fish last week (e.g. salmon, mackerel, sardines)?",
-          "required": true
+          "text": "Did you eat any oily fish last week (e.g. salmon, mackerel, sardines)?"
         },
         {
           "linkId": "ba4c8cee-f422-4a8a-8abc-e4418d8a87d1",
           "type": "boolean",
-          "text": "Do you include some unsalted nuts and seeds in your diet?",
-          "required": true
+          "text": "Do you include some unsalted nuts and seeds in your diet?"
         },
         {
           "linkId": "0707e0b9-611c-43ec-fa8a-be6a7ad7c800",
@@ -132,14 +125,12 @@
         {
           "linkId": "055647aa-77aa-4877-81ae-40a2f08b8c5e",
           "type": "boolean",
-          "text": "Do you base your main meals around starchy foods (e.g., potatoes, pasta, rice, bread)?",
-          "required": true
+          "text": "Do you base your main meals around starchy foods (e.g., potatoes, pasta, rice, bread)?"
         },
         {
           "linkId": "784f7a2c-6ec8-414b-caa4-b59f1e8a6a1c",
           "type": "boolean",
-          "text": "Do you regularly include beans and/or lentils in your diet?",
-          "required": true
+          "text": "Do you regularly include beans and/or lentils in your diet?"
         },
         {
           "linkId": "e3f7d6b7-0e40-41cd-d800-b95d05b00535",
@@ -161,26 +152,22 @@
         {
           "linkId": "016e5729-7381-455d-b888-38e9e4365fa8",
           "type": "boolean",
-          "text": "Do you regularly eat sugar-coated breakfast cereals or add sugar to your breakfast cereals?",
-          "required": true
+          "text": "Do you regularly eat sugar-coated breakfast cereals or add sugar to your breakfast cereals?"
         },
         {
           "linkId": "99e55082-b818-44c7-878b-8da477b300cc",
           "type": "boolean",
-          "text": "Do you add sugar to your drinks? (sweet tea, sugar in coffee/tea, etc)",
-          "required": true
+          "text": "Do you add sugar to your drinks? (sweet tea, sugar in coffee/tea, etc)"
         },
         {
           "linkId": "a39e0c58-32a5-4ace-9980-e42363ae898d",
           "type": "boolean",
-          "text": "Do you regularly drink sugar sweetened soda? (pepsi, sprite, etc)",
-          "required": true
+          "text": "Do you regularly drink sugar sweetened soda? (pepsi, sprite, etc)"
         },
         {
           "linkId": "df1d2dcd-5087-4120-86b1-ca811498c655",
           "type": "boolean",
-          "text": "Do you regularly eat cakes, sweets, chocolate or biscuits?",
-          "required": true
+          "text": "Do you regularly eat cakes, sweets, chocolate or biscuits?"
         },
         {
           "linkId": "4c4823c3-75aa-483a-b0fe-d3e33d3ef838",
@@ -202,20 +189,17 @@
         {
           "linkId": "7d376d7b-4167-49b3-8600-683af1534e77",
           "type": "boolean",
-          "text": "Do you regularly eat greek or 'live' yogurt?",
-          "required": true
+          "text": "Do you regularly eat greek or 'live' yogurt?"
         },
         {
           "linkId": "e5208b21-21d1-4f88-8c22-0580d4457172",
           "type": "boolean",
-          "text": "Do you regularly eat fermented foods (e.g. Kimchi, Sauerkraut)?",
-          "required": true
+          "text": "Do you regularly eat fermented foods (e.g. Kimchi, Sauerkraut)?"
         },
         {
           "linkId": "96ee1662-9b70-4f72-8f48-08ee91252d49",
           "type": "boolean",
-          "text": "Do you regularly have fermented drinks (e.g Kombucha, Kefir)?",
-          "required": true
+          "text": "Do you regularly have fermented drinks (e.g Kombucha, Kefir)?"
         },
         {
           "linkId": "f3a3be27-474b-474a-b138-e8aeed7a2e87",
@@ -237,26 +221,22 @@
         {
           "linkId": "a713aac6-c812-46e7-896c-ab9209d197fc",
           "type": "boolean",
-          "text": "Do you regularly add salt to food during cooking?",
-          "required": true
+          "text": "Do you regularly add salt to food during cooking?"
         },
         {
           "linkId": "ed1856e6-5ba3-4ca2-85d3-1ff744ff492e",
           "type": "boolean",
-          "text": "Do you regularly eat savory snacks at work (e.g. chips, salted nuts)?",
-          "required": true
+          "text": "Do you regularly eat savory snacks at work (e.g. chips, salted nuts)?"
         },
         {
           "linkId": "7e2609d6-2b29-4d70-8cbb-69f60d985876",
           "type": "boolean",
-          "text": "Do you regularly eat pre-prepared meals (e.g. sandwiches, ready meals, canned soups)?",
-          "required": true
+          "text": "Do you regularly eat pre-prepared meals (e.g. sandwiches, ready meals, canned soups)?"
         },
         {
           "linkId": "a7ea3c2f-2f87-4fe3-811e-fe3c85a7c1b1",
           "type": "boolean",
-          "text": "Do you regularly eat processed meats (e.g. ham, bacon, salami)?",
-          "required": true
+          "text": "Do you regularly eat processed meats (e.g. ham, bacon, salami)?"
         },
         {
           "linkId": "b32457c7-368d-460c-a99e-f1b842851fba",
@@ -277,8 +257,7 @@
         {
           "linkId": "1ce40499-9d9c-4f91-e7c5-da0986503406",
           "type": "boolean",
-          "text": "Do you drink less than 1 unit of alcohol/day (women) or less than 2 units/day (men)?",
-          "required": true
+          "text": "Do you drink less than 1 unit of alcohol/day (women) or less than 2 units/day (men)?"
         },
         {
           "linkId": "0a709d20-1be4-45e0-b811-83c004df4129",
