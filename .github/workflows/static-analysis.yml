@@ -24,3 +24,5 @@ jobs:
   swiftlint:
     name: SwiftLint
     uses: SchmiedmayerLab/.github/.github/workflows/swiftlint.yml@v0.5
+    with:
+      runs_on_labels: '["ubuntu-24.04"]'
