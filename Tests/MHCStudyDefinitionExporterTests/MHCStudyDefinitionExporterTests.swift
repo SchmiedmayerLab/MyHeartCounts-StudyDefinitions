@@ -420,6 +420,10 @@ extension MHCStudyDefinitionExporterTests {
                 if key == "meta", element.key == "tag" {
                     return
                 }
+                // Constraint guidance is localized; its key, severity and expression remain contract data.
+                if dictionary["url"] as? String == "human", element.key == "valueString" {
+                    return
+                }
                 if let projected = projectContract(element.value, key: element.key) {
                     result[element.key] = projected
                 }
