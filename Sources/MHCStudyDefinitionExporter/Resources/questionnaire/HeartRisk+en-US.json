@@ -527,6 +527,30 @@
               "text": "What is your most recent systolic Blood Pressure? (mmHg, blood pressure is typically shown as systolic/diastolic)",
               "extension": [
                 {
+                  "url": "http://hl7.org/fhir/StructureDefinition/targetConstraint",
+                  "extension": [
+                    {
+                      "url": "key",
+                      "valueId": "bp-systolic-requires-diastolic"
+                    },
+                    {
+                      "url": "severity",
+                      "valueCode": "error"
+                    },
+                    {
+                      "url": "human",
+                      "valueString": "Enter both systolic and diastolic blood pressure, or leave both blank."
+                    },
+                    {
+                      "url": "expression",
+                      "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.item.where(linkId = 'heart-risk').item.where(linkId = 'blood-pressure-panel').item.where(linkId = 'b25ac0aa-4528-47dc-951f-97f411ec5cc2').answer.exists()"
+                      }
+                    }
+                  ]
+                },
+                {
                   "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-observationExtract",
                   "valueCode": "component"
                 },
@@ -569,6 +593,30 @@
               "type": "quantity",
               "text": "What is your most recent diastolic Blood Pressure? (mmHg, blood pressure is typically shown as systolic/diastolic)",
               "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/targetConstraint",
+                  "extension": [
+                    {
+                      "url": "key",
+                      "valueId": "bp-diastolic-requires-systolic"
+                    },
+                    {
+                      "url": "severity",
+                      "valueCode": "error"
+                    },
+                    {
+                      "url": "human",
+                      "valueString": "Enter both systolic and diastolic blood pressure, or leave both blank."
+                    },
+                    {
+                      "url": "expression",
+                      "valueExpression": {
+                        "language": "text/fhirpath",
+                        "expression": "%resource.item.where(linkId = 'heart-risk').item.where(linkId = 'blood-pressure-panel').item.where(linkId = '7cec349c-495c-4ef6-834e-cc9708625736').answer.exists()"
+                      }
+                    }
+                  ]
+                },
                 {
                   "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-observationExtract",
                   "valueCode": "component"
