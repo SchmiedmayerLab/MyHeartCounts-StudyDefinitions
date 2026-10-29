@@ -39,7 +39,9 @@ struct HeartRiskExtractionTests {
     @Test
     func heartRiskKeepsOneTopLevelGroup() throws {
         try StudyBundleFixture.withExportedStudyBundle { bundle in
-            let items = try #require(bundle.questionnaire(named: "HeartRisk")).item ?? []
+            let questionnaire = try #require(bundle.questionnaire(named: "HeartRisk"))
+            #expect(questionnaire.version?.value?.string == "0.2.0")
+            let items = questionnaire.item ?? []
             // Grove renders every top-level group as its own section, so the wrapper keeps HeartRisk one page.
             #expect(items.count == 1, "HeartRisk must keep exactly one top-level group")
             #expect(items.first?.linkId.value?.string == "heart-risk")
