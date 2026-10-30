@@ -38,8 +38,19 @@ extension StudyBundle.FileReference {
 }
 
 
-let mhcStudyDefinition = StudyDefinition(
-    studyRevision: 44,
+func mhcStudyDefinition(for variant: StudyVariant) -> StudyDefinition {
+    var definition = sharedStudyDefinition
+    let region: Locale.Region = switch variant {
+    case .stanford: .unitedStates
+    case .imperial: .unitedKingdom
+    }
+    definition.metadata.participationCriterion = .ageAtLeast(18) && .isFromRegion(region)
+    return definition
+}
+
+
+private let sharedStudyDefinition = StudyDefinition(
+    studyRevision: 45,
     metadata: .init(
         id: .mhcStudy,
         title: [.enUS: "My Heart Counts"],
