@@ -99,14 +99,14 @@ struct StudyVariantExportTests {
             let consent = try #require(bundle.consentText(
                 for: consentRef, in: locale, using: .requirePerfectMatch, fallbackLocale: nil
             ))
+            #expect(!consent.contains("INTERNAL TESTING ONLY"))
             let expectedFiles: Set<String>
             switch variant {
             case .stanford:
                 #expect(consent.contains("# STANFORD UNIVERSITY"))
-                #expect(!consent.contains("INTERNAL TESTING ONLY"))
                 expectedFiles = ["Consent+en-US.md", "Consent+es-US.md"]
             case .imperial:
-                #expect(consent.contains("# IMPERIAL VARIANT — INTERNAL TESTING ONLY"))
+                #expect(consent.contains("Imperial College London"))
                 expectedFiles = ["Consent+en-GB.md"]
             }
             let consentDirectory = bundle.bundleUrl.appending(component: "consent", directoryHint: .isDirectory)
