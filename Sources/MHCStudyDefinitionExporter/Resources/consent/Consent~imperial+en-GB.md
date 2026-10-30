@@ -9,7 +9,7 @@ version: 1.0.0
 
 **Chief Investigator:** Professor Allan Lawrie, Imperial College London.
 
-**Full Title of Project:** Real-world data capture via My /Heart Counts smartphone app to support early diagnosis and management of cardiovascular disease
+**Full Title of Project:** Real-world data capture via My Heart Counts smartphone app to support early diagnosis and management of cardiovascular disease
 
 **Project Identifier:**
 

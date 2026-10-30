@@ -39,7 +39,9 @@ struct HeartRiskExtractionTests {
     @Test
     func heartRiskKeepsOneTopLevelGroup() throws {
         try StudyBundleFixture.withExportedStudyBundle { bundle in
-            let items = try #require(bundle.questionnaire(named: "HeartRisk")).item ?? []
+            let questionnaire = try #require(bundle.questionnaire(named: "HeartRisk"))
+            #expect(questionnaire.version?.value?.string == "0.2.0")
+            let items = questionnaire.item ?? []
             // Grove renders every top-level group as its own section, so the wrapper keeps HeartRisk one page.
             #expect(items.count == 1, "HeartRisk must keep exactly one top-level group")
             #expect(items.first?.linkId.value?.string == "heart-risk")
@@ -55,7 +57,8 @@ struct HeartRiskExtractionTests {
             let questionnaire = try #require(bundle.questionnaire(named: "HeartRisk"))
             let response = try Self.response(for: questionnaire)
             #if canImport(GroveQuestionnaireFHIR)
-            let issues = PairValidator().issues(questionnaire: questionnaire, response: response)
+            let evaluator = try PairExpressionEvaluator.fhirPath(questionnaire: questionnaire, response: response)
+            let issues = PairValidator(expressionEvaluator: evaluator).issues(questionnaire: questionnaire, response: response)
             #expect(issues.isEmpty, "\(issues.map(\.message))")
             #endif
             record = QuestionnaireFHIRExporter.Record(questionnaire: questionnaire, response: response)
@@ -70,6 +73,51 @@ struct HeartRiskExtractionTests {
         #expect(observations.count == 2, "HeartRisk extracts the blood-pressure panel and the fasting glucose")
         try validateBloodPressure(try #require(observations.first { Self.code(of: $0) == "85354-9" }))
         try validateGlucose(try #require(observations.first { Self.code(of: $0) == "2339-0" }))
+    }
+
+
+    #if canImport(GroveQuestionnaireFHIR)
+    @Test(arguments: [false, true], [false, true])
+    func bloodPressureAnswersMustBePaired(systolic: Bool, diastolic: Bool) throws {
+        try StudyBundleFixture.withExportedStudyBundle { bundle in
+            let questionnaire = try #require(bundle.questionnaire(named: "HeartRisk"))
+            for locale in StudyBundleFixture.locales {
+                var response = try Self.response(for: questionnaire, systolic: systolic, diastolic: diastolic)
+                response.language = locale.asFHIRStringPrimitive()
+                let evaluator = try PairExpressionEvaluator.fhirPath(questionnaire: questionnaire, response: response)
+                let issues = PairValidator(expressionEvaluator: evaluator).issues(questionnaire: questionnaire, response: response)
+                if systolic == diastolic {
+                    #expect(issues.isEmpty, "\(locale): \(issues.map(\.message))")
+                } else {
+                    #expect(issues.count == 1, "\(locale): \(issues.map(\.message))")
+                    #expect(issues.first?.code == .targetConstraint)
+                    #expect(issues.first?.severity == .error)
+                }
+            }
+        }
+    }
+    #endif
+
+
+    @Test
+    func unansweredBloodPressureStillExtractsGlucose() async throws {
+        var record: QuestionnaireFHIRExporter.Record?
+        try StudyBundleFixture.withExportedStudyBundle { bundle in
+            let questionnaire = try #require(bundle.questionnaire(named: "HeartRisk"))
+            record = QuestionnaireFHIRExporter.Record(
+                questionnaire: questionnaire,
+                response: try Self.response(for: questionnaire, systolic: false, diastolic: false)
+            )
+        }
+        let graph = try await Self.exchangeGraph(of: try #require(record))
+        let observations = (graph.bundle.entry ?? []).compactMap { entry -> Observation? in
+            guard case .observation(let observation) = entry.resource else {
+                return nil
+            }
+            return observation
+        }
+        #expect(observations.count == 1)
+        try validateGlucose(try #require(observations.first))
     }
 
 
@@ -154,17 +202,25 @@ extension HeartRiskExtractionTests {
 
     /// A completed response in the instrument's base language, answering exactly the marked items and
     /// mirroring the instrument's hierarchy, with the writer context Grove requires of every response it exports.
-    private static func response(for questionnaire: ModelsR4.Questionnaire) throws -> ModelsR4.QuestionnaireResponse {
+    private static func response(
+        for questionnaire: ModelsR4.Questionnaire,
+        systolic: Bool = true,
+        diastolic: Bool = true
+    ) throws -> ModelsR4.QuestionnaireResponse {
+        var pressureItems: [QuestionnaireResponseItem] = []
+        if systolic {
+            pressureItems.append(ResponseFixture.item(systolicLinkID, answer: answer(118, code: "mm[Hg]", unit: "mmHg")))
+        }
+        if diastolic {
+            pressureItems.append(ResponseFixture.item(diastolicLinkID, answer: answer(76, code: "mm[Hg]", unit: "mmHg")))
+        }
+        let pressurePanel = pressureItems.isEmpty ? [] : [ResponseFixture.item(bloodPressurePanelLinkID, children: pressureItems)]
         var response = try ResponseFixture.completed(
             questionnaire,
             in: try #require(questionnaire.language),
             identifier: "heart-risk-extraction-contract",
             items: [
-                ResponseFixture.item("heart-risk", children: [
-                    ResponseFixture.item(bloodPressurePanelLinkID, children: [
-                        ResponseFixture.item(systolicLinkID, answer: answer(118, code: "mm[Hg]", unit: "mmHg")),
-                        ResponseFixture.item(diastolicLinkID, answer: answer(76, code: "mm[Hg]", unit: "mmHg"))
-                    ]),
+                ResponseFixture.item("heart-risk", children: pressurePanel + [
                     ResponseFixture.item(glucoseLinkID, answer: answer(95, code: "mg/dL", unit: "mg/dL"))
                 ])
             ]

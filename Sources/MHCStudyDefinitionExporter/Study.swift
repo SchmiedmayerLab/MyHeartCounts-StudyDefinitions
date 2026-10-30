@@ -50,7 +50,7 @@ func mhcStudyDefinition(for variant: StudyVariant) -> StudyDefinition {
 
 
 private let sharedStudyDefinition = StudyDefinition(
-    studyRevision: 49,
+    studyRevision: 50,
     metadata: .init(
         id: .mhcStudy,
         title: [.enUS: "My Heart Counts"],
