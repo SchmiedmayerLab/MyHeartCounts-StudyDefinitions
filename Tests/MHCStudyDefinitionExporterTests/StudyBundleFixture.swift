@@ -63,8 +63,13 @@ enum StudyBundleFixture {
 
 
     /// The per-locale source an instrument is authored in, before the export merges it.
+    ///
+    /// For an instrument authored per study variant, this is the Stanford source, matching ``withExportedStudyBundle(_:)``.
     static func source(named name: String, in locale: String) throws -> [String: Any] {
-        let data = try Data(contentsOf: sourceDirectory.appending(component: "\(name)+\(locale).json"))
+        let url = try #require(["\(name)+\(locale).json", "\(name)~stanford+\(locale).json"]
+            .map { sourceDirectory.appending(component: $0) }
+            .first { FileManager.default.fileExists(atPath: $0.path()) })
+        let data = try Data(contentsOf: url)
         return try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
     }
 }
