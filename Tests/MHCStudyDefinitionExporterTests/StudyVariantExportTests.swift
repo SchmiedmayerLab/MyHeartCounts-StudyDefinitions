@@ -45,9 +45,14 @@ struct StudyVariantExportTests {
         #expect(!paths.contains { $0.contains("~") })
         // Questionnaire translations are embedded in the base-language file.
         #expect(!paths.contains("questionnaire/GAD7+es-US.json"))
+        let variantPaths = switch variant {
+        case .stanford: ["article/Welcome+en-US.md", "article/Welcome+es-US.md"]
+        case .imperial: ["article/Welcome+en-GB.md"]
+        }
+        for variantPath in variantPaths {
+            #expect(paths.contains(variantPath))
+        }
         for sharedPath in [
-            "article/Welcome+en-US.md",
-            "article/Welcome+es-US.md",
             "article/assets/SensorKit/Settings1.jpg",
             "questionnaire/GAD7+en-US.json",
             "hhdExplainer/Sleep+en-US.md",
