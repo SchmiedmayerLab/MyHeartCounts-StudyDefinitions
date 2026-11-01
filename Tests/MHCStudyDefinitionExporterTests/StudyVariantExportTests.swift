@@ -112,7 +112,7 @@ struct StudyVariantExportTests {
                 expectedFiles = ["Consent+en-US.md", "Consent+es-US.md"]
             case .imperial:
                 #expect(consent.contains("Imperial College London"))
-                expectedFiles = ["Consent+en-GB.md", "ParticipantInformation+en-GB.md"]
+                expectedFiles = ["Consent+en-GB.md", "ParticipantInformation+en-GB.md", "Withdrawal+en-GB.md"]
             }
             let consentDirectory = bundle.bundleUrl.appending(component: "consent", directoryHint: .isDirectory)
             let actualFiles = try FileManager.default.contentsOfDirectory(atPath: consentDirectory.path())
