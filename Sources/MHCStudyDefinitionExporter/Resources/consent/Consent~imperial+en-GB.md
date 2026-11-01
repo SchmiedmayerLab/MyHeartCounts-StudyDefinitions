@@ -1,6 +1,6 @@
 ---
 title: My Heart Counts Informed eConsent Form
-version: 1.0.0
+version: 1.1.0
 ---
 
 # My Heart Counts
@@ -44,9 +44,11 @@ I give consent for information collected about me to be used to support other re
 I understand that data collected from me are a gift donated to Imperial College and that I will not personally benefit financially if this research leads to an invention and/or the successful development of a new test, medication treatment, product or service.
 </>
 
-<toggle id=future-studies initial-value=false>
+<select id=future-studies expected-value="*">
 OPTIONAL I give consent to being contacted about the outcomes of the study and possibility to take part in other research studies.
-</>
+<option id=future-studies-yes>Yes</option>
+<option id=future-studies-no>No</option>
+</select>
 
 <select id=short-term-physical-activity-trial expected-value="*">
 OPTIONAL I understand that participation in the eCoach component is optional. If I choose to participate, I agree to receive personalised activity-promoting messages through the MHC app. I understand that these messages are intended to encourage general physical activity and study engagement, do not constitute medical advice, and may be stopped at any time without withdrawing from the main study.
@@ -54,9 +56,11 @@ OPTIONAL I understand that participation in the eCoach component is optional. If
 <option id=short-term-physical-activity-trial-no>No</option>
 </select>
 
-<toggle id=feedback-activities initial-value=false>
+<select id=feedback-activities expected-value="*">
 OPTIONAL I agree to be contacted about optional focus groups, interviews, surveys or other feedback activities relating to my experience of using the MHC app. I understand that participation in these activities is voluntary and that I may decline or withdraw at any time without affecting my participation in the main study.
-</>
+<option id=feedback-activities-yes>Yes</option>
+<option id=feedback-activities-no>No</option>
+</select>
 
 <toggle id=not-clinical-monitoring expected-value=true>
 **I understand that My Heart Counts is a research tool and is not a clinical monitoring service. Data provided via the app will NOT be reviewed by healthcare professionals and should not be relied upon for medical care, diagnosis or treatment.**
