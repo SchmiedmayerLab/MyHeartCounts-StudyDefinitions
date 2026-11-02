@@ -28,7 +28,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/SchmiedmayerLab/Grove.git",
-            exact: "0.3.0-beta.9"
+            revision: "26c59b8def9466cbd27860ed168bf29b05a1fa7f"
         ),
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.6.2"),
         .package(url: "https://github.com/apple/swift-crypto.git", "4.0.0"..<"6.0.0")
