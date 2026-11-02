@@ -8,15 +8,15 @@ While your body needs some cholesterol for cell function, too much LDL is harmfu
 
 Our scoring system helps you see your risk at a glance:
 
-| Range      | Score | What it means                                                    |
-| :--------: | :---: | :--------------------------------------------------------------- |
-| <55 mg/dL  | 100   | Excellent; maximal protection, especially for high-risk patients |
-| 55–69      | 90    | Very good; ideal for heart disease patients                      |
-| 70–99      | 80    | Optimal for most adults                                          |
-| 100–129    | 60    | Slightly above ideal; risk starts to rise                        |
-| 130–159    | 40    | High risk; consider lifestyle changes or medication              |
-| 160–189    | 20    | Very high risk                                                   |
-| ≥190 mg/dL | 0     | Severe risk; urgent action needed                                |
+| Range        | Score | What it means                                                    |
+| :----------: | :---: | :--------------------------------------------------------------- |
+| <1.4 mmol/L  | 100   | Excellent; maximal protection, especially for high-risk patients |
+| 1.4–1.7      | 90    | Very good; ideal for heart disease patients                      |
+| 1.8–2.5      | 80    | Optimal for most adults                                          |
+| 2.6–3.3      | 60    | Slightly above ideal; risk starts to rise                        |
+| 3.4–4.0      | 40    | High risk; consider lifestyle changes or medication              |
+| 4.1–4.8      | 20    | Very high risk                                                   |
+| ≥4.9 mmol/L  | 0     | Severe risk; urgent action needed                                |
 
 Lowering LDL through diet, exercise, and, if needed, medication helps reduce cardiovascular risk.
 LDL targets may differ based on individual risk factors, so discuss your goals with a healthcare provider. Regular testing is important, as high LDL often has no symptoms.
