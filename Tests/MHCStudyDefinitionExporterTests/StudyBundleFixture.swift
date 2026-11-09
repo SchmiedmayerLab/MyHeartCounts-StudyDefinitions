@@ -9,6 +9,7 @@
 import Foundation
 @_spi(APISupport)
 import GroveStudyDefinition
+import MHCStudyDefinition
 import MHCStudyDefinitionExporter
 import Testing
 
@@ -27,7 +28,10 @@ enum StudyBundleFixture {
         .appending(path: "../../Sources/MHCStudyDefinitionExporter/Resources/questionnaire", directoryHint: .isDirectory)
         .standardized
 
-    static func withExportedStudyBundle(_ operation: (StudyBundle) throws -> Void) throws {
+    static func withExportedStudyBundle(
+        variant: StudyVariant = .stanford,
+        _ operation: (StudyBundle) throws -> Void
+    ) throws {
         let fileManager = FileManager.default
         let destination = URL.temporaryDirectory.appending(component: UUID().uuidString, directoryHint: .isDirectory)
         try fileManager.createDirectory(at: destination, withIntermediateDirectories: true)
@@ -36,7 +40,7 @@ enum StudyBundleFixture {
         }
 
         do {
-            let archive = try MHCStudyDefinitionExporter.export(.stanford, to: destination, as: .zstd)
+            let archive = try MHCStudyDefinitionExporter.export(variant, to: destination, as: .zstd)
             let bundleURL = destination.appending(
                 path: "mhcStudyBundle.\(StudyBundle.fileExtension)",
                 directoryHint: .isDirectory
@@ -63,8 +67,13 @@ enum StudyBundleFixture {
 
 
     /// The per-locale source an instrument is authored in, before the export merges it.
+    ///
+    /// For an instrument authored per study variant, this is the Stanford source, matching ``withExportedStudyBundle(_:)``.
     static func source(named name: String, in locale: String) throws -> [String: Any] {
-        let data = try Data(contentsOf: sourceDirectory.appending(component: "\(name)+\(locale).json"))
+        let url = try #require(["\(name)+\(locale).json", "\(name)~stanford+\(locale).json"]
+            .map { sourceDirectory.appending(component: $0) }
+            .first { FileManager.default.fileExists(atPath: $0.path()) })
+        let data = try Data(contentsOf: url)
         return try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
     }
 }
