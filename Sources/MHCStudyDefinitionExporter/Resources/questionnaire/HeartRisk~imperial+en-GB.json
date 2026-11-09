@@ -4,7 +4,7 @@
   "id": "09BE8C43-4501-4861-B6C9-A15F94BE6E14",
   "title": "Heart Risk",
   "status": "active",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm",
@@ -691,14 +691,10 @@
           ]
         },
         {
-          "linkId": "7309938e-ea24-4e31-8427-82f3a1a44f83",
+          "linkId": "30f4d33d-b4a1-4a56-9e89-717034b64efa",
           "type": "quantity",
           "text": "What is your fasting blood glucose?",
           "extension": [
-            {
-              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-observationExtract",
-              "valueBoolean": true
-            },
             {
               "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
               "valueCoding": {
@@ -723,6 +719,38 @@
                 "unit": "millimole per litre",
                 "system": "http://unitsofmeasure.org",
                 "code": "mmol/L"
+              }
+            }
+          ]
+        },
+        {
+          "linkId": "7309938e-ea24-4e31-8427-82f3a1a44f83",
+          "type": "quantity",
+          "text": "Fasting blood glucose, converted to mg/dL",
+          "readOnly": true,
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-hidden",
+              "valueBoolean": true
+            },
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression",
+              "valueExpression": {
+                "description": "The mmol/L answer above, converted to mg/dL (1 mmol/L = 18.0156 mg/dL)",
+                "language": "text/fhirpath",
+                "expression": "%resource.item.where(linkId = 'heart-risk').item.where(linkId = '30f4d33d-b4a1-4a56-9e89-717034b64efa').answer.value.value * 18.0156"
+              }
+            },
+            {
+              "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-observationExtract",
+              "valueBoolean": true
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption",
+              "valueCoding": {
+                "system": "http://unitsofmeasure.org",
+                "code": "mg/dL",
+                "display": "milligram per deciliter"
               }
             }
           ],

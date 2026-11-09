@@ -76,7 +76,8 @@ let package = Package(
                 .product(name: "Crypto", package: "swift-crypto", condition: .when(platforms: [.linux])),
                 // Grove's questionnaire authoring products do not build on the Linux CI leg.
                 .product(name: "GroveQuestionnaire", package: "Grove", condition: .when(platforms: [.macOS])),
-                .product(name: "GroveQuestionnaireFHIR", package: "Grove", condition: .when(platforms: [.macOS]))
+                .product(name: "GroveQuestionnaireFHIR", package: "Grove", condition: .when(platforms: [.macOS])),
+                .product(name: "FHIRPathParser", package: "Grove", condition: .when(platforms: [.macOS]))
             ]
         )
     ]

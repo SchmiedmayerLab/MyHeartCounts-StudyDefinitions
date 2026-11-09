@@ -9,6 +9,7 @@
 import Foundation
 @_spi(APISupport)
 import GroveStudyDefinition
+import MHCStudyDefinition
 import MHCStudyDefinitionExporter
 import Testing
 
@@ -27,7 +28,10 @@ enum StudyBundleFixture {
         .appending(path: "../../Sources/MHCStudyDefinitionExporter/Resources/questionnaire", directoryHint: .isDirectory)
         .standardized
 
-    static func withExportedStudyBundle(_ operation: (StudyBundle) throws -> Void) throws {
+    static func withExportedStudyBundle(
+        variant: StudyVariant = .stanford,
+        _ operation: (StudyBundle) throws -> Void
+    ) throws {
         let fileManager = FileManager.default
         let destination = URL.temporaryDirectory.appending(component: UUID().uuidString, directoryHint: .isDirectory)
         try fileManager.createDirectory(at: destination, withIntermediateDirectories: true)
@@ -36,7 +40,7 @@ enum StudyBundleFixture {
         }
 
         do {
-            let archive = try MHCStudyDefinitionExporter.export(.stanford, to: destination, as: .zstd)
+            let archive = try MHCStudyDefinitionExporter.export(variant, to: destination, as: .zstd)
             let bundleURL = destination.appending(
                 path: "mhcStudyBundle.\(StudyBundle.fileExtension)",
                 directoryHint: .isDirectory

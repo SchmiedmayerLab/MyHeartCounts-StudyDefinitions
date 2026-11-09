@@ -11,6 +11,9 @@ import CryptoKit
 #else
 import Crypto
 #endif
+#if canImport(FHIRPathParser)
+import FHIRPathParser
+#endif
 import Foundation
 import GroveFHIRContract
 import GroveQuestionnaireExtraction
@@ -34,6 +37,9 @@ struct HeartRiskExtractionTests {
     private static let systolicLinkID = "7cec349c-495c-4ef6-834e-cc9708625736"
     private static let diastolicLinkID = "b25ac0aa-4528-47dc-951f-97f411ec5cc2"
     private static let glucoseLinkID = "7309938e-ea24-4e31-8427-82f3a1a44f83"
+    /// The Imperial question the participant answers in mmol/L; `glucoseLinkID` is the hidden item calculated from it.
+    private static let imperialGlucoseEntryLinkID = "30f4d33d-b4a1-4a56-9e89-717034b64efa"
+    private static let calculatedExpressionURL = "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression"
     private static let observationCategorySystem = "http://terminology.hl7.org/CodeSystem/observation-category"
 
     @Test
@@ -121,6 +127,53 @@ struct HeartRiskExtractionTests {
     }
 
 
+    #if canImport(FHIRPathParser)
+    /// Imperial asks for fasting glucose in mmol/L, which the IG does not extract as 2339-0. A hidden item
+    /// under the shared glucose linkId calculates the mg/dL value, and only that item extracts.
+    @Test
+    func imperialGlucoseExtractsInMilligramsPerDeciliter() async throws {
+        var record: QuestionnaireFHIRExporter.Record?
+        var converted: Decimal?
+        try StudyBundleFixture.withExportedStudyBundle(variant: .imperial) { bundle in
+            let questionnaire = try #require(bundle.questionnaire(named: "HeartRisk"))
+            let entry = ResponseFixture.item(
+                Self.imperialGlucoseEntryLinkID,
+                answer: Self.answer(5.5, code: "mmol/L", unit: "millimole per litre")
+            )
+            // The participant's answer alone, as the form holds it before the hidden item is calculated.
+            let milligrams = try Self.calculatedGlucose(
+                in: questionnaire,
+                from: try Self.response(for: questionnaire, glucose: [entry])
+            )
+            #expect((milligrams - 99.0858).magnitude < 0.0001, "5.5 mmol/L × 18.0156 is 99.0858 mg/dL")
+            converted = milligrams
+            let response = try Self.response(for: questionnaire, glucose: [
+                entry,
+                ResponseFixture.item(Self.glucoseLinkID, answer: Self.answer(milligrams, code: "mg/dL", unit: "milligram per deciliter"))
+            ])
+            #if canImport(GroveQuestionnaireFHIR)
+            let evaluator = try PairExpressionEvaluator.fhirPath(questionnaire: questionnaire, response: response)
+            let issues = PairValidator(expressionEvaluator: evaluator).issues(questionnaire: questionnaire, response: response)
+            #expect(issues.isEmpty, "\(issues.map(\.message))")
+            #endif
+            record = QuestionnaireFHIRExporter.Record(questionnaire: questionnaire, response: response)
+        }
+        let graph = try await Self.exchangeGraph(of: try #require(record))
+        let observations = (graph.bundle.entry ?? []).compactMap { entry -> Observation? in
+            guard case .observation(let observation) = entry.resource else {
+                return nil
+            }
+            return observation
+        }
+        #expect(observations.count == 2, "the mmol/L answer itself must not extract")
+        try validateGlucose(
+            try #require(observations.first { Self.code(of: $0) == "2339-0" }),
+            value: try #require(converted)
+        )
+    }
+    #endif
+
+
     private func validateBloodPressure(_ observation: Observation) throws {
         #expect(observation.meta?.profile == [Profile.groveMobileBloodPressure])
         #expect(
@@ -140,7 +193,7 @@ struct HeartRiskExtractionTests {
     }
 
 
-    private func validateGlucose(_ observation: Observation) throws {
+    private func validateGlucose(_ observation: Observation, value: Decimal = 95) throws {
         #expect(observation.meta?.profile == [Profile.groveMobileBloodGlucoseUnspecifiedSpecimen])
         // The glucose profile fixes no category, so the instrument deliberately declares none.
         #expect(observation.category == nil)
@@ -149,7 +202,7 @@ struct HeartRiskExtractionTests {
             Issue.record("the fasting glucose must extract as a Quantity")
             return
         }
-        #expect(quantity.value?.value?.decimal == 95)
+        #expect(quantity.value?.value?.decimal == value)
         #expect(quantity.code?.value?.string == "mg/dL")
         validateProvenanceContract(observation)
     }
@@ -176,6 +229,11 @@ struct HeartRiskExtractionTests {
 // MARK: Fixtures
 
 extension HeartRiskExtractionTests {
+    /// The Stanford fasting glucose answer: asked in mg/dL, under the linkId that extracts.
+    private static var stanfordGlucose: [QuestionnaireResponseItem] {
+        [ResponseFixture.item(glucoseLinkID, answer: answer(95, code: "mg/dL", unit: "mg/dL"))]
+    }
+
     private static func code(of observation: Observation) -> String? {
         observation.code.coding?.first?.code?.value?.string
     }
@@ -205,7 +263,8 @@ extension HeartRiskExtractionTests {
     private static func response(
         for questionnaire: ModelsR4.Questionnaire,
         systolic: Bool = true,
-        diastolic: Bool = true
+        diastolic: Bool = true,
+        glucose: [QuestionnaireResponseItem] = stanfordGlucose
     ) throws -> ModelsR4.QuestionnaireResponse {
         var pressureItems: [QuestionnaireResponseItem] = []
         if systolic {
@@ -220,9 +279,7 @@ extension HeartRiskExtractionTests {
             in: try #require(questionnaire.language),
             identifier: "heart-risk-extraction-contract",
             items: [
-                ResponseFixture.item("heart-risk", children: pressurePanel + [
-                    ResponseFixture.item(glucoseLinkID, answer: answer(95, code: "mg/dL", unit: "mg/dL"))
-                ])
+                ResponseFixture.item("heart-risk", children: pressurePanel + glucose)
             ]
         )
         response.apply(writerContext: try QuestionnaireWriterContext(
@@ -235,6 +292,38 @@ extension HeartRiskExtractionTests {
         ))
         return response
     }
+
+    #if canImport(FHIRPathParser)
+    /// The value the hidden glucose item's `calculatedExpression` yields for `response`, bound as SDC binds it:
+    /// `%resource` and the starting focus are the whole response.
+    private static func calculatedGlucose(
+        in questionnaire: ModelsR4.Questionnaire,
+        from response: ModelsR4.QuestionnaireResponse
+    ) throws -> Decimal {
+        let group = try #require(questionnaire.item?.first { $0.linkId.value?.string == "heart-risk" })
+        let item = try #require(group.item?.first { $0.linkId.value?.string == glucoseLinkID })
+        let calculated = try #require(item.extension?.first { $0.url.value?.url.absoluteString == calculatedExpressionURL })
+        guard case .expression(let expression)? = calculated.value,
+              let fhirPath = expression.expression?.value?.string else {
+            Issue.record("the hidden glucose item must carry its calculatedExpression as an Expression")
+            return 0
+        }
+        let node = try FHIRPathNode.encoding(response)
+        let result = try FHIRPathExpression.evaluate(
+            expression: fhirPath,
+            context: FHIRPathEvaluationContext(
+                focus: [.object(node)],
+                constants: ["resource": [.object(node)]],
+                clock: FHIRPathClock(instant: .now, timeZone: .gmt)
+            )
+        )
+        guard result.count == 1, case .decimal(let value)? = result.first else {
+            Issue.record("the glucose expression must yield one decimal, got \(result)")
+            return 0
+        }
+        return value
+    }
+    #endif
 
     /// The graph Grove exports for `record`, through an exporter over a fresh in-memory ledger.
     private static func exchangeGraph(of record: QuestionnaireFHIRExporter.Record) async throws -> ExchangeGraph {
