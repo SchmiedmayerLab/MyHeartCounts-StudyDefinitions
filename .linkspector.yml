@@ -1,0 +1,24 @@
+#
+# This source file is part of the My Heart Counts Study Definitions open-source project
+#
+# SPDX-FileCopyrightText: 2026 Stanford University and the project authors (see CONTRIBUTORS.md)
+#
+# SPDX-License-Identifier: MIT
+#
+
+# The shared Markdown Links workflow's default configuration, plus the ignore patterns this repository needs.
+dirs:
+  - .
+useGitIgnore: true
+ignorePatterns:
+  - pattern: '^doc:.*$'
+  - pattern: '^http://localhost.*$'
+  # ico.org.uk (the UK Information Commissioner's Office, linked from the Imperial privacy notice) sits behind
+  # Cloudflare's bot protection: automated clients, this link checker included, get a "Performing security
+  # verification" page with HTTP 403 instead of the page itself, whether or not the link is valid.
+  - pattern: '^https?://(www\.)?ico\.org\.uk(/.*)?$'
+replacementPatterns:
+  - pattern: '(.*)#gh-dark-mode-only'
+    replacement: '$1'
+  - pattern: '(.*)#gh-light-mode-only'
+    replacement: '$1'

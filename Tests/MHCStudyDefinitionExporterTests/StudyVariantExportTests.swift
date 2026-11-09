@@ -45,14 +45,17 @@ struct StudyVariantExportTests {
         #expect(!paths.contains { $0.contains("~") })
         // Questionnaire translations are embedded in the base-language file.
         #expect(!paths.contains("questionnaire/GAD7+es-US.json"))
+        let variantPaths = switch variant {
+        case .stanford: ["article/Welcome+en-US.md", "article/Welcome+es-US.md", "hhdExplainer/Sleep+en-US.md", "hhdExplainer/Sleep+es-US.md"]
+        case .imperial: ["article/Welcome+en-GB.md", "hhdExplainer/Sleep+en-GB.md"]
+        }
+        for variantPath in variantPaths {
+            #expect(paths.contains(variantPath))
+        }
         for sharedPath in [
-            "article/Welcome+en-US.md",
-            "article/Welcome+es-US.md",
             "article/assets/SensorKit/Settings1.jpg",
             "questionnaire/GAD7+en-US.json",
-            "hhdExplainer/Sleep+en-US.md",
-            "hhdExplainer/Sleep+en-GB.md",
-            "hhdExplainer/Sleep+es-US.md"
+            "hhdExplainer/LearnMore+en-US.md"
         ] {
             #expect(paths.contains(sharedPath))
         }
@@ -107,7 +110,7 @@ struct StudyVariantExportTests {
                 expectedFiles = ["Consent+en-US.md", "Consent+es-US.md"]
             case .imperial:
                 #expect(consent.contains("Imperial College London"))
-                expectedFiles = ["Consent+en-GB.md"]
+                expectedFiles = ["Consent+en-GB.md", "ParticipantInformation+en-GB.md", "PrivacyNotice+en-GB.md", "Withdrawal+en-GB.md"]
             }
             let consentDirectory = bundle.bundleUrl.appending(component: "consent", directoryHint: .isDirectory)
             let actualFiles = try FileManager.default.contentsOfDirectory(atPath: consentDirectory.path())
