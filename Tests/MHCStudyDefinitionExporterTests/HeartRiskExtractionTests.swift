@@ -368,7 +368,7 @@ extension HeartRiskExtractionTests {
             throw error
         }
         var packer = ExchangeBundlePacker(kind: .active)
-        #expect(try packer.add(try #require(exports.first?.record)) == .added)
+        #expect(try packer.insert(try #require(exports.first?.record)) == .inserted)
         return try packer.bundle(packedAt: instant)
     }
 }
