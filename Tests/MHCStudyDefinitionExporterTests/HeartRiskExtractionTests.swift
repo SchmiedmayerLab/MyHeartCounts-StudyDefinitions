@@ -325,12 +325,12 @@ extension HeartRiskExtractionTests {
     }
     #endif
 
-    /// The graph Grove exports for `record`, through an exporter over a fresh in-memory ledger.
+    /// The one-record Bundle Grove exports for `record`.
     private static func exchangeGraph(of record: QuestionnaireFHIRExporter.Record) async throws -> ExchangeGraph {
         var patient = ModelsR4.Patient()
         patient.id = ResponseFixture.participantID.asFHIRStringPrimitive()
         let keyID = "mhc-contract-test"
-        let epoch = EventSequence(1)
+        let epoch = KeyEpoch(1)
         let producer = try ExchangeProducer(
             identityScope: try OpaqueIdentityScope(
                 systems: try DeploymentIdentifierSystems.derived(
@@ -354,20 +354,21 @@ extension HeartRiskExtractionTests {
                 bundleIdentifier: "edu.stanford.myheartcounts",
                 version: "1.0.0"
             ),
-            host: try HostDevice(operatingSystemVersion: "26.0", modelNumber: "iPhone17,1"),
-            storage: ExchangeProducer.InMemoryStorage()
+            host: try HostDevice(operatingSystemVersion: "26.0", productType: "iPhone17,1")
         )
         let exporter = QuestionnaireFHIRExporter(
             producer: producer,
             repositoryScope: try BusinessIdentifier(system: "urn:uuid:1f5c58aa-6ec6-4e79-a682-829a9debd3f5", value: "default")
         )
         var exports: [QuestionnaireFHIRExporter.Export] = []
-        let receipt = try await exporter.export([record], at: Date(timeIntervalSince1970: 1_787_931_125)) { exports.append($0) }
-        receipt.release()
+        let instant = Date(timeIntervalSince1970: 1_787_931_125)
+        try await exporter.export([record], at: instant) { exports.append($0) }
         #expect(exports.count == 1)
         if case .refused(let error)? = exports.first?.outcome {
             throw error
         }
-        return try #require(exports.first?.graph)
+        var packer = ExchangeBundlePacker(kind: .active)
+        #expect(try packer.insert(try #require(exports.first?.record)) == .inserted)
+        return try packer.bundle(packedAt: instant)
     }
 }
